@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "430225770501",
+    "project_id": "japp-87ede",
+    "storage_bucket": "japp-87ede.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:430225770501:android:42ed1926030d2ab9ae346c",
+        "android_client_info": {
+          "package_name": "com.muhmmad.japp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "430225770501-bsn3kmrg1im1kqug50ei56srtfj0d9gl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDpvtDGjyEWvstEd8zIA4lrYRjegENCxo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "430225770501-bsn3kmrg1im1kqug50ei56srtfj0d9gl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">JAPP</string>
+    <string name="welcome">Welcome</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forget_password">Forget Password ?</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="you_don_t_have_an_account_yet">You don\'t have an account yet?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="create_an_account">Create an Account</string>
+    <string name="phone_number">Phone number</string>
+    <string name="job_seeker">Job Seeker</string>
+    <string name="organization">Organization</string>
+    <string name="sign_in2">Sign in</string>
+    <string name="name_alert">Please enter your name</string>
+    <string name="email_alert_1">Please enter email address</string>
+    <string name="email_alert_2">Please enter valid email address</string>
+    <string name="pass_alert">Please enter password</string>
+    <string name="phone_alert">Please enter phone number</string>
+    <string name="phone_alert2">Please enter valid phone number</string>
+    <string name="auth_failed">Authentication failed.</string>
+    <string name="checkbox_alert">please choose your role</string>
+    <string name="name">Name</string>
+    <string name="find_your">Find Your</string>
+    <string name="dream_job">Dream Job</string>
+    <string name="here">Here!</string>
+    <string name="splash_text">Explore all the most exciting job roles based on your interest and study major.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="profile">Profile</string>
+    <string name="my_jobs">My jobs</string>
+    <string name="full_time">Full-time</string>
+    <string name="part_time">Part-time</string>
+    <string name="job_list">Job List</string>
+    <string name="read_more">Read more</string>
+    <string name="your_compatibility_percentage_with_this_job">Your Compatibility Percentage With This Job</string>
+</resources>
