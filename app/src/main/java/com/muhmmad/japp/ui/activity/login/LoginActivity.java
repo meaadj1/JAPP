@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.muhmmad.japp.R;
 import com.muhmmad.japp.Utils.SharedHelper;
 import com.muhmmad.japp.databinding.ActivityLoginBinding;
+import com.muhmmad.japp.model.Job;
 import com.muhmmad.japp.model.User;
 import com.muhmmad.japp.ui.activity.home.HomeActivity;
 import com.muhmmad.japp.ui.activity.register.RegisterActivity;
@@ -31,6 +33,8 @@ import com.muhmmad.japp.ui.activity.register.RegisterActivity;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private static final String TAG = "LoginActivity";
 
     private ActivityLoginBinding binding;
     private FirebaseAuth mAuth;
@@ -47,6 +51,15 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mDatabase.child("jobs").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                Log.i(TAG, "onSuccess");
+                Job job = new Job("Android developer", "this is the description", "Google", "", "Developer", "Full time", "Cairo", null, "1 year", "reject", "Developer", new SharedHelper().getString(context, SharedHelper.uid));
+                dataSnapshot.child(String.valueOf(dataSnapshot.getChildrenCount())).getRef().setValue(job);
+            }
+        });
 
         binding.tvSignUp.setOnClickListener(view -> startActivity(new Intent(context, RegisterActivity.class)));
 

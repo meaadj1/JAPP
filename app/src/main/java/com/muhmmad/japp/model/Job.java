@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Job {
 
-    public Job(String name, String description, String companyName, String companyImage, String category, String type, String location, ArrayList<String> requirements, String experience, String status, String specialization, String companyUid) {
-        this.name = name;
+    public Job(String title, String description, String companyName, String companyImage, String category, String type, String location, ArrayList<String> requirements, String experience, String status, String specialization, String companyUid) {
+        this.title = title;
         this.description = description;
         this.companyName = companyName;
         this.companyImage = companyImage;
@@ -19,7 +19,7 @@ public class Job {
         this.companyUid = companyUid;
     }
 
-    String name;
+    String title;
     String description;
     String companyName;
     String companyImage;
