@@ -7,6 +7,7 @@
     tools:context=".ui.fragment.job_details.JobDetailsFragment">
 
     <LinearLayout
+        android:id="@+id/ll_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/blue"
@@ -20,14 +21,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_15sdp"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_back"
+            android:contentDescription="@string/forward_back" />
 
         <ImageView
             android:id="@+id/iv_company"
+            style="@style/circleImageView"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
             android:layout_gravity="center"
-            tools:src="@drawable/ic_profile" />
+            tools:src="@drawable/ic_profile"
+            android:contentDescription="@string/company_image" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -41,15 +45,199 @@
             tools:text="UI/UX Designer" />
 
         <TextView
-            android:layout_marginTop="@dimen/_5sdp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14sdp"
             android:id="@+id/tv_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_10sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sdp"
             tools:text="Google" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_header">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="@string/job_description"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            tools:text="Hello this is the description thanks " />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="@string/requirements"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_requirements"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            tools:text="the requirements is test" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="@string/information"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/position"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_position"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11ssp"
+            tools:text="Senior developer" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:background="@color/view_bg" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="@string/qualification"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_qualification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11ssp"
+            tools:text="Bachelor’s Degree" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:background="@color/view_bg" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="@string/experience"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_experience"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11ssp"
+            tools:text="3 Years" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:background="@color/view_bg" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="@string/job_type"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11ssp"
+            tools:text="Full-Time" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:background="@color/view_bg" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="@string/specialization"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_specialization"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11ssp"
+            tools:text="Design" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:background="@color/view_bg" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:paddingStart="@dimen/_80sdp"
+            android:paddingTop="@dimen/_12sdp"
+            android:paddingEnd="@dimen/_80sdp"
+            android:paddingBottom="@dimen/_12sdp"
+            android:text="@string/apply_now"
+            android:textSize="@dimen/_10sdp"
+            app:cornerRadius="@dimen/_5sdp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

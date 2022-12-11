@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_2sdp"
+    android:layout_marginBottom="@dimen/_15sdp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/job_item_bg"
+        android:paddingBottom="@dimen/_40sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_company"
+            style="@style/circleImageView"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_margin="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_profile" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tv_details"
+            app:layout_constraintStart_toEndOf="@id/iv_company"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Android developer" />
+
+        <TextView
+            android:id="@+id/tv_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.162"
+            app:layout_constraintStart_toEndOf="@id/iv_company"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            tools:text="You have been accepted for this job" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-20dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_item">
+
+        <TextView
+            android:id="@+id/tv_reject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/reject_bg"
+            android:paddingStart="@dimen/_30sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_30sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="@string/reject"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_accept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:background="@drawable/accept_bg"
+            android:paddingStart="@dimen/_30sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_30sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="@string/accept"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

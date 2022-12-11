@@ -25,4 +25,9 @@
         android:name="com.muhmmad.japp.ui.fragment.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/jobDetailsFragment"
+        android:name="com.muhmmad.japp.ui.fragment.job_details.JobDetailsFragment"
+        android:label="fragment_job_details"
+        tools:layout="@layout/fragment_job_details" />
 </navigation>

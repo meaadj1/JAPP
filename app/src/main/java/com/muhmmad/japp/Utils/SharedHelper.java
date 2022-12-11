@@ -12,8 +12,9 @@ public class SharedHelper {
     public static String phone = "PHONE";
     public static String dateOfBirth = "DATEOFBIRTH";
     public static String country = "COUNTRY";
-    public static String nationality="NATIONALITY";
-    public static String city="CITY";
+    public static String nationality = "NATIONALITY";
+    public static String city = "CITY";
+    public static String user = "USER";
 
     public SharedHelper() {
 

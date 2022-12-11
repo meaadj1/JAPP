@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 import com.muhmmad.japp.R;
 import com.muhmmad.japp.Utils.SharedHelper;
 import com.muhmmad.japp.databinding.ActivityLoginBinding;
@@ -33,8 +34,6 @@ import com.muhmmad.japp.ui.activity.register.RegisterActivity;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
-
-    private static final String TAG = "LoginActivity";
 
     private ActivityLoginBinding binding;
     private FirebaseAuth mAuth;
@@ -51,15 +50,6 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        mDatabase.child("jobs").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                Log.i(TAG, "onSuccess");
-                Job job = new Job("Android developer", "this is the description", "Google", "", "Developer", "Full time", "Cairo", null, "1 year", "reject", "Developer", new SharedHelper().getString(context, SharedHelper.uid));
-                dataSnapshot.child(String.valueOf(dataSnapshot.getChildrenCount())).getRef().setValue(job);
-            }
-        });
 
         binding.tvSignUp.setOnClickListener(view -> startActivity(new Intent(context, RegisterActivity.class)));
 
@@ -96,6 +86,9 @@ public class LoginActivity extends AppCompatActivity {
                                     public void onSuccess(DataSnapshot dataSnapshot) {
                                         User user = dataSnapshot.getValue(User.class);
                                         if (user != null) {
+                                            Gson gson = new Gson();
+                                            String json = gson.toJson(user);
+                                            new SharedHelper().saveString(context, SharedHelper.user, json);
                                             new SharedHelper().saveString(context, SharedHelper.name, user.getName());
                                             new SharedHelper().saveString(context, SharedHelper.type, user.getType());
                                             new SharedHelper().saveString(context, SharedHelper.email, user.getEmail());

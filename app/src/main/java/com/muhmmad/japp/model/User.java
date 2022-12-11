@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class User {
 
+    public User() {
+
+    }
+
     public User(String name, String email, String phone, String type) {
         this.name = name;
         this.email = email;
@@ -11,7 +15,15 @@ public class User {
         this.phone = phone;
     }
 
-    public User(String name, String email, String phone, String type, String dateOfBirth, String country, String nationality, String city, ArrayList<String> skills, ArrayList<String> education, ArrayList<String> languages) {
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public User(String name, String email, String phone, String gender, String type, String dateOfBirth, String country, String nationality, String city, ArrayList<String> skills, ArrayList<String> education, ArrayList<String> languages) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -23,6 +35,7 @@ public class User {
         this.skills = skills;
         this.education = education;
         this.languages = languages;
+        this.gender = gender;
     }
 
     public User(String name, String email, String phone, String type, String country, String city, String companySize, String description, ArrayList<Job> jobs) {
@@ -52,6 +65,7 @@ public class User {
     String companySize;
     String description;
     ArrayList<Job> jobs;
+    String gender;
 
     public String getPhone() {
         return phone;

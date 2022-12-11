@@ -25,8 +25,6 @@
     <string name="dream_job">Dream Job</string>
     <string name="here">Here!</string>
     <string name="splash_text">Explore all the most exciting job roles based on your interest and study major.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
     <string name="search">Search</string>
     <string name="profile">Profile</string>
@@ -37,4 +35,37 @@
     <string name="read_more">Read more</string>
     <string name="your_compatibility_percentage_with_this_job">Your Compatibility Percentage With This Job</string>
     <string name="find_your_job">Find Your Job</string>
+    <string name="job_description">Job Description</string>
+    <string name="requirements">Requirements</string>
+    <string name="information">Information</string>
+    <string name="position">Position</string>
+    <string name="qualification">Qualification</string>
+    <string name="experience">Experience</string>
+    <string name="job_type">Job Type</string>
+    <string name="specialization">Specialization</string>
+    <string name="apply_now">APPLY NOW</string>
+    <string name="forward_back">imageForwardBack</string>
+    <string name="company_image">companyImage</string>
+    <string name="categories">Categories :</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="personal_information">Personal information</string>
+    <string name="gender">Gender</string>
+    <string name="country">Country</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="city">City</string>
+    <string name="nationality">Nationality</string>
+    <string name="skills">Skills</string>
+    <string name="add">+ADD</string>
+    <string name="education">Education</string>
+    <string name="languages">Languages</string>
+    <string name="save">Save</string>
+    <string name="notification">notification</string>
+    <string name="saved_jobs">saved jobs</string>
+    <string name="pending">pending</string>
+    <string name="active">active</string>
+    <string name="reject">REJECT</string>
+    <string name="accept">Accept</string>
+    <string name="adding_item">Adding Item</string>
+    <string name="text">text</string>
+    <string name="cancel">cancel</string>
 </resources>
