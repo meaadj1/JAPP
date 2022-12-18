@@ -20,7 +20,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-
             <ImageView
                 android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
@@ -40,6 +39,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tv_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profile"
@@ -54,11 +54,13 @@
             <ImageView
                 android:id="@+id/iv_profile"
                 style="@style/circleImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_margin="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_profile"
                 tools:src="@drawable/ic_profile" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -172,6 +174,7 @@
                             android:layout_marginStart="@dimen/_8sdp"
                             android:background="@drawable/job_button_bg"
                             android:clickable="false"
+                            android:focusable="false"
                             android:padding="@dimen/_3sdp"
                             android:textColor="@color/blue"
                             android:textSize="@dimen/_10ssp" />

@@ -7,27 +7,37 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.muhmmad.japp.ui.fragment.home.HomeFragment"
+        android:name="com.example.japp.ui.fragment.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/nav_jobs"
-        android:name="com.muhmmad.japp.ui.fragment.jobs.JobsFragment"
+        android:name="com.example.japp.ui.fragment.jobs.JobsFragment"
         android:label="fragment_jobs"
         tools:layout="@layout/fragment_jobs" />
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.muhmmad.japp.ui.fragment.profile.ProfileFragment"
+        android:name="com.example.japp.ui.fragment.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/nav_search"
-        android:name="com.muhmmad.japp.ui.fragment.search.SearchFragment"
+        android:name="com.example.japp.ui.fragment.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
     <fragment
-        android:id="@+id/jobDetailsFragment"
-        android:name="com.muhmmad.japp.ui.fragment.job_details.JobDetailsFragment"
+        android:id="@+id/nav_job_details"
+        android:name="com.example.japp.ui.fragment.job_details.JobDetailsFragment"
         android:label="fragment_job_details"
         tools:layout="@layout/fragment_job_details" />
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.japp.ui.fragment.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/nav_update_password"
+        android:name="com.example.japp.ui.fragment.update_password.UpdatePasswordFragment"
+        android:label="fragment_update_password"
+        tools:layout="@layout/fragment_update_password" />
 </navigation>

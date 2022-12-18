@@ -3,27 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_margin="@dimen/_10sdp"
-    app:cardCornerRadius="@dimen/_10sdp"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_8sdp"
+    app:cardCornerRadius="@dimen/_10sdp"
     app:cardElevation="@dimen/_5sdp">
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:padding="@dimen/_5sdp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_5sdp">
 
         <ImageView
-            android:layout_margin="@dimen/_15sdp"
             android:id="@+id/iv_category"
             style="@style/circleImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_8sdp"
+            android:background="@drawable/category_bg"
+            android:padding="@dimen/_15sdp"
+            android:src="@drawable/ic_education"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_percentage" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"

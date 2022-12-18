@@ -1,15 +1,16 @@
 {
   "project_info": {
     "project_number": "430225770501",
+    "firebase_url": "https://japp-87ede-default-rtdb.firebaseio.com",
     "project_id": "japp-87ede",
     "storage_bucket": "japp-87ede.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:430225770501:android:42ed1926030d2ab9ae346c",
+        "mobilesdk_app_id": "1:430225770501:android:b2071a777269b4deae346c",
         "android_client_info": {
-          "package_name": "com.muhmmad.japp"
+          "package_name": "com.example.japp"
         }
       },
       "oauth_client": [

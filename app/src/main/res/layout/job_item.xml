@@ -99,6 +99,7 @@
                 android:paddingStart="@dimen/_12sdp"
                 android:paddingEnd="@dimen/_12sdp"
                 android:text="@string/read_more"
+                android:textSize="@dimen/_10ssp"
                 android:textAllCaps="false" />
         </LinearLayout>
 
