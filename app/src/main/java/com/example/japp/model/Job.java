@@ -98,7 +98,7 @@ public class Job implements Serializable {
         this.companyUid = companyUid;
     }
 
-    public Job(int id, String title, String description, ArrayList<String> requirements, String companyName, String companyImage, String category, String type, String location, String experience, String qualification, String status, String specialization, String companyUid) {
+    public Job(int id, String title, String description, ArrayList<String> requirements, String companyName, String companyImage, String category, String type, String location, String experience, String status, String companyUid, String specialization) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -110,9 +110,8 @@ public class Job implements Serializable {
         this.location = location;
         this.experience = experience;
         this.status = status;
-        this.specialization = specialization;
         this.companyUid = companyUid;
-        this.qualification = qualification;
+        this.specialization = specialization;
     }
 
     public List<String> getRequirements() {
@@ -121,14 +120,6 @@ public class Job implements Serializable {
 
     public void setRequirements(List<String> requirements) {
         this.requirements = requirements;
-    }
-
-    public String getQualification() {
-        return qualification;
-    }
-
-    public void setQualification(String qualification) {
-        this.qualification = qualification;
     }
 
     public int getId() {
@@ -158,9 +149,18 @@ public class Job implements Serializable {
     String type;
     String location;
     String experience;
-    String qualification;
     String status;
+
+    public ArrayList<User> getApplicants() {
+        return applicants;
+    }
+
+    public void setApplicants(ArrayList<User> applicants) {
+        this.applicants = applicants;
+    }
+
     String specialization;
     String companyUid;
     ArrayList<String> saved;
+    ArrayList<User> applicants;
 }

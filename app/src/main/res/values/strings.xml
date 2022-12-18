@@ -18,6 +18,7 @@
     <string name="pass_alert">Please enter password</string>
     <string name="phone_alert">Please enter phone number</string>
     <string name="phone_alert2">Please enter valid phone number</string>
+    <string name="edt_alert">Please enter this field</string>
     <string name="auth_failed">Authentication failed.</string>
     <string name="checkbox_alert">please choose your role</string>
     <string name="name">Name</string>
@@ -32,9 +33,11 @@
     <string name="full_time">Full-time</string>
     <string name="part_time">Part-time</string>
     <string name="job_list">Job List</string>
+    <string name="applicant_list">Applicant List</string>
     <string name="read_more">Read more</string>
     <string name="your_compatibility_percentage_with_this_job">Your Compatibility Percentage With This Job</string>
     <string name="find_your_job">Find Your Job</string>
+    <string name="find_your_employee">Find Your employee</string>
     <string name="job_description">Job Description</string>
     <string name="requirements">Requirements</string>
     <string name="information">Information</string>
@@ -86,4 +89,26 @@
     <string name="update">Update</string>
     <string name="are_you_sure_you_want_to_leave">Are you sure you want to leave?</string>
     <string name="yes">Yes</string>
+    <string name="add_post">add post</string>
+    <string name="jobs">jobs</string>
+    <string name="name_of_organization">Name of Organization</string>
+    <string name="organization_location">Organization Location</string>
+    <string name="city_of_organization">City of Organization</string>
+    <string name="required_service">Required Service</string>
+    <string name="organization_size">Organization size</string>
+    <string name="_1_5">1-5</string>
+    <string name="_6_24">6-24</string>
+    <string name="_25_49">25-49</string>
+    <string name="_50_149">50-149</string>
+    <string name="_200">+200</string>
+    <string name="company_description">Company description</string>
+    <string name="write_additional_information_here">Write additional information here</string>
+    <string name="post_title">Post Title</string>
+    <string name="write_the_title_of_your_post_here">Write the title of your post here</string>
+    <string name="description">Description</string>
+    <string name="what_do_you_want_to_talk_about">What do you want to talk about?</string>
+    <string name="type">Type</string>
+    <string name="category">Category</string>
+    <string name="location">Location</string>
+
 </resources>
