@@ -1,11 +1,14 @@
 package com.example.japp.adapter;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.japp.R;
 import com.example.japp.databinding.CategoryItemBinding;
 import com.example.japp.model.Category;
 
@@ -30,6 +33,12 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.binding.tvCategory.setText(list.get(position).getTitle());
         holder.binding.ivCategory.setImageResource(list.get(position).getImage());
+
+        holder.binding.getRoot().setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("category", list.get(holder.getAdapterPosition()).getTitle());
+            Navigation.createNavigateOnClickListener(R.id.resultFragment, bundle).onClick(v);
+        });
     }
 
     @Override
@@ -37,7 +46,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         CategoryItemBinding binding;
 
         public ViewHolder(CategoryItemBinding binding) {

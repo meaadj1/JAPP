@@ -1,16 +1,20 @@
 package com.example.japp.ui.activity.splash;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
 import com.example.japp.R;
+import com.example.japp.Utils.SharedHelper;
 import com.example.japp.databinding.ActivitySplashBinding;
 import com.example.japp.ui.activity.home.HomeActivity;
 import com.example.japp.ui.activity.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -28,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mAuth.getCurrentUser() != null) {
+                if (!Objects.equals(new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.user), "")) {
                     startActivity(new Intent(binding.getRoot().getContext(), HomeActivity.class));
                     finish();
                 } else {

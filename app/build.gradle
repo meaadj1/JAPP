@@ -56,8 +56,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.5.1"
     implementation "androidx.lifecycle:lifecycle-livedata:2.5.1"
     implementation "androidx.lifecycle:lifecycle-runtime:2.5.1"
-    //Picasso
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
     //Gson
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     //Firebase storage

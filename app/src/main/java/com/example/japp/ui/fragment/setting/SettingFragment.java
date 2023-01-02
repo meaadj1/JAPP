@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.japp.R;
+import com.example.japp.Utils.SharedHelper;
 import com.example.japp.databinding.FragmentSettingBinding;
 import com.example.japp.databinding.SheetLogoutBinding;
 import com.example.japp.ui.activity.login.LoginActivity;
@@ -76,6 +77,7 @@ public class SettingFragment extends Fragment {
         sheetBinding.btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                binding.getRoot().getContext().deleteSharedPreferences("app_data");
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(sheetBinding.getRoot().getContext(), LoginActivity.class));
                 requireActivity().finish();

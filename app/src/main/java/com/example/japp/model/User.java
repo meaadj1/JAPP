@@ -1,11 +1,20 @@
 package com.example.japp.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class User {
+public class User implements Serializable {
 
     public User() {
 
+    }
+
+    public float getMatching() {
+        return matching;
+    }
+
+    public void setMatching(float matching) {
+        this.matching = matching;
     }
 
     public User(String name, String email, String phone, String type) {
@@ -38,7 +47,7 @@ public class User {
         this.gender = gender;
     }
 
-    public User(String name, String email, String phone, String type, String country, String city, String companySize, String description, ArrayList<Job> jobs) {
+    public User(String name, String email, String phone, String type, String country, String city, String companySize, String description) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -47,7 +56,6 @@ public class User {
         this.city = city;
         this.companySize = companySize;
         this.description = description;
-        this.jobs = jobs;
     }
 
     String name;
@@ -62,10 +70,30 @@ public class User {
     ArrayList<String> skills;
     ArrayList<String> education;
     ArrayList<String> languages;
+    ArrayList<Job> jobs;
     String companySize;
     String description;
-    ArrayList<Job> jobs;
+    float matching;
+
+    public ArrayList<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(ArrayList<Job> jobs) {
+        this.jobs = jobs;
+    }
+
+    public int getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(int jobId) {
+        this.jobId = jobId;
+    }
+
+    ArrayList<User> applicants;
     String gender;
+    int jobId;
 
     public String getPhone() {
         return phone;
@@ -143,6 +171,14 @@ public class User {
         return companySize;
     }
 
+    public ArrayList<User> getApplicants() {
+        return applicants;
+    }
+
+    public void setApplicants(ArrayList<User> applicants) {
+        this.applicants = applicants;
+    }
+
     public void setCompanySize(String companySize) {
         this.companySize = companySize;
     }
@@ -153,14 +189,6 @@ public class User {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public ArrayList<Job> getJobs() {
-        return jobs;
-    }
-
-    public void setJobs(ArrayList<Job> jobs) {
-        this.jobs = jobs;
     }
 
     public String getName() {

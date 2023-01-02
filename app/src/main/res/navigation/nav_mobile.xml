@@ -40,4 +40,9 @@
         android:name="com.example.japp.ui.fragment.update_password.UpdatePasswordFragment"
         android:label="fragment_update_password"
         tools:layout="@layout/fragment_update_password" />
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.example.japp.ui.fragment.result.ResultFragment"
+        android:label="fragment_result"
+        tools:layout="@layout/fragment_result" />
 </navigation>

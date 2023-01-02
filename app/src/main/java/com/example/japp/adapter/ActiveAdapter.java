@@ -42,7 +42,7 @@ public class ActiveAdapter extends RecyclerView.Adapter<ActiveAdapter.ViewHolder
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ActiveJobItemBinding binding;
 
         ViewHolder(ActiveJobItemBinding binding) {

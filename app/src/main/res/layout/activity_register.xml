@@ -49,10 +49,10 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:layout_marginTop="@dimen/_30sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_22sdp"
+        android:layout_marginTop="@dimen/_30sdp"
         android:layout_marginBottom="@dimen/_5sdp"
         android:text="@string/phone_number"
         android:textColor="@color/blue"

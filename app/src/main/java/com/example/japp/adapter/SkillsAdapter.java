@@ -12,11 +12,11 @@ import java.util.ArrayList;
 
 public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.ViewHolder> {
 
-    ArrayList<String> skills;
+    ArrayList<String> skills = new ArrayList<>();
 
     public SkillsAdapter(ArrayList<String> skills) {
-        super();
-        this.skills = skills;
+        if (skills != null)
+            this.skills.addAll(skills);
     }
 
     @NonNull
@@ -32,7 +32,10 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return skills.size();
+        if (skills != null)
+            return skills.size();
+        else
+            return 0;
     }
 
     public void addingItem(String item) {
@@ -44,7 +47,7 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.ViewHolder
         return skills;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         SkillItemBinding binding;
 
         public ViewHolder(SkillItemBinding binding) {
