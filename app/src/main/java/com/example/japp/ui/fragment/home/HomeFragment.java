@@ -63,25 +63,29 @@ public class HomeFragment extends Fragment {
         binding.btnAll.setOnClickListener(v -> viewModel.getJobs(binding.getRoot().getContext()));
 
         viewModel.jobs.observe(getViewLifecycleOwner(), jobs -> {
-            if (jobs != null) {
+            if (!jobs.isEmpty()) {
                 binding.ivNotFound.setVisibility(View.GONE);
+                binding.tvNotFound.setVisibility(View.GONE);
                 binding.rvJob.setVisibility(View.VISIBLE);
                 String json = new SharedHelper().getString(context, SharedHelper.user);
                 User user = new Gson().fromJson(json, User.class);
                 binding.rvJob.setAdapter(new JobsAdapter(jobs, user.getSkills(), viewModel, "HOME"));
             } else {
                 binding.ivNotFound.setVisibility(View.VISIBLE);
+                binding.tvNotFound.setVisibility(View.VISIBLE);
                 binding.rvJob.setVisibility(View.GONE);
             }
         });
 
         viewModel.applicants.observe(getViewLifecycleOwner(), users -> {
-            if (users != null) {
+            if (!users.isEmpty()) {
                 binding.ivNotFound.setVisibility(View.GONE);
+                binding.tvNotFound.setVisibility(View.GONE);
                 binding.rvJob.setVisibility(View.VISIBLE);
                 binding.rvJob.setAdapter(new ApplicantsAdapter(users));
             } else {
                 binding.ivNotFound.setVisibility(View.VISIBLE);
+                binding.tvNotFound.setVisibility(View.VISIBLE);
                 binding.rvJob.setVisibility(View.GONE);
             }
         });

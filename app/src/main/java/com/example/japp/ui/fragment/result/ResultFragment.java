@@ -16,8 +16,6 @@ import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.ApplicantsAdapter;
 import com.example.japp.adapter.JobsAdapter;
 import com.example.japp.databinding.FragmentResultBinding;
-import com.example.japp.model.User;
-import com.google.gson.Gson;
 
 import java.util.Objects;
 
@@ -51,28 +49,31 @@ public class ResultFragment extends Fragment {
         }
 
         viewModel.users.observe(getViewLifecycleOwner(), list -> {
-            if (list != null) {
+            if (!list.isEmpty()) {
                 binding.ivNotFound.setVisibility(View.GONE);
+                binding.tvNotFound.setVisibility(View.GONE);
                 binding.rvJob.setVisibility(View.VISIBLE);
                 binding.rvJob.setAdapter(new ApplicantsAdapter(list));
             } else {
                 binding.ivNotFound.setVisibility(View.VISIBLE);
+                binding.tvNotFound.setVisibility(View.VISIBLE);
                 binding.rvJob.setVisibility(View.GONE);
             }
         });
 
         viewModel.jobs.observe(getViewLifecycleOwner(), jobs -> {
-            if (jobs != null) {
+            if (!jobs.isEmpty()) {
                 binding.ivNotFound.setVisibility(View.GONE);
+                binding.tvNotFound.setVisibility(View.GONE);
                 binding.rvJob.setVisibility(View.VISIBLE);
                 binding.rvJob.setAdapter(new JobsAdapter(jobs, "SAVED"));
             } else {
                 binding.ivNotFound.setVisibility(View.VISIBLE);
+                binding.tvNotFound.setVisibility(View.VISIBLE);
                 binding.rvJob.setVisibility(View.GONE);
             }
         });
 
         binding.ivBack.setOnClickListener(v -> Navigation.findNavController(binding.getRoot()).navigateUp());
-
     }
 }

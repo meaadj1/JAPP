@@ -131,4 +131,8 @@
     <string name="ar">Arabic</string>
     <string name="en">English</string>
     <string name="you_already_have_an_account">You already have an account ?</string>
+    <string name="not_found_active_jobs">Not found Active jobs</string>
+    <string name="not_found">Not found</string>
+    <string name="not_found_notifications">Not found notifications</string>
+    <string name="not_found_jobs">Not found Jobs</string>
 </resources>

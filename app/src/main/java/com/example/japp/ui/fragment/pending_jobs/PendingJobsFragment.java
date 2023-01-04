@@ -43,12 +43,14 @@ public class PendingJobsFragment extends Fragment {
             viewModel.getPosts(binding.getRoot().getContext());
 
         viewModel.pendingJobs.observe(getViewLifecycleOwner(), jobs -> {
-            if (jobs != null) {
+            if (!jobs.isEmpty()) {
                 binding.ivNotFound.setVisibility(View.GONE);
+                binding.tvNotFound.setVisibility(View.GONE);
                 binding.rvJobs.setVisibility(View.VISIBLE);
                 binding.rvJobs.setAdapter(new PendingAdapter(jobs));
             } else {
                 binding.ivNotFound.setVisibility(View.VISIBLE);
+                binding.tvNotFound.setVisibility(View.VISIBLE);
                 binding.rvJobs.setVisibility(View.GONE);
             }
         });
