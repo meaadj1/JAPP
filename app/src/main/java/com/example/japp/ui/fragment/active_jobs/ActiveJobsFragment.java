@@ -42,8 +42,14 @@ public class ActiveJobsFragment extends Fragment {
         viewModel.getActiveJobs(getContext());
 
         viewModel.jobs.observe(getViewLifecycleOwner(), list -> {
-            if (list != null)
+            if (list != null) {
+                binding.ivNotFound.setVisibility(View.GONE);
+                binding.rvJobs.setVisibility(View.VISIBLE);
                 binding.rvJobs.setAdapter(new ActiveAdapter(list));
+            } else {
+                binding.ivNotFound.setVisibility(View.VISIBLE);
+                binding.rvJobs.setVisibility(View.GONE);
+            }
         });
     }
 }

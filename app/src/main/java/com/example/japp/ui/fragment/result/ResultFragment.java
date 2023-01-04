@@ -42,13 +42,9 @@ public class ResultFragment extends Fragment {
         ResultViewModel viewModel = new ViewModelProvider(this).get(ResultViewModel.class);
 
         if (Objects.equals(requireArguments().getString("category"), "jobs")) {
-            String data = new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.user);
-            User user = new Gson().fromJson(data, User.class);
-            viewModel.getJobsByCity(user.getCity());
+            viewModel.getJobsByCity(requireArguments().getString("city"));
         } else if (Objects.equals(requireArguments().getString("category"), "users")) {
-            String data = new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.user);
-            User user = new Gson().fromJson(data, User.class);
-            viewModel.getUsersByCity(user.getCity());
+            viewModel.getUsersByCity(requireArguments().getString("city"));
         } else {
             if (Objects.equals(new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.type), "JOB_SEEKER"))
                 viewModel.getJobsByCategory(requireArguments().getString("category"));
@@ -56,16 +52,23 @@ public class ResultFragment extends Fragment {
 
         viewModel.users.observe(getViewLifecycleOwner(), list -> {
             if (list != null) {
-                String json = new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.user);
+                binding.ivNotFound.setVisibility(View.GONE);
+                binding.rvJob.setVisibility(View.VISIBLE);
                 binding.rvJob.setAdapter(new ApplicantsAdapter(list));
+            } else {
+                binding.ivNotFound.setVisibility(View.VISIBLE);
+                binding.rvJob.setVisibility(View.GONE);
             }
         });
 
         viewModel.jobs.observe(getViewLifecycleOwner(), jobs -> {
             if (jobs != null) {
-                String json = new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.user);
-                User user = new Gson().fromJson(json, User.class);
+                binding.ivNotFound.setVisibility(View.GONE);
+                binding.rvJob.setVisibility(View.VISIBLE);
                 binding.rvJob.setAdapter(new JobsAdapter(jobs, "SAVED"));
+            } else {
+                binding.ivNotFound.setVisibility(View.VISIBLE);
+                binding.rvJob.setVisibility(View.GONE);
             }
         });
 

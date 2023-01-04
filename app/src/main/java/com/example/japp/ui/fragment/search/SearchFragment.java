@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.CategoriesAdapter;
 import com.example.japp.databinding.FragmentSearchBinding;
 import com.example.japp.model.Category;
-import com.example.japp.ui.fragment.result.ResultViewModel;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -39,7 +37,6 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ResultViewModel viewModel = new ViewModelProvider(this).get(ResultViewModel.class);
         if (Objects.equals(new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.type), "JOB_SEEKER")) {
             binding.tvTitle.setText(getString(R.string.find_your_job));
         } else {
@@ -56,14 +53,21 @@ public class SearchFragment extends Fragment {
         binding.rvCategories.setAdapter(new CategoriesAdapter(categories));
 
         binding.ivLocation.setOnClickListener(v -> {
-            if (Objects.equals(new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.type), "JOB_SEEKER")) {
-                Bundle bundle = new Bundle();
-                bundle.putString("category", "jobs");
-                Navigation.createNavigateOnClickListener(R.id.resultFragment, bundle).onClick(v);
+            String city = Objects.requireNonNull(binding.edtSearch.getText()).toString().trim();
+            if (!city.isEmpty()) {
+                if (Objects.equals(new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.type), "JOB_SEEKER")) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("city", city);
+                    bundle.putString("category", "jobs");
+                    Navigation.createNavigateOnClickListener(R.id.resultFragment, bundle).onClick(v);
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("city", city);
+                    bundle.putString("category", "users");
+                    Navigation.createNavigateOnClickListener(R.id.resultFragment, bundle).onClick(v);
+                }
             } else {
-                Bundle bundle = new Bundle();
-                bundle.putString("category", "users");
-                Navigation.createNavigateOnClickListener(R.id.resultFragment, bundle).onClick(v);
+                binding.edtSearch.setError(getString(R.string.edt_alert));
             }
         });
     }

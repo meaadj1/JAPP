@@ -124,4 +124,5 @@
     <string name="choose_language">اختر لغة</string>
     <string name="ar">اللغة العربية</string>
     <string name="en">اللغة الانجليزية</string>
+    <string name="you_already_have_an_account">You already have an account ?</string>
 </resources>

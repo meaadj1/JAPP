@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +44,12 @@ public class PendingJobsFragment extends Fragment {
 
         viewModel.pendingJobs.observe(getViewLifecycleOwner(), jobs -> {
             if (jobs != null) {
+                binding.ivNotFound.setVisibility(View.GONE);
+                binding.rvJobs.setVisibility(View.VISIBLE);
                 binding.rvJobs.setAdapter(new PendingAdapter(jobs));
+            } else {
+                binding.ivNotFound.setVisibility(View.VISIBLE);
+                binding.rvJobs.setVisibility(View.GONE);
             }
         });
     }
