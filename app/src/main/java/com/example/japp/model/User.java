@@ -9,27 +9,11 @@ public class User implements Serializable {
 
     }
 
-    public float getMatching() {
-        return matching;
-    }
-
-    public void setMatching(float matching) {
-        this.matching = matching;
-    }
-
     public User(String name, String email, String phone, String type) {
         this.name = name;
         this.email = email;
         this.type = type;
         this.phone = phone;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public User(String name, String email, String phone, String gender, String type, String dateOfBirth, String country, String nationality, String city, ArrayList<String> skills, ArrayList<String> education, ArrayList<String> languages) {
@@ -67,6 +51,7 @@ public class User implements Serializable {
     String nationality;
     String city;
     String photo;
+    String cv;
     ArrayList<String> skills;
     ArrayList<String> education;
     ArrayList<String> languages;
@@ -213,5 +198,29 @@ public class User implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getCv() {
+        return cv;
+    }
+
+    public void setCv(String cv) {
+        this.cv = cv;
+    }
+
+    public float getMatching() {
+        return matching;
+    }
+
+    public void setMatching(float matching) {
+        this.matching = matching;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

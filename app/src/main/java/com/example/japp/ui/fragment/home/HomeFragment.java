@@ -60,6 +60,8 @@ public class HomeFragment extends Fragment {
 
         binding.btnPartTime.setOnClickListener(v -> viewModel.getPartTimeJobs(binding.getRoot().getContext()));
 
+        binding.btnAll.setOnClickListener(v -> viewModel.getJobs(binding.getRoot().getContext()));
+
         viewModel.jobs.observe(getViewLifecycleOwner(), jobs -> {
             if (jobs != null) {
                 String json = new SharedHelper().getString(context, SharedHelper.user);

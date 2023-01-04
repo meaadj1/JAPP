@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +22,6 @@ import com.google.gson.Gson;
 import java.util.Objects;
 
 public class ResultFragment extends Fragment {
-
-    private static final String TAG = "ResultFragment";
-
     private FragmentResultBinding binding;
 
     public ResultFragment() {
@@ -43,9 +40,6 @@ public class ResultFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ResultViewModel viewModel = new ViewModelProvider(this).get(ResultViewModel.class);
-
-
-        Log.i(TAG, requireArguments().getString("category").toString());
 
         if (Objects.equals(requireArguments().getString("category"), "jobs")) {
             String data = new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.user);
@@ -74,6 +68,8 @@ public class ResultFragment extends Fragment {
                 binding.rvJob.setAdapter(new JobsAdapter(jobs, "SAVED"));
             }
         });
+
+        binding.ivBack.setOnClickListener(v -> Navigation.findNavController(binding.getRoot()).navigateUp());
 
     }
 }

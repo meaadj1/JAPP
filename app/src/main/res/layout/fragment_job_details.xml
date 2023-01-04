@@ -31,7 +31,7 @@
             android:layout_height="@dimen/_50sdp"
             android:layout_gravity="center"
             android:contentDescription="@string/company_image"
-            tools:src="@drawable/ic_profile" />
+            android:src="@drawable/place_holder" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ll_header">
@@ -224,6 +224,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ll_header">
@@ -317,6 +318,28 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp"
             tools:text="the requirements is test" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="@string/cv"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_show_cv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_10sdp"
+            android:paddingStart="@dimen/_30sdp"
+            android:paddingEnd="@dimen/_30sdp"
+            android:text="@string/show_cv"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/blue_secondary" />
 
         <LinearLayout
             android:id="@+id/ll_app"

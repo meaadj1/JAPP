@@ -69,7 +69,7 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
             holder.binding.btnCategory.setText(list.get(position).getCategory());
             holder.binding.btnTime.setText(list.get(position).getType());
             if (!list.get(position).getCompanyImage().isEmpty())
-                Glide.with(holder.binding.getRoot()).load(list.get(position).getCompanyImage()).into(holder.binding.ivCompany);
+                Glide.with(holder.binding.getRoot()).load(list.get(position).getCompanyImage()).placeholder(R.drawable.place_holder).into(holder.binding.ivCompany);
             for (int i = 0; i < list.get(position).getRequirements().size(); i++) {
 
                 Log.i(TAG, list.get(position).getRequirements().get(i));
@@ -115,9 +115,17 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
                 Navigation.createNavigateOnClickListener(R.id.nav_job_details, bundle).onClick(v);
             });
 
+
             holder.binding.ivSave.setOnClickListener(v -> {
-                viewModel.savingJob(holder.binding.getRoot().getContext(), holder.getAdapterPosition());
-                holder.binding.ivSave.setImageResource(R.drawable.ic_saved);
+                if (holder.binding.ivSave.getTag().toString().equals("saved")) {
+                    viewModel.deleteJob(holder.getAdapterPosition(), new SharedHelper().getString(holder.binding.getRoot().getContext(), SharedHelper.uid));
+                    holder.binding.ivSave.setImageResource(R.drawable.ic_save);
+                    holder.binding.ivSave.setTag("save");
+                } else {
+                    viewModel.savingJob(holder.binding.getRoot().getContext(), holder.getAdapterPosition());
+                    holder.binding.ivSave.setImageResource(R.drawable.ic_saved);
+                    holder.binding.ivSave.setTag("saved");
+                }
             });
         }
     }

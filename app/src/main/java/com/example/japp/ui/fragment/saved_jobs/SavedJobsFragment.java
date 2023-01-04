@@ -46,7 +46,6 @@ public class SavedJobsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         SavedViewModel viewModel = new ViewModelProvider(this).get(SavedViewModel.class);
 
         SkillsAdapter requirementsAdapter = new SkillsAdapter(new ArrayList<>());
@@ -56,7 +55,6 @@ public class SavedJobsFragment extends Fragment {
             binding.llOrg.setVisibility(View.GONE);
             viewModel.getSavedJobs(getContext());
         } else {
-            mDatabase = FirebaseDatabase.getInstance().getReference();
             binding.rvJobs.setVisibility(View.GONE);
             binding.llOrg.setVisibility(View.VISIBLE);
 
@@ -64,6 +62,8 @@ public class SavedJobsFragment extends Fragment {
 
             binding.btnAdd.setOnClickListener(v -> addingItem(requirementsAdapter));
         }
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
         binding.btnSave.setOnClickListener(v -> {
@@ -80,7 +80,7 @@ public class SavedJobsFragment extends Fragment {
             mDatabase.child("jobs").get().addOnSuccessListener(dataSnapshot -> {
                 Job data = new Job((int) dataSnapshot.getChildrenCount(), title, description, requirementsAdapter.getList(), new SharedHelper().getString(getContext(), SharedHelper.name), new SharedHelper().getString(getContext(), SharedHelper.photo), category, type, location, experience, "reject", new SharedHelper().getString(getContext(), SharedHelper.uid), specialization);
                 mDatabase.child("jobs").child(String.valueOf(dataSnapshot.getChildrenCount())).setValue(data);
-                Toast.makeText(binding.getRoot().getContext(), "Done , succeed you saved the data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(binding.getRoot().getContext(), getString(R.string.save_data), Toast.LENGTH_SHORT).show();
             });
         });
 
@@ -165,7 +165,7 @@ public class SavedJobsFragment extends Fragment {
                 adapter.addingItem(dialogBinding.edtItem.getText().toString());
                 dialog.dismiss();
             } else
-                Toast.makeText(getContext(), "please Enter the text", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.edt_alert), Toast.LENGTH_SHORT).show();
         });
         dialog.show();
     }

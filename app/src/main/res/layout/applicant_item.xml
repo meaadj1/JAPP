@@ -21,6 +21,7 @@
             style="@style/circleImageView"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
+            android:src="@drawable/place_holder"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -63,7 +64,7 @@
         android:layout_height="wrap_content"
         android:outlineAmbientShadowColor="@color/white"
         android:outlineSpotShadowColor="@color/white"
-        android:visibility="gone"
+        android:visibility="visible"
         app:cardCornerRadius="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="@id/cl_item"
         app:layout_constraintStart_toStartOf="@id/cl_item"
@@ -74,7 +75,7 @@
             android:layout_height="wrap_content"
             android:background="@color/gray2"
             android:padding="@dimen/_10sdp"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tv_present_details"

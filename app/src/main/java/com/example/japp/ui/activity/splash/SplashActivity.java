@@ -8,18 +8,17 @@ import android.os.Handler;
 import android.view.View;
 
 import com.example.japp.R;
+import com.example.japp.Utils.LocaleHelper;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.databinding.ActivitySplashBinding;
 import com.example.japp.ui.activity.home.HomeActivity;
 import com.example.japp.ui.activity.login.LoginActivity;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
 public class SplashActivity extends AppCompatActivity {
 
     private ActivitySplashBinding binding;
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,26 +26,20 @@ public class SplashActivity extends AppCompatActivity {
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        mAuth = FirebaseAuth.getInstance();
+        LocaleHelper.setLocale(binding.getRoot().getContext(), LocaleHelper.getLanguage(binding.getRoot().getContext()));
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (!Objects.equals(new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.user), "")) {
-                    startActivity(new Intent(binding.getRoot().getContext(), HomeActivity.class));
+        new Handler().postDelayed(() -> {
+            if (!Objects.equals(new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.user), "")) {
+                startActivity(new Intent(binding.getRoot().getContext(), HomeActivity.class));
+                finish();
+            } else {
+                binding.llSplash.setVisibility(View.GONE);
+                binding.llIntro.setVisibility(View.VISIBLE);
+                binding.getRoot().setBackgroundColor(getColor(R.color.white));
+                binding.fabGo.setOnClickListener(v -> {
+                    startActivity(new Intent(binding.getRoot().getContext(), LoginActivity.class));
                     finish();
-                } else {
-                    binding.llSplash.setVisibility(View.GONE);
-                    binding.llIntro.setVisibility(View.VISIBLE);
-                    binding.getRoot().setBackgroundColor(getColor(R.color.white));
-                    binding.fabGo.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(binding.getRoot().getContext(), LoginActivity.class));
-                            finish();
-                        }
-                    });
-                }
+                });
             }
         }, 2000);
     }

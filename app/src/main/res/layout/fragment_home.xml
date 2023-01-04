@@ -55,6 +55,15 @@
                 android:text="@string/part_time"
                 android:textAllCaps="false" />
 
+            <Button
+                android:id="@+id/btn_all"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:background="@drawable/button_bg"
+                android:text="@string/all"
+                android:textAllCaps="false" />
+
         </LinearLayout>
     </LinearLayout>
 

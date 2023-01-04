@@ -11,19 +11,6 @@
         android:layout_height="match_parent"
         android:paddingBottom="@dimen/_40sdp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_jobs"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/_15sdp"
-            android:visibility="gone"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/job_item" />
-
         <LinearLayout
             android:id="@+id/ll_org"
             android:layout_width="match_parent"
@@ -205,6 +192,19 @@
                 android:textSize="@dimen/_10ssp" />
 
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_jobs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_15sdp"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/job_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

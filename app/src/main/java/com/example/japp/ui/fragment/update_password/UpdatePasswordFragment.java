@@ -1,20 +1,23 @@
 package com.example.japp.ui.fragment.update_password;
 
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import com.example.japp.R;
 import com.example.japp.databinding.FragmentUpdatePasswordBinding;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.Objects;
 
 public class UpdatePasswordFragment extends Fragment {
@@ -36,31 +39,13 @@ public class UpdatePasswordFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(binding.getRoot()).navigateUp();
-            }
-        });
+        binding.ivBack.setOnClickListener(v -> Navigation.findNavController(binding.getRoot()).navigateUp());
 
-        binding.btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isValidForm())
-                    return;
-                String password = Objects.requireNonNull(binding.edtPassword.getText()).toString();
-                FirebaseAuth.getInstance().getCurrentUser().updatePassword(password).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(binding.getRoot().getContext(), "The password was updated successfully", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(binding.getRoot().getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+        binding.btnUpdate.setOnClickListener(v -> {
+            if (!isValidForm())
+                return;
+            String password = Objects.requireNonNull(binding.edtPassword.getText()).toString();
+            Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).updatePassword(password).addOnSuccessListener(unused -> Toast.makeText(binding.getRoot().getContext(), "The password was updated successfully", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Toast.makeText(binding.getRoot().getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
         });
     }
 
@@ -84,7 +69,7 @@ public class UpdatePasswordFragment extends Fragment {
 
         if (!password.equals(confPassword)) {
             valid = false;
-            Toast.makeText(binding.getRoot().getContext(), "Please enter the same password in the 2 fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(binding.getRoot().getContext(), getString(R.string.same_password), Toast.LENGTH_SHORT).show();
         }
 
         return valid;

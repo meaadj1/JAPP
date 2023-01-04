@@ -48,11 +48,11 @@
                 android:layout_width="@dimen/_60sdp"
                 android:layout_height="@dimen/_60sdp"
                 android:layout_margin="@dimen/_10sdp"
+                android:src="@drawable/place_holder"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_profile"
-                tools:src="@drawable/ic_profile" />
+                app:layout_constraintTop_toBottomOf="@id/tv_profile" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -79,7 +79,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_edit">
-
 
             <TextView
                 android:layout_width="match_parent"
@@ -374,6 +373,42 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:text="@string/cv"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_7sdp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_upload_cv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_30sdp"
+                    android:paddingEnd="@dimen/_30sdp"
+                    android:text="@string/upload"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@color/blue_secondary" />
+
+                <TextView
+                    android:id="@+id/tv_cv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|end"
+                    tools:text="resume(5).pdf" />
+
+            </androidx.cardview.widget.CardView>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save"
                 android:layout_width="wrap_content"
@@ -514,54 +549,81 @@
                 android:text="@string/organization_size"
                 android:textColor="@color/black" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <RadioGroup
+                android:id="@+id/rg_size"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
-                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@drawable/rg_bg"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btn_1"
+                <RadioButton
+                    android:id="@+id/rb_1"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_30sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:background="@drawable/rb_bg"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
                     android:text="@string/_1_5"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textColor="@drawable/tab_text_color"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btn_2"
+                <RadioButton
+                    android:id="@+id/rb_2"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_30sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:background="@drawable/rb_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
                     android:text="@string/_6_24"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textColor="@drawable/tab_text_color"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btn_3"
+                <RadioButton
+                    android:id="@+id/rb_3"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_30sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:background="@drawable/rb_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
                     android:text="@string/_25_49"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textColor="@drawable/tab_text_color"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btn_4"
+                <RadioButton
+                    android:id="@+id/rb_4"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_30sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:background="@drawable/rb_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
                     android:text="@string/_50_149"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textColor="@drawable/tab_text_color"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btn_5"
+                <RadioButton
+                    android:id="@+id/rb_5"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_30sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:background="@drawable/rb_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
                     android:text="@string/_200"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textColor="@drawable/tab_text_color"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
 
-            </LinearLayout>
+            </RadioGroup>
 
             <TextView
                 android:layout_width="wrap_content"

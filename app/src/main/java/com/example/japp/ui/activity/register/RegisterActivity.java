@@ -1,26 +1,19 @@
 package com.example.japp.ui.activity.register;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.japp.R;
+import com.example.japp.Utils.LocaleHelper;
 import com.example.japp.databinding.ActivityRegisterBinding;
 import com.example.japp.model.User;
 import com.example.japp.ui.activity.login.LoginActivity;
 import com.example.japp.ui.activity.verify.VerifyActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -29,9 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
-
-    private static final String TAG = "RegisterActivity";
-
     private ActivityRegisterBinding binding;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -44,6 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        LocaleHelper.setLocale(binding.getRoot().getContext(), LocaleHelper.getLanguage(binding.getRoot().getContext()));
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -80,17 +72,11 @@ public class RegisterActivity extends AppCompatActivity {
                 assert user != null;
                 {
                     mDatabase.child("users").child(user.getUid()).setValue(userData);
-                    user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            startActivity(new Intent(binding.getRoot().getContext(), VerifyActivity.class));
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(binding.getRoot().getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    user.sendEmailVerification().addOnSuccessListener(unused -> {
+                        Intent intent = new Intent(binding.getRoot().getContext(), VerifyActivity.class);
+                        intent.putExtra("email", email);
+                        startActivity(intent);
+                    }).addOnFailureListener(e -> Toast.makeText(binding.getRoot().getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
                 }
             } else {
                 Toast.makeText(binding.getRoot().getContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();

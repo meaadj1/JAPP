@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.japp.R;
 import com.example.japp.databinding.PendingItemBinding;
 import com.example.japp.model.Job;
 
@@ -33,7 +34,7 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
         holder.binding.tvPosition.setText(list.get(position).getSpecialization());
         holder.binding.tvType.setText(list.get(position).getType());
         holder.binding.tvExperience.setText(list.get(position).getExperience());
-        Glide.with(holder.binding.getRoot()).load(list.get(position).getCompanyImage()).into(holder.binding.ivCompany);
+        Glide.with(holder.binding.getRoot()).load(list.get(position).getCompanyImage()).placeholder(R.drawable.place_holder).into(holder.binding.ivCompany);
     }
 
     @Override

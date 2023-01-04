@@ -46,7 +46,7 @@ public class SearchFragment extends Fragment {
             binding.tvTitle.setText(getString(R.string.find_your_employee));
         }
 
-        ArrayList<Category> categories = new ArrayList();
+        ArrayList<Category> categories = new ArrayList<>();
         categories.add(new Category(getString(R.string.education), R.drawable.ic_education));
         categories.add(new Category(getString(R.string.finance), R.drawable.ic_finance));
         categories.add(new Category(getString(R.string.restaurant), R.drawable.ic_resturant));
@@ -55,18 +55,15 @@ public class SearchFragment extends Fragment {
 
         binding.rvCategories.setAdapter(new CategoriesAdapter(categories));
 
-        binding.ivLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Objects.equals(new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.type), "JOB_SEEKER")) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("category", "jobs");
-                    Navigation.createNavigateOnClickListener(R.id.resultFragment, bundle).onClick(v);
-                } else {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("category", "users");
-                    Navigation.createNavigateOnClickListener(R.id.resultFragment, bundle).onClick(v);
-                }
+        binding.ivLocation.setOnClickListener(v -> {
+            if (Objects.equals(new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.type), "JOB_SEEKER")) {
+                Bundle bundle = new Bundle();
+                bundle.putString("category", "jobs");
+                Navigation.createNavigateOnClickListener(R.id.resultFragment, bundle).onClick(v);
+            } else {
+                Bundle bundle = new Bundle();
+                bundle.putString("category", "users");
+                Navigation.createNavigateOnClickListener(R.id.resultFragment, bundle).onClick(v);
             }
         });
     }

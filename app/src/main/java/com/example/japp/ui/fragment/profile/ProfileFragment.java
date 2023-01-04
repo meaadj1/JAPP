@@ -9,13 +9,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -36,17 +37,15 @@ import java.util.Calendar;
 import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
-
-    private static final String TAG = "ProfileFragment";
-
     private static final int RESULT_LOAD_IMG = 5;
+    private static final int RESULT_LOAD_PDF = 1;
     private FragmentProfileBinding binding;
     private DatabaseReference mDatabase;
     FirebaseStorage storage;
     StorageReference storageReference;
-    private Uri filePath;
+    private Uri imagePath, pdfPath;
     Context context;
-    private String companySize = firstCompanySize;
+    private String companySize = firstCompanySize, uid, photo, pdf;
     static String firstCompanySize = "1-5";
     static String secondCompanySize = "6-24";
     static String thirdCompanySize = "25-49";
@@ -68,10 +67,13 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        context = binding.edtDate.getContext();
+        context = binding.getRoot().getContext();
+        uid = new SharedHelper().getString(context, SharedHelper.uid);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+        photo = new SharedHelper().getString(context, SharedHelper.photo);
+        pdf = new SharedHelper().getString(context, SharedHelper.pdf);
 
         binding.ivSetting.setOnClickListener(v -> Navigation.createNavigateOnClickListener(R.id.nav_settings).onClick(v));
 
@@ -85,14 +87,13 @@ public class ProfileFragment extends Fragment {
             binding.llOrg.setVisibility(View.VISIBLE);
         }
 
-        binding.edtDate.setOnClickListener(v -> new DatePickerDialog(context, (view1, year, month, dayOfMonth) -> binding.edtDate.setText(dayOfMonth + "-" + month + "-" + year), Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH)).show());
+        binding.edtDate.setOnClickListener(v -> new DatePickerDialog(context, (view1, year, month, dayOfMonth) -> binding.edtDate.setText(dayOfMonth + "-" + month + 1 + "-" + year), Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH)).show());
 
         String json = new SharedHelper().getString(getContext(), SharedHelper.user);
-
         User user = new Gson().fromJson(json, User.class);
 
-        if (!(new SharedHelper().getString(context, SharedHelper.photo)).isEmpty())
-            Glide.with(context).load(new SharedHelper().getString(context, SharedHelper.photo)).into(binding.ivProfile);
+        if (!photo.isEmpty())
+            Glide.with(context).load(photo).into(binding.ivProfile);
 
         binding.edtName.setText(user.getName());
         binding.edtOrgName.setText(user.getName());
@@ -106,15 +107,19 @@ public class ProfileFragment extends Fragment {
         binding.edtCity.setText(user.getCity());
         binding.edtNationality.setText(user.getNationality());
 
-        binding.btn1.setOnClickListener(v -> companySize = firstCompanySize);
+        binding.rgSize.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.rb_1)
+                companySize = firstCompanySize;
+            else if (checkedId == R.id.rb_2)
+                companySize = secondCompanySize;
+            else if (checkedId == R.id.rb_3)
+                companySize = thirdCompanySize;
+            else if (checkedId == R.id.rb_4)
+                companySize = fourthCompanySize;
+            else if (checkedId == R.id.rb_5)
+                companySize = fifthCompanySize;
+        });
 
-        binding.btn2.setOnClickListener(v -> companySize = secondCompanySize);
-
-        binding.btn3.setOnClickListener(v -> companySize = thirdCompanySize);
-
-        binding.btn4.setOnClickListener(v -> companySize = fourthCompanySize);
-
-        binding.btn5.setOnClickListener(v -> companySize = fifthCompanySize);
         SkillsAdapter skillsAdapter = new SkillsAdapter(user.getSkills());
         binding.rvSkills.setAdapter(skillsAdapter);
         binding.btnAddSkill.setOnClickListener(v -> addingItem(skillsAdapter));
@@ -136,20 +141,30 @@ public class ProfileFragment extends Fragment {
         binding.rvLang.setAdapter(langAdapter);
         binding.btnAddLang.setOnClickListener(v -> addingItem(langAdapter));
 
+        binding.btnUploadCv.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setType("application/pdf");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "SELECT PDF FILE"), RESULT_LOAD_PDF);
+        });
+
         binding.btnSave.setOnClickListener(v -> {
-            if (filePath != null) {
-                StorageReference ref = storageReference.child("images/" + new SharedHelper().getString(requireContext(), SharedHelper.uid));
-                ref.putFile(filePath).addOnSuccessListener(taskSnapshot -> taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri -> {
-                    mDatabase.child("users").child(new SharedHelper().getString(getContext(), SharedHelper.uid)).child("photo").setValue(uri.toString());
-                    new SharedHelper().saveString(context, SharedHelper.photo, uri.toString());
-                }));
+            saveImage();
+
+            if (pdfPath != null) {
+                storageReference.child("cv/" + uid).putFile(pdfPath).addOnSuccessListener(taskSnapshot -> taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri -> {
+                    mDatabase.child("users").child(uid).child("cv").setValue(uri.toString());
+                    new SharedHelper().saveString(context, SharedHelper.pdf, uri.toString());
+                }).addOnFailureListener(e -> Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show()));
             }
 
             User data = new User(Objects.requireNonNull(binding.edtName.getText()).toString(), user.getEmail(), user.getPhone(), Objects.requireNonNull(binding.edtGender.getText()).toString(), user.getType(), Objects.requireNonNull(binding.edtDate.getText()).toString(), Objects.requireNonNull(binding.edtCountry.getText()).toString(), Objects.requireNonNull(binding.edtNationality.getText()).toString(), Objects.requireNonNull(binding.edtCity.getText()).toString(), skillsAdapter.getList(), eduAdapter.getList(), langAdapter.getList());
-            mDatabase.child("users").child(new SharedHelper().getString(getContext(), SharedHelper.uid)).setValue(data);
-            Toast.makeText(getContext(), "Done , succeed you saved the data", Toast.LENGTH_SHORT).show();
+            data.setPhoto(photo);
+            data.setCv(pdf);
+            mDatabase.child("users").child(uid).setValue(data);
+            Toast.makeText(context, getString(R.string.save_data), Toast.LENGTH_SHORT).show();
 
-            mDatabase.child("users").child(new SharedHelper().getString(getContext(), SharedHelper.uid)).get().addOnSuccessListener(dataSnapshot -> {
+            mDatabase.child("users").child(uid).get().addOnSuccessListener(dataSnapshot -> {
                 User user1 = dataSnapshot.getValue(User.class);
                 if (user1 != null) {
                     Gson gson = new Gson();
@@ -164,20 +179,14 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.btnOrgSave.setOnClickListener(v -> {
-            if (filePath != null) {
-                StorageReference ref = storageReference.child("images/" + new SharedHelper().getString(requireContext(), SharedHelper.uid));
-                ref.putFile(filePath).addOnSuccessListener(taskSnapshot -> taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri -> {
-                    mDatabase.child("users").child(new SharedHelper().getString(getContext(), SharedHelper.uid)).child("photo").setValue(uri.toString());
-                    new SharedHelper().saveString(context, SharedHelper.photo, uri.toString());
-                }));
-            }
+            saveImage();
 
             User data = new User(Objects.requireNonNull(binding.edtOrgName.getText()).toString(), user.getEmail(), user.getPhone(), user.getType(), Objects.requireNonNull(binding.edtOrgLocation.getText()).toString(), Objects.requireNonNull(binding.edtOrgCity.getText()).toString(), companySize, Objects.requireNonNull(binding.edtDescription.getText()).toString());
 
-            mDatabase.child("users").child(new SharedHelper().getString(getContext(), SharedHelper.uid)).setValue(data);
-            Toast.makeText(getContext(), "Done , succeed you saved the data", Toast.LENGTH_SHORT).show();
+            mDatabase.child("users").child(uid).setValue(data);
+            Toast.makeText(getContext(), getString(R.string.save_data), Toast.LENGTH_SHORT).show();
 
-            mDatabase.child("users").child(new SharedHelper().getString(getContext(), SharedHelper.uid)).get().addOnSuccessListener(dataSnapshot -> {
+            mDatabase.child("users").child(uid).get().addOnSuccessListener(dataSnapshot -> {
                 User user1 = dataSnapshot.getValue(User.class);
                 if (user1 != null) {
                     Gson gson = new Gson();
@@ -203,7 +212,7 @@ public class ProfileFragment extends Fragment {
                 adapter.addingItem(dialogBinding.edtItem.getText().toString());
                 dialog.dismiss();
             } else
-                Toast.makeText(getContext(), "please Enter the text", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.edt_alert), Toast.LENGTH_SHORT).show();
         });
         dialog.show();
     }
@@ -214,6 +223,15 @@ public class ProfileFragment extends Fragment {
         startActivityForResult(intent, RESULT_LOAD_IMG);
     }
 
+    private void saveImage() {
+        if (imagePath != null) {
+            StorageReference ref = storageReference.child("images/" + uid);
+            ref.putFile(imagePath).addOnSuccessListener(taskSnapshot -> taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri -> {
+                mDatabase.child("users").child(uid).child("photo").setValue(uri.toString()).addOnSuccessListener(unused -> new SharedHelper().saveString(context, SharedHelper.photo, uri.toString())).addOnFailureListener(e -> Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show());
+            }));
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -221,15 +239,27 @@ public class ProfileFragment extends Fragment {
         if (requestCode == RESULT_LOAD_IMG) {
             try {
                 if (data != null) {
-                    filePath = data.getData();
-                    binding.ivProfile.setImageURI(filePath);
+                    imagePath = data.getData();
+                    binding.ivProfile.setImageURI(imagePath);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(binding.getRoot().getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+                Toast.makeText(binding.getRoot().getContext(), getString(R.string.error), Toast.LENGTH_LONG).show();
             }
+        } else if (requestCode == RESULT_LOAD_PDF) {
+            try {
+                if (data != null) {
+                    pdfPath = data.getData();
+                    DocumentFile file = DocumentFile.fromSingleUri(binding.getRoot().getContext(), data.getData());
+                    assert file != null;
+                    binding.tvCv.setText(file.getName());
+                }
+            } catch (Exception e) {
+                Toast.makeText(binding.getRoot().getContext(), getString(R.string.error), Toast.LENGTH_LONG).show();
+            }
+
         } else {
-            Toast.makeText(binding.getRoot().getContext(), "You haven't picked Image", Toast.LENGTH_LONG).show();
+            Toast.makeText(binding.getRoot().getContext(), getString(R.string.picked_file), Toast.LENGTH_LONG).show();
 
         }
     }

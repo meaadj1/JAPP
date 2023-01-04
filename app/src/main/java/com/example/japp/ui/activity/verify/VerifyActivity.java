@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.japp.R;
+import com.example.japp.Utils.LocaleHelper;
 import com.example.japp.databinding.ActivityVerifyBinding;
 import com.example.japp.ui.activity.login.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,7 +28,11 @@ public class VerifyActivity extends AppCompatActivity {
         ActivityVerifyBinding binding = ActivityVerifyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        LocaleHelper.setLocale(binding.getRoot().getContext(), LocaleHelper.getLanguage(binding.getRoot().getContext()));
+
         type = getIntent().getStringExtra("type");
+        String email = getIntent().getStringExtra("email");
+        binding.tvEmail.setText(getString(R.string.we_have_sent_the_verification_code_to_email_address) + email);
 
         binding.btnEmail.setOnClickListener(v -> {
             try {
@@ -35,7 +40,7 @@ public class VerifyActivity extends AppCompatActivity {
                 intent.addCategory(Intent.CATEGORY_APP_EMAIL);
                 startActivity(intent);
             } catch (android.content.ActivityNotFoundException e) {
-                Toast.makeText(binding.getRoot().getContext(), "There is no email client installed.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(binding.getRoot().getContext(), getString(R.string.no_email_client), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -43,12 +48,7 @@ public class VerifyActivity extends AppCompatActivity {
 
         binding.tvResend.setOnClickListener(v -> {
             if (Objects.equals(type, "password")) {
-                FirebaseAuth.getInstance().sendPasswordResetEmail(getIntent().getStringExtra("email")).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(binding.getRoot().getContext(), getString(R.string.we_have_sent_the_verification_code_to_email_address), Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+                FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnSuccessListener(unused -> Toast.makeText(binding.getRoot().getContext(), getString(R.string.we_have_sent_the_verification_code_to_email_address), Toast.LENGTH_SHORT).show()).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(binding.getRoot().getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();

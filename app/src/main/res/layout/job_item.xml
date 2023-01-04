@@ -22,9 +22,9 @@
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_margin="@dimen/_10sdp"
+            android:src="@drawable/place_holder"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_profile" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -54,6 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_12sdp"
             android:src="@drawable/ic_save"
+            android:tag="save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -99,8 +100,8 @@
                 android:paddingStart="@dimen/_12sdp"
                 android:paddingEnd="@dimen/_12sdp"
                 android:text="@string/read_more"
-                android:textSize="@dimen/_10ssp"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:textSize="@dimen/_10ssp" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

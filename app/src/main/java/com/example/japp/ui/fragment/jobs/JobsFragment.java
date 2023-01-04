@@ -1,5 +1,6 @@
 package com.example.japp.ui.fragment.jobs;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,9 +14,11 @@ import android.view.ViewGroup;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.JobsPagerAdapter;
 import com.example.japp.databinding.FragmentJobsBinding;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 public class JobsFragment extends Fragment {
     private FragmentJobsBinding binding;
+    Context context;
 
     public JobsFragment() {
         // Required empty public constructor
@@ -33,14 +36,13 @@ public class JobsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.viewPager.setAdapter(new JobsPagerAdapter(getContext(), getParentFragmentManager(), new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.type)));
-        binding.tabLayout.setupWithViewPager(binding.viewPager);
+        context = binding.getRoot().getContext();
 
-        for (int i = 0; i < binding.tabLayout.getTabCount(); i++) {
-            View tab = ((ViewGroup) binding.tabLayout.getChildAt(0)).getChildAt(i);
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) tab.getLayoutParams();
-            p.setMargins(0, 0, 7, 0);
-            tab.requestLayout();
-        }
+        JobsPagerAdapter adapter = new JobsPagerAdapter(context, requireActivity(), new SharedHelper().getString(context, SharedHelper.type));
+        binding.viewPager.setAdapter(adapter);
+
+        new TabLayoutMediator(binding.tabLayout, binding.viewPager, true, (tab, position) -> tab.setText(adapter.getPageTitle(position))).attach();
+
+
     }
 }

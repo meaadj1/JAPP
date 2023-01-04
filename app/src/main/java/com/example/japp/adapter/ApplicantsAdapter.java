@@ -34,7 +34,8 @@ public class ApplicantsAdapter extends RecyclerView.Adapter<ApplicantsAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.binding.tvApplicant.setText(list.get(position).getName());
         holder.binding.tvPresent.setText(list.get(position).getMatching() + "%");
-        Glide.with(holder.binding.getRoot()).load(list.get(position).getPhoto()).into(holder.binding.ivApplicant);
+        holder.binding.progressBar.setProgress((int) list.get(position).getMatching());
+        Glide.with(holder.binding.getRoot()).load(list.get(position).getPhoto()).placeholder(R.drawable.place_holder).into(holder.binding.ivApplicant);
         if (list.get(position).getCity() != null)
             holder.binding.tvDetails.setText(list.get(position).getCity());
 

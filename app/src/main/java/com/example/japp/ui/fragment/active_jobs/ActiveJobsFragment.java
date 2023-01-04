@@ -1,11 +1,14 @@
 package com.example.japp.ui.fragment.active_jobs;
 
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,17 +37,13 @@ public class ActiveJobsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         ActiveViewModel viewModel = new ViewModelProvider(this).get(ActiveViewModel.class);
 
         viewModel.getActiveJobs(getContext());
 
-        viewModel.jobs.observe(getViewLifecycleOwner(), new Observer<ArrayList<Job>>() {
-            @Override
-            public void onChanged(ArrayList<Job> list) {
-                if (list != null)
-                    binding.rvJobs.setAdapter(new ActiveAdapter(list));
-            }
+        viewModel.jobs.observe(getViewLifecycleOwner(), list -> {
+            if (list != null)
+                binding.rvJobs.setAdapter(new ActiveAdapter(list));
         });
     }
 }

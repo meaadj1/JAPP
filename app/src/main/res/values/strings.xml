@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">JAPP</string>
+    <string name="app_name" translatable="false">JAPP</string>
     <string name="welcome">Welcome</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -47,7 +47,7 @@
     <string name="job_type">Job Type</string>
     <string name="specialization">Specialization</string>
     <string name="apply_now">APPLY NOW</string>
-    <string name="forward_back">imageForwardBack</string>
+    <string name="forward_back" translatable="false">imageForwardBack</string>
     <string name="company_image">companyImage</string>
     <string name="categories">Categories :</string>
     <string name="edit_profile">Edit profile</string>
@@ -66,7 +66,7 @@
     <string name="saved_jobs">saved jobs</string>
     <string name="pending">pending</string>
     <string name="active">active</string>
-    <string name="reject">REJECT</string>
+    <string name="reject">Reject</string>
     <string name="accept">Accept</string>
     <string name="adding_item">Adding Item</string>
     <string name="text">text</string>
@@ -94,11 +94,11 @@
     <string name="city_of_organization">City of Organization</string>
     <string name="required_service">Required Service</string>
     <string name="organization_size">Organization size</string>
-    <string name="_1_5">1-5</string>
-    <string name="_6_24">6-24</string>
-    <string name="_25_49">25-49</string>
-    <string name="_50_149">50-149</string>
-    <string name="_200">+200</string>
+    <string name="_1_5" translatable="false">1-5</string>
+    <string name="_6_24" translatable="false">6-24</string>
+    <string name="_25_49" translatable="false">25-49</string>
+    <string name="_50_149" translatable="false">50-149</string>
+    <string name="_200" translatable="false">+200</string>
     <string name="company_description">Company description</string>
     <string name="write_additional_information_here">Write additional information here</string>
     <string name="post_title">Post Title</string>
@@ -115,5 +115,19 @@
     <string name="back_to_sign_in">back to sign in</string>
     <string name="you_have_not_received_the_email">you have not received the email?</string>
     <string name="resend">Resend</string>
-
+    <string name="all">All</string>
+    <string name="cv">CV</string>
+    <string name="upload">Upload</string>
+    <string name="download_cv">Download CV</string>
+    <string name="show_cv">Show CV</string>
+    <string name="no_email_client">There is no email client installed.</string>
+    <string name="apply_job">Officially You applied on this job</string>
+    <string name="reject_user">Done you reject this applicant</string>
+    <string name="accept_user">Done you accept this applicant</string>
+    <string name="save_data">Done , succeed you saved the data</string>
+    <string name="picked_file">You haven\'t picked file</string>
+    <string name="same_password">Please enter the same password in the 2 fields</string>
+    <string name="choose_language">choose the language</string>
+    <string name="ar">Arabic</string>
+    <string name="en">English</string>
 </resources>

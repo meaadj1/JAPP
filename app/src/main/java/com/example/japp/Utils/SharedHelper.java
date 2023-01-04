@@ -16,6 +16,7 @@ public class SharedHelper {
     public static String city = "CITY";
     public static String user = "USER";
     public static String photo = "PHOTO";
+    public static String pdf = "PDF";
 
     public SharedHelper() {
 

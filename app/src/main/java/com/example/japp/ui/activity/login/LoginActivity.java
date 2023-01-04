@@ -10,6 +10,7 @@ import android.util.Patterns;
 import android.widget.Toast;
 
 import com.example.japp.R;
+import com.example.japp.Utils.LocaleHelper;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.databinding.ActivityLoginBinding;
 import com.example.japp.model.User;
@@ -37,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         context = binding.getRoot().getContext();
+
+        LocaleHelper.setLocale(context, LocaleHelper.getLanguage(context));
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -127,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                 intent.putExtra("type", "password");
                 startActivity(intent);
             }).addOnFailureListener(e -> {
-
+                Toast.makeText(binding.getRoot().getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             });
         }
     }
