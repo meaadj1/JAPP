@@ -10,11 +10,13 @@ import com.example.japp.R;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.model.Job;
 import com.example.japp.model.User;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class HomeViewModel extends ViewModel {
     MutableLiveData<ArrayList<Job>> jobs = new MutableLiveData<>();
@@ -27,9 +29,12 @@ public class HomeViewModel extends ViewModel {
             Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_SHORT).show();
         }).addOnSuccessListener(dataSnapshot -> {
             ArrayList<Job> list = new ArrayList<>();
-            for (int i = 0; i < dataSnapshot.getChildrenCount(); i++) {
-                list.add(dataSnapshot.child(String.valueOf(i)).getValue(Job.class));
-            }
+            dataSnapshot.getChildren().forEach(new Consumer<DataSnapshot>() {
+                @Override
+                public void accept(DataSnapshot dataSnapshot) {
+                    list.add(dataSnapshot.getValue(Job.class));
+                }
+            });
             jobs.setValue(list);
         });
     }

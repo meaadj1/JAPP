@@ -23,6 +23,8 @@ import com.example.japp.model.Job;
 import com.example.japp.model.User;
 import com.google.gson.Gson;
 
+import java.util.Objects;
+
 public class JobDetailsFragment extends Fragment {
     private FragmentJobDetailsBinding binding;
     JobDetailsViewModel viewModel;
@@ -65,11 +67,15 @@ public class JobDetailsFragment extends Fragment {
             binding.tvTitle.setText(data.getTitle());
             binding.tvCompany.setText(data.getCompanyName());
             binding.tvDescription.setText(data.getDescription());
-            binding.tvRequirements.setText(data.getRequirements().toString());
+            if (data.getRequirements() != null)
+                binding.tvRequirements.setText(data.getRequirements().toString());
             binding.tvPosition.setText(data.getCategory());
             binding.tvExperience.setText(data.getExperience());
             binding.tvType.setText(data.getType());
             binding.tvSpecialization.setText(data.getSpecialization());
+
+            if (Objects.equals(uid, data.getCompanyUid()))
+                binding.btnApply.setVisibility(View.GONE);
 
             binding.btnApply.setOnClickListener(v -> viewModel.applyJob(context, uid, data, user));
         } else {

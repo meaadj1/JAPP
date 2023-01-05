@@ -125,4 +125,10 @@
     <string name="ar">اللغة العربية</string>
     <string name="en">اللغة الانجليزية</string>
     <string name="you_already_have_an_account">You already have an account ?</string>
+
+
+    <string-array name="type">
+        <item>Full time</item>
+        <item>Part time</item>
+    </string-array>
 </resources>

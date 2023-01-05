@@ -25,15 +25,17 @@ public class JobDetailsViewModel extends ViewModel {
             mDatabase.child("users").child(data.getCompanyUid()).child("applicants").get().addOnSuccessListener(dataSnapshot1 -> {
                 user.setJobId(data.getId());
                 float validate = 0;
-                for (int i = 0; i < data.getRequirements().size(); i++) {
-                    if (user.getSkills() != null) {
-                        for (int j = 0; j < user.getSkills().size(); j++) {
-                            if (Objects.equals(data.getRequirements().get(i), user.getSkills().get(j)))
-                                validate++;
+                if (data.getRequirements() != null) {
+                    for (int i = 0; i < data.getRequirements().size(); i++) {
+                        if (user.getSkills() != null) {
+                            for (int j = 0; j < user.getSkills().size(); j++) {
+                                if (Objects.equals(data.getRequirements().get(i), user.getSkills().get(j)))
+                                    validate++;
+                            }
                         }
                     }
+                    validate = (validate / data.getRequirements().size()) * 100;
                 }
-                validate = (validate / data.getRequirements().size()) * 100;
                 user.setMatching(validate);
                 mDatabase.child("users").child(data.getCompanyUid()).child("applicants").child(String.valueOf(dataSnapshot1.getChildrenCount())).setValue(user);
             });

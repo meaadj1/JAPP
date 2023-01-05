@@ -45,4 +45,9 @@
         android:name="com.example.japp.ui.fragment.result.ResultFragment"
         android:label="fragment_result"
         tools:layout="@layout/fragment_result" />
+    <fragment
+        android:id="@+id/savedJobsFragment"
+        android:name="com.example.japp.ui.fragment.saved_jobs.SavedJobsFragment"
+        android:label="fragment_saved_jobs"
+        tools:layout="@layout/fragment_saved_jobs" />
 </navigation>

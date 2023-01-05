@@ -47,7 +47,7 @@ public class PendingJobsFragment extends Fragment {
                 binding.ivNotFound.setVisibility(View.GONE);
                 binding.tvNotFound.setVisibility(View.GONE);
                 binding.rvJobs.setVisibility(View.VISIBLE);
-                binding.rvJobs.setAdapter(new PendingAdapter(jobs));
+                binding.rvJobs.setAdapter(new PendingAdapter(jobs, viewModel));
             } else {
                 binding.ivNotFound.setVisibility(View.VISIBLE);
                 binding.tvNotFound.setVisibility(View.VISIBLE);

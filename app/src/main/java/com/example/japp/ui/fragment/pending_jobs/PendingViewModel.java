@@ -3,17 +3,22 @@ package com.example.japp.ui.fragment.pending_jobs;
 import android.content.Context;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.japp.R;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.model.Job;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class PendingViewModel extends ViewModel {
     MutableLiveData<ArrayList<Job>> pendingJobs = new MutableLiveData<>();
@@ -38,16 +43,20 @@ public class PendingViewModel extends ViewModel {
     public void getPosts(Context context) {
         mDatabase.child("jobs").get().addOnSuccessListener(dataSnapshot -> {
             ArrayList<Job> list = new ArrayList<>();
-            for (int i = 0; i < dataSnapshot.getChildrenCount(); i++) {
-                Job item = dataSnapshot.child(String.valueOf(i)).getValue(Job.class);
+            dataSnapshot.getChildren().forEach(dataSnapshot1 -> {
+                Job item = dataSnapshot1.getValue(Job.class);
                 assert item != null;
                 if (Objects.equals(item.getCompanyUid(), new SharedHelper().getString(context, SharedHelper.uid)))
                     list.add(item);
-            }
+            });
             pendingJobs.setValue(list);
         }).addOnFailureListener(e -> {
             pendingJobs.setValue(null);
             Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_SHORT).show();
         });
+    }
+
+    public void deleteJob(Context context, String id) {
+        mDatabase.child("jobs").child(id).removeValue().addOnSuccessListener(unused -> Toast.makeText(context, "Done , you delete this job", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 }

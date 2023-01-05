@@ -135,4 +135,10 @@
     <string name="not_found">Not found</string>
     <string name="not_found_notifications">Not found notifications</string>
     <string name="not_found_jobs">Not found Jobs</string>
+
+    <string-array name="type">
+        <item>Full time</item>
+        <item>Part time</item>
+    </string-array>
+
 </resources>

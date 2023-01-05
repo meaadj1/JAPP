@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:outlineAmbientShadowColor="@color/white"
         android:outlineSpotShadowColor="@color/white"
-        android:visibility="visible"
+        android:visibility="gone"
         app:cardCornerRadius="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="@id/cl_item"
         app:layout_constraintStart_toStartOf="@id/cl_item"
@@ -74,8 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/gray2"
-            android:padding="@dimen/_10sdp"
-            android:visibility="gone">
+            android:padding="@dimen/_10sdp">
 
             <TextView
                 android:id="@+id/tv_present_details"

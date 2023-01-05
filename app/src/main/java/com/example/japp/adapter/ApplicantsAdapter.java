@@ -1,6 +1,7 @@
 package com.example.japp.adapter;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 
 public class ApplicantsAdapter extends RecyclerView.Adapter<ApplicantsAdapter.ViewHolder> {
 
+    private static final String TAG = "ApplicantsAdapter";
     ArrayList<User> list;
 
     public ApplicantsAdapter(ArrayList<User> list) {
@@ -40,10 +42,11 @@ public class ApplicantsAdapter extends RecyclerView.Adapter<ApplicantsAdapter.Vi
             holder.binding.tvDetails.setText(list.get(position).getCity());
 
         holder.binding.ivPresent.setOnClickListener(v -> {
-            if (holder.binding.cvDetails.getVisibility() == View.VISIBLE)
+            if (holder.binding.cvDetails.getVisibility() == View.VISIBLE) {
                 holder.binding.cvDetails.setVisibility(View.GONE);
-            else
+            } else {
                 holder.binding.cvDetails.setVisibility(View.VISIBLE);
+            }
         });
 
         holder.binding.getRoot().setOnClickListener(v -> {

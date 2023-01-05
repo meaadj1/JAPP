@@ -65,25 +65,28 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
             });
         } else if (Objects.equals(type, "HOME")) {
             float validate = 0;
+            Log.i(TAG, list.toString());
             holder.binding.tvTitle.setText(list.get(position).getTitle());
             holder.binding.btnCategory.setText(list.get(position).getCategory());
             holder.binding.btnTime.setText(list.get(position).getType());
             if (!list.get(position).getCompanyImage().isEmpty())
                 Glide.with(holder.binding.getRoot()).load(list.get(position).getCompanyImage()).placeholder(R.drawable.place_holder).into(holder.binding.ivCompany);
-            for (int i = 0; i < list.get(position).getRequirements().size(); i++) {
+            if (list.get(position).getRequirements() != null) {
+                for (int i = 0; i < list.get(position).getRequirements().size(); i++) {
 
-                Log.i(TAG, list.get(position).getRequirements().get(i));
+                    Log.i(TAG, list.get(position).getRequirements().get(i));
 
-                if (skills != null) {
-                    for (int j = 0; j < skills.size(); j++) {
-                        Log.i(TAG, skills.get(j));
-                        if (Objects.equals(list.get(position).getRequirements().get(i), skills.get(j)))
-                            validate++;
+                    if (skills != null) {
+                        for (int j = 0; j < skills.size(); j++) {
+                            Log.i(TAG, skills.get(j));
+                            if (Objects.equals(list.get(position).getRequirements().get(i), skills.get(j)))
+                                validate++;
+                        }
                     }
                 }
+                validate = (validate / list.get(position).getRequirements().size()) * 100;
             }
 
-            validate = (validate / list.get(position).getRequirements().size()) * 100;
             holder.binding.progressBar.setProgress((int) validate);
             holder.binding.tvPresent.setText((int) validate + "%");
 
