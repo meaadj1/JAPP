@@ -124,11 +124,23 @@
     <string name="choose_language">اختر لغة</string>
     <string name="ar">اللغة العربية</string>
     <string name="en">اللغة الانجليزية</string>
-    <string name="you_already_have_an_account">You already have an account ?</string>
-
+    <string name="you_already_have_an_account">لديك حساب بالفعل ؟</string>
+    <string name="not_found_active_jobs">لم يتم العثور على وظائف نشطة</string>
+    <string name="not_found">لا يوجد</string>
+    <string name="not_found_notifications">لم يتم العثور على اشعارات</string>
+    <string name="not_found_jobs">لا يوجد وظائف</string>
+    <string name="edit">تعديل</string>
 
     <string-array name="type">
-        <item>Full time</item>
-        <item>Part time</item>
+        <item>دوام كامل</item>
+        <item>دوام جزئي</item>
+    </string-array>
+
+    <string-array name="categories">
+        <item>تعليم</item>
+        <item>الموارد المالية</item>
+        <item>مطعم</item>
+        <item>برمجة</item>
+        <item>الصحة</item>
     </string-array>
 </resources>

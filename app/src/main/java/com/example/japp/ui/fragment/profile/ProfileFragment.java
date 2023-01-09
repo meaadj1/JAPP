@@ -179,6 +179,9 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.btnOrgSave.setOnClickListener(v -> {
+            if (!isValidation()) {
+                return;
+            }
             saveImage();
 
             User data = new User(Objects.requireNonNull(binding.edtOrgName.getText()).toString(), user.getEmail(), user.getPhone(), user.getType(), Objects.requireNonNull(binding.edtOrgLocation.getText()).toString(), Objects.requireNonNull(binding.edtOrgCity.getText()).toString(), companySize, Objects.requireNonNull(binding.edtDescription.getText()).toString());
@@ -230,6 +233,19 @@ public class ProfileFragment extends Fragment {
                 mDatabase.child("users").child(uid).child("photo").setValue(uri.toString()).addOnSuccessListener(unused -> new SharedHelper().saveString(context, SharedHelper.photo, uri.toString())).addOnFailureListener(e -> Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show());
             }));
         }
+    }
+
+    private boolean isValidation() {
+        boolean validation = true;
+        String phone = binding.edtOrgPhone.getText().toString().trim();
+        if (phone.length() > 10) {
+            binding.edtOrgPhone.setError(getString(R.string.phone_alert2));
+            validation = false;
+        } else if (!phone.startsWith("05")) {
+            binding.edtOrgPhone.setError(getString(R.string.phone_alert2));
+            validation = false;
+        }
+        return validation;
     }
 
     @Override

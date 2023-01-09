@@ -21,7 +21,7 @@
         android:layout_width="@dimen/_50sdp"
         android:layout_height="@dimen/_50sdp"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/_20sdp"
+        android:layout_margin="@dimen/_18sdp"
         android:src="@drawable/place_holder" />
 
     <TextView
@@ -29,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_3sdp"
+        android:gravity="center"
         android:textColor="@color/black"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
@@ -39,6 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_3sdp"
+        android:gravity="center"
         tools:text="Google" />
 
     <TextView
@@ -46,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_3sdp"
         android:layout_marginTop="@dimen/_20sdp"
+        android:gravity="center"
         android:text="@string/job_details"
         android:textColor="@color/black"
         android:textSize="@dimen/_14ssp"
@@ -56,6 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_7sdp"
+        android:gravity="center"
         tools:text="senior developer" />
 
     <TextView
@@ -63,6 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_7sdp"
+        android:gravity="center"
         tools:text="Full time" />
 
     <TextView
@@ -70,5 +75,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_7sdp"
+        android:gravity="center"
         tools:text="3 years" />
 </LinearLayout>

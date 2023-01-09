@@ -86,15 +86,13 @@
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_category"
+            <Spinner
+                android:id="@+id/spinner_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
-                android:background="@drawable/edt_bg"
-                android:padding="@dimen/_10sdp"
-                android:textColor="@color/blue"
-                android:textSize="@dimen/_11ssp" />
+                android:gravity="center"
+                android:layout_margin="@dimen/_7sdp"
+                android:entries="@array/categories"/>
 
             <TextView
                 android:layout_width="wrap_content"

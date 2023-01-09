@@ -34,6 +34,7 @@ public class SavedJobsFragment extends Fragment {
     private FragmentSavedJobsBinding binding;
     private DatabaseReference mDatabase;
     private String type = "Full time";
+    private String category = "Education";
 
     public SavedJobsFragment() {
         // Required empty public constructor
@@ -89,20 +90,52 @@ public class SavedJobsFragment extends Fragment {
             }
         });
 
+        binding.spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    category = "Education";
+                } else if (position == 1) {
+                    category = "Finance";
+                } else if (position == 2) {
+                    category = "Restaurant";
+                } else if (position == 3) {
+                    category = "Programming";
+                } else {
+                    category = "Health";
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         if (jobData != null) {
             binding.edtTitle.setText(jobData.getTitle());
             binding.edtDescription.setText(jobData.getDescription());
-            binding.edtCategory.setText(jobData.getCategory());
             binding.edtSpecialization.setText(jobData.getSpecialization());
             binding.edtLocation.setText(jobData.getLocation());
             binding.edtExperience.setText(jobData.getExperience());
             requirementsAdapter.setList((ArrayList<String>) jobData.getRequirements());
-            binding.btnSave.setText("Edit");
-            if (Objects.equals(jobData.getType(), "Full part")) {
+            binding.btnSave.setText(getString(R.string.edit));
+            if (Objects.equals(jobData.getType(), "Full part"))
                 binding.spinnerType.setSelection(0);
-            } else {
+            else
                 binding.spinnerType.setSelection(1);
-            }
+
+
+            if (Objects.equals(jobData.getCategory(), "Education"))
+                binding.spinnerCategory.setSelection(0);
+            else if (Objects.equals(jobData.getCategory(), "Finance"))
+                binding.spinnerCategory.setSelection(1);
+            else if (Objects.equals(jobData.getCategory(), "Restaurant"))
+                binding.spinnerCategory.setSelection(2);
+            else if (Objects.equals(jobData.getCategory(), "Programming"))
+                binding.spinnerCategory.setSelection(3);
+            else
+                binding.spinnerCategory.setSelection(4);
         }
 
 
@@ -126,7 +159,6 @@ public class SavedJobsFragment extends Fragment {
 
             String title = Objects.requireNonNull(binding.edtTitle.getText()).toString();
             String description = Objects.requireNonNull(binding.edtDescription.getText()).toString();
-            String category = Objects.requireNonNull(binding.edtCategory.getText()).toString();
             String location = Objects.requireNonNull(binding.edtLocation.getText()).toString();
             String experience = Objects.requireNonNull(binding.edtExperience.getText()).toString();
             String specialization = Objects.requireNonNull(binding.edtSpecialization.getText()).toString();
@@ -142,7 +174,6 @@ public class SavedJobsFragment extends Fragment {
                 loading.dismiss();
                 binding.edtTitle.setText("");
                 binding.edtDescription.setText("");
-                binding.edtCategory.setText("");
                 binding.edtLocation.setText("");
                 binding.edtExperience.setText("");
                 binding.edtSpecialization.setText("");
@@ -164,7 +195,6 @@ public class SavedJobsFragment extends Fragment {
 
         String title = Objects.requireNonNull(binding.edtTitle.getText()).toString();
         String description = Objects.requireNonNull(binding.edtDescription.getText()).toString();
-        String category = Objects.requireNonNull(binding.edtCategory.getText()).toString();
         String location = Objects.requireNonNull(binding.edtLocation.getText()).toString();
         String experience = Objects.requireNonNull(binding.edtExperience.getText()).toString();
         String specialization = Objects.requireNonNull(binding.edtSpecialization.getText()).toString();
@@ -181,13 +211,6 @@ public class SavedJobsFragment extends Fragment {
             valid = false;
         } else {
             binding.edtDescription.setError(null);
-        }
-
-        if (TextUtils.isEmpty(category)) {
-            binding.edtCategory.setError(getString(R.string.edt_alert));
-            valid = false;
-        } else {
-            binding.edtCategory.setError(null);
         }
 
         if (TextUtils.isEmpty(location)) {

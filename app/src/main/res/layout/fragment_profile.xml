@@ -56,7 +56,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_edit"
             android:layout_width="wrap_content"
@@ -534,7 +533,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_35sdp"
                     android:background="@drawable/button_bg"
-                    android:inputType="textPersonName"
+                    android:inputType="phone"
                     android:padding="@dimen/_3sdp"
                     android:textColor="@color/blue"
                     android:textSize="@dimen/_10ssp"
