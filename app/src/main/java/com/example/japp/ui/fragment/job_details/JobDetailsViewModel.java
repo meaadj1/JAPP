@@ -28,7 +28,6 @@ public class JobDetailsViewModel extends ViewModel {
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
     public void applyJob(Context context, String uid, Job data, User user) {
-        isApplied.setValue(false);
         mDatabase.child("users").child(uid).child("jobs").get().addOnSuccessListener(dataSnapshot -> {
             float validate = 0;
             if (data.getRequirements() != null) {
@@ -44,18 +43,21 @@ public class JobDetailsViewModel extends ViewModel {
             }
             user.setMatching(validate);
             data.setStatus("pending");
-            mDatabase.child("users").child(uid).child("jobs").get().addOnSuccessListener(dataSnapshot13 -> dataSnapshot13.getChildren().forEach(dataSnapshot12 -> {
-                if (Objects.equals(Objects.requireNonNull(dataSnapshot12.getValue(Job.class)).getTitle(), data.getTitle())) {
-                    isApplied.setValue(true);
-                }
-            }));
-            if (!isApplied.getValue()) {
-                mDatabase.child("users").child(uid).child("jobs").child(String.valueOf(dataSnapshot.getChildrenCount())).setValue(data);
-                mDatabase.child("users").child(data.getCompanyUid()).child("applicants").get().addOnSuccessListener(dataSnapshot1 -> {
-                    user.setJobId(data.getId());
-                    mDatabase.child("users").child(data.getCompanyUid()).child("applicants").child(String.valueOf(dataSnapshot1.getChildrenCount())).setValue(user);
+            mDatabase.child("users").child(uid).child("jobs").get().addOnSuccessListener(dataSnapshot13 -> {
+                dataSnapshot13.getChildren().forEach(dataSnapshot12 -> {
+                    if (Objects.equals(Objects.requireNonNull(dataSnapshot12.getValue(Job.class)).getTitle(), data.getTitle())) {
+                        isApplied.setValue(true);
+                    }
                 });
-            }
+                if (!Boolean.TRUE.equals(isApplied.getValue())) {
+                    isApplied.setValue(false);
+                    mDatabase.child("users").child(uid).child("jobs").child(String.valueOf(dataSnapshot13.getChildrenCount())).setValue(data);
+                    mDatabase.child("users").child(data.getCompanyUid()).child("applicants").get().addOnSuccessListener(dataSnapshot1 -> {
+                        user.setJobId(data.getId());
+                        mDatabase.child("users").child(data.getCompanyUid()).child("applicants").child(String.valueOf(dataSnapshot1.getChildrenCount())).setValue(user);
+                    });
+                }
+            });
             Toast.makeText(context, context.getString(R.string.apply_job), Toast.LENGTH_SHORT).show();
             isDone.setValue(true);
         });
@@ -68,7 +70,6 @@ public class JobDetailsViewModel extends ViewModel {
             if (Objects.equals(user.getEmail(), email)) {
                 dataSnapshot1.child("jobs").child(String.valueOf(jobId)).child("status").getRef().setValue("reject");
                 Toast.makeText(context, context.getString(R.string.reject_user), Toast.LENGTH_SHORT).show();
-
                 isDone.setValue(true);
             }
         })).addOnFailureListener(e -> Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_SHORT).show());

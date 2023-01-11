@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -113,5 +114,14 @@ public class JobDetailsFragment extends Fragment {
                 Navigation.findNavController(binding.getRoot()).navigateUp();
             }
         });
+
+//        viewModel.isApplied.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(Boolean aBoolean) {
+//                if(!aBoolean){
+//
+//                }
+//            }
+//        });
     }
 }
