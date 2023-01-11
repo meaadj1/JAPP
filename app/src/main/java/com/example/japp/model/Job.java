@@ -130,6 +130,7 @@ public class Job implements Serializable {
         this.id = id;
     }
 
+
     int id;
     String title;
     String description;

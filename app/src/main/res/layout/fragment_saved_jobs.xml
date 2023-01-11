@@ -90,9 +90,9 @@
                 android:id="@+id/spinner_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_margin="@dimen/_7sdp"
-                android:entries="@array/categories"/>
+                android:entries="@array/categories"
+                android:gravity="center" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -161,8 +161,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/skill_item" />
 
             <com.google.android.material.button.MaterialButton

@@ -69,7 +69,7 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
             holder.binding.tvTitle.setText(list.get(position).getTitle());
             holder.binding.btnCategory.setText(list.get(position).getCategory());
             holder.binding.btnTime.setText(list.get(position).getType());
-            if (!list.get(position).getCompanyImage().isEmpty())
+            if (list.get(position).getCompanyImage() != null)
                 Glide.with(holder.binding.getRoot()).load(list.get(position).getCompanyImage()).placeholder(R.drawable.place_holder).into(holder.binding.ivCompany);
             if (list.get(position).getRequirements() != null) {
                 for (int i = 0; i < list.get(position).getRequirements().size(); i++) {

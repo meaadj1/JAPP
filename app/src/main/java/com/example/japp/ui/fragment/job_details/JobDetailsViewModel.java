@@ -1,6 +1,7 @@
 package com.example.japp.ui.fragment.job_details;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -15,28 +16,32 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Objects;
 
 public class JobDetailsViewModel extends ViewModel {
+
+    private static final String TAG = "JobDetailsViewModel";
+
     public MutableLiveData<Boolean> isDone = new MutableLiveData<>();
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
     public void applyJob(Context context, String uid, Job data, User user) {
         mDatabase.child("users").child(uid).child("jobs").get().addOnSuccessListener(dataSnapshot -> {
+            float validate = 0;
+            if (data.getRequirements() != null) {
+                for (int i = 0; i < data.getRequirements().size(); i++) {
+                    if (user.getSkills() != null) {
+                        for (int j = 0; j < user.getSkills().size(); j++) {
+                            if (Objects.equals(data.getRequirements().get(i), user.getSkills().get(j)))
+                                validate++;
+                        }
+                    }
+                }
+                validate = (validate / data.getRequirements().size()) * 100;
+            }
+            Log.i(TAG, String.valueOf(validate));
+            user.setMatching(validate);
             data.setStatus("pending");
             mDatabase.child("users").child(uid).child("jobs").child(String.valueOf(dataSnapshot.getChildrenCount())).setValue(data);
             mDatabase.child("users").child(data.getCompanyUid()).child("applicants").get().addOnSuccessListener(dataSnapshot1 -> {
                 user.setJobId(data.getId());
-                float validate = 0;
-                if (data.getRequirements() != null) {
-                    for (int i = 0; i < data.getRequirements().size(); i++) {
-                        if (user.getSkills() != null) {
-                            for (int j = 0; j < user.getSkills().size(); j++) {
-                                if (Objects.equals(data.getRequirements().get(i), user.getSkills().get(j)))
-                                    validate++;
-                            }
-                        }
-                    }
-                    validate = (validate / data.getRequirements().size()) * 100;
-                }
-                user.setMatching(validate);
                 mDatabase.child("users").child(data.getCompanyUid()).child("applicants").child(String.valueOf(dataSnapshot1.getChildrenCount())).setValue(user);
             });
             Toast.makeText(context, context.getString(R.string.apply_job), Toast.LENGTH_SHORT).show();
