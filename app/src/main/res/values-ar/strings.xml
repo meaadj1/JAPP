@@ -71,8 +71,10 @@
     <string name="text">نص</string>
     <string name="cancel">الغاء</string>
     <string name="finance">المالية</string>
-    <string name="restaurant">مطعم</string>
-    <string name="programming">برمجة</string>
+    <string name="food">طعام</string>
+    <string name="marketing">تسويق</string>
+    <string name="programming">تقنية</string>
+    <string name="law">قانون</string>
     <string name="health">الصحة</string>
     <string name="error">هناك خطب ما</string>
     <string name="job_details">تفاصيل الوظيفة</string>
@@ -130,6 +132,8 @@
     <string name="not_found_notifications">لم يتم العثور على اشعارات</string>
     <string name="not_found_jobs">لا يوجد وظائف</string>
     <string name="edit">تعديل</string>
+    <string name="eng">هندسة</string>
+    <string name="translation">ترجمة</string>
 
     <string-array name="type">
         <item>دوام كامل</item>
@@ -138,9 +142,13 @@
 
     <string-array name="categories">
         <item>تعليم</item>
+        <item>هندسة</item>
         <item>الموارد المالية</item>
-        <item>مطعم</item>
-        <item>برمجة</item>
+        <item>ترجمة</item>
+        <item>تسويق</item>
+        <item>طعام</item>
+        <item>قانون</item>
+        <item>تقنية</item>
         <item>الصحة</item>
     </string-array>
 </resources>

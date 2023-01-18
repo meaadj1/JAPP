@@ -13,6 +13,7 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -238,7 +239,10 @@ public class ProfileFragment extends Fragment {
     private boolean isValidation() {
         boolean validation = true;
         String phone = binding.edtOrgPhone.getText().toString().trim();
-        if (phone.length() > 10) {
+        if (!Patterns.PHONE.matcher(phone).matches()) {
+            binding.edtOrgPhone.setError(getString(R.string.phone_alert2));
+            validation = false;
+        } else if (phone.length() > 10) {
             binding.edtOrgPhone.setError(getString(R.string.phone_alert2));
             validation = false;
         } else if (!phone.startsWith("05")) {

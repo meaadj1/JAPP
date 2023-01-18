@@ -72,8 +72,10 @@
     <string name="text">text</string>
     <string name="cancel">cancel</string>
     <string name="finance">Finance</string>
-    <string name="restaurant">Restaurant</string>
-    <string name="programming">Programming</string>
+    <string name="food">Food</string>
+    <string name="marketing">Marketing</string>
+    <string name="programming">Technology</string>
+    <string name="law">Law</string>
     <string name="health">Health</string>
     <string name="error">something wrong</string>
     <string name="job_details">Job details</string>
@@ -131,11 +133,13 @@
     <string name="ar">Arabic</string>
     <string name="en">English</string>
     <string name="you_already_have_an_account">You already have an account ?</string>
-    <string name="not_found_active_jobs">Not found Active jobs</string>
+    <string name="not_found_active_jobs">Not Found Active Jobs</string>
     <string name="not_found">Not found</string>
-    <string name="not_found_notifications">Not found notifications</string>
-    <string name="not_found_jobs">Not found Jobs</string>
+    <string name="not_found_notifications">Not Found Notifications</string>
+    <string name="not_found_jobs">Not Found Jobs</string>
     <string name="edit">Edit</string>
+    <string name="eng">Engineering</string>
+    <string name="translation">Translation</string>
 
     <string-array name="type">
         <item>Full time</item>
@@ -144,9 +148,13 @@
 
     <string-array name="categories">
         <item>Education</item>
+        <item>Engineering</item>
         <item>Finance</item>
-        <item>Restaurant</item>
-        <item>Programming</item>
+        <item>Translation</item>
+        <item>Marketing</item>
+        <item>Food</item>
+        <item>Law</item>
+        <item>Technology</item>
         <item>Health</item>
     </string-array>
 </resources>

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +41,15 @@ public class ResultFragment extends Fragment {
         ResultViewModel viewModel = new ViewModelProvider(this).get(ResultViewModel.class);
 
         if (Objects.equals(requireArguments().getString("category"), "jobs")) {
-            viewModel.getJobsByCity(requireArguments().getString("city"));
+            if (Objects.equals(requireArguments().getString("city", ""), "")) {
+                viewModel.getJobsByName(requireArguments().getString("text"));
+            } else {
+                viewModel.getJobsByCity(requireArguments().getString("city"));
+            }
         } else if (Objects.equals(requireArguments().getString("category"), "users")) {
             viewModel.getUsersByCity(requireArguments().getString("city"));
+        } else if (Objects.equals(requireArguments().getString("category"), "org")) {
+            viewModel.getOrgByName(requireArguments().getString("text"));
         } else {
             if (Objects.equals(new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.type), "JOB_SEEKER"))
                 viewModel.getJobsByCategory(requireArguments().getString("category"));
