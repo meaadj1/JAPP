@@ -16,6 +16,7 @@
     <string name="email_alert_1">Please enter email address</string>
     <string name="email_alert_2">Please enter valid email address</string>
     <string name="pass_alert">Please enter password</string>
+    <string name="pass_alert2">Password should contain capital letters</string>
     <string name="phone_alert">Please enter phone number</string>
     <string name="phone_alert2">Please enter valid phone number</string>
     <string name="edt_alert">Please enter this field</string>
@@ -140,6 +141,7 @@
     <string name="edit">Edit</string>
     <string name="eng">Engineering</string>
     <string name="translation">Translation</string>
+    <string name="edit_photo">Edit photo</string>
 
     <string-array name="type">
         <item>Full time</item>

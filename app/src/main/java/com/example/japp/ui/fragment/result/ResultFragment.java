@@ -17,6 +17,7 @@ import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.ApplicantsAdapter;
 import com.example.japp.adapter.JobsAdapter;
 import com.example.japp.databinding.FragmentResultBinding;
+import com.example.japp.model.User;
 
 import java.util.Objects;
 

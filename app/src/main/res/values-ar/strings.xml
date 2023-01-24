@@ -16,6 +16,7 @@
     <string name="email_alert_1">ادخل البريد اﻻلكترونى</string>
     <string name="email_alert_2">ادخل بريد الكترونى صالح</string>
     <string name="pass_alert">ادخل كلمة المرور</string>
+    <string name="pass_alert2">يجب أن تحتوي كلمة المرور على أحرف كبيرة</string>
     <string name="phone_alert">ادخل رقم الهاتف</string>
     <string name="phone_alert2">ادخل رقم هاتف صالح</string>
     <string name="edt_alert">ادخل النص</string>
@@ -134,6 +135,7 @@
     <string name="edit">تعديل</string>
     <string name="eng">هندسة</string>
     <string name="translation">ترجمة</string>
+    <string name="edit_photo">تعديل الصورة</string>
 
     <string-array name="type">
         <item>دوام كامل</item>

@@ -15,12 +15,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
 public class HomeViewModel extends ViewModel {
     MutableLiveData<ArrayList<Job>> jobs = new MutableLiveData<>();
-    MutableLiveData<ArrayList<User>> applicants = new MutableLiveData<>();
+    MutableLiveData<List<User>> applicants = new MutableLiveData<>();
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
     public void getJobs(Context context) {

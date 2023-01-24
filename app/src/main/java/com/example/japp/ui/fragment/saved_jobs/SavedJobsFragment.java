@@ -96,11 +96,19 @@ public class SavedJobsFragment extends Fragment {
                 if (position == 0) {
                     category = "Education";
                 } else if (position == 1) {
-                    category = "Finance";
+                    category = "Engineering";
                 } else if (position == 2) {
-                    category = "Restaurant";
+                    category = "Finance";
                 } else if (position == 3) {
-                    category = "Programming";
+                    category = "Translation";
+                } else if (position == 4) {
+                    category = "Marketing";
+                } else if (position == 5) {
+                    category = "Food";
+                } else if (position == 6) {
+                    category = "Law";
+                } else if (position == 7) {
+                    category = "Technology";
                 } else {
                     category = "Health";
                 }

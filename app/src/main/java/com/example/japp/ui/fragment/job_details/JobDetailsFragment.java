@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +20,19 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.example.japp.R;
 import com.example.japp.Utils.SharedHelper;
+import com.example.japp.adapter.RequirementsAdapter;
 import com.example.japp.databinding.FragmentJobDetailsBinding;
 import com.example.japp.model.Job;
 import com.example.japp.model.User;
 import com.google.gson.Gson;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class JobDetailsFragment extends Fragment {
+
+    private static final String TAG = "JobDetailsFragment";
+
     private FragmentJobDetailsBinding binding;
     JobDetailsViewModel viewModel;
     Context context;
@@ -54,6 +60,7 @@ public class JobDetailsFragment extends Fragment {
         Job data = (Job) requireArguments().get("data");
         User userData = (User) requireArguments().get("user");
         user = new Gson().fromJson(new SharedHelper().getString(context, SharedHelper.user), User.class);
+        RequirementsAdapter requirementsAdapter = null;
 
         if (data != null) {
             binding.llJob.setVisibility(View.VISIBLE);
@@ -68,8 +75,10 @@ public class JobDetailsFragment extends Fragment {
             binding.tvTitle.setText(data.getTitle());
             binding.tvCompany.setText(data.getCompanyName());
             binding.tvDescription.setText(data.getDescription());
-            if (data.getRequirements() != null)
-                binding.tvRequirements.setText(data.getRequirements().toString());
+            if (data.getRequirements() != null) {
+                requirementsAdapter = new RequirementsAdapter(data.getRequirements());
+                binding.rvRequirements.setAdapter(requirementsAdapter);
+            }
             binding.tvPosition.setText(data.getCategory());
             binding.tvExperience.setText(data.getExperience());
             binding.tvType.setText(data.getType());
@@ -78,7 +87,14 @@ public class JobDetailsFragment extends Fragment {
             if (Objects.equals(uid, data.getCompanyUid()))
                 binding.btnApply.setVisibility(View.GONE);
 
-            binding.btnApply.setOnClickListener(v -> viewModel.applyJob(context, uid, data, user));
+            RequirementsAdapter finalRequirementsAdapter = requirementsAdapter;
+            binding.btnApply.setOnClickListener(v -> {
+                if (finalRequirementsAdapter != null)
+                    viewModel.applyJob(context, uid, data, user, finalRequirementsAdapter.getCheckedList());
+                else
+                    viewModel.applyJob(context, uid, data, user, null);
+            });
+
         } else {
             binding.llJob.setVisibility(View.GONE);
             binding.llUser.setVisibility(View.VISIBLE);
@@ -99,6 +115,14 @@ public class JobDetailsFragment extends Fragment {
                 binding.tvEdu.setText(userData.getEducation().toString());
             if (userData.getLanguages() != null)
                 binding.tvLang.setText(userData.getLanguages().toString());
+
+            if (userData.getCv() == null) {
+                binding.tvCv.setVisibility(View.GONE);
+                binding.btnShowCv.setVisibility(View.GONE);
+            } else {
+                binding.tvCv.setVisibility(View.VISIBLE);
+                binding.btnShowCv.setVisibility(View.VISIBLE);
+            }
 
             binding.btnShowCv.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(userData.getCv()))));
 

@@ -13,11 +13,11 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -38,6 +38,8 @@ import java.util.Calendar;
 import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
+    private static final String TAG = "ProfileFragment";
+
     private static final int RESULT_LOAD_IMG = 5;
     private static final int RESULT_LOAD_PDF = 1;
     private FragmentProfileBinding binding;
@@ -229,6 +231,7 @@ public class ProfileFragment extends Fragment {
 
     private void saveImage() {
         if (imagePath != null) {
+            Log.i(TAG, "not null");
             StorageReference ref = storageReference.child("images/" + uid);
             ref.putFile(imagePath).addOnSuccessListener(taskSnapshot -> taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri -> {
                 mDatabase.child("users").child(uid).child("photo").setValue(uri.toString()).addOnSuccessListener(unused -> new SharedHelper().saveString(context, SharedHelper.photo, uri.toString())).addOnFailureListener(e -> Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show());

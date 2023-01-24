@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.japp.R;
+import com.example.japp.Utils.MergeSort;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.ApplicantsAdapter;
 import com.example.japp.adapter.JobsAdapter;
@@ -20,6 +21,8 @@ import com.example.japp.databinding.FragmentHomeBinding;
 import com.example.japp.model.User;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class HomeFragment extends Fragment {
@@ -82,12 +85,18 @@ public class HomeFragment extends Fragment {
                 binding.ivNotFound.setVisibility(View.GONE);
                 binding.tvNotFound.setVisibility(View.GONE);
                 binding.rvJob.setVisibility(View.VISIBLE);
-                binding.rvJob.setAdapter(new ApplicantsAdapter(users));
+                handleApplicants(users);
             } else {
                 binding.ivNotFound.setVisibility(View.VISIBLE);
                 binding.tvNotFound.setVisibility(View.VISIBLE);
                 binding.rvJob.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void handleApplicants(List<User> users) {
+        MergeSort ob = new MergeSort();
+        ob.mergeSort(users, 0, users.size() - 1);
+        binding.rvJob.setAdapter(new ApplicantsAdapter(users));
     }
 }

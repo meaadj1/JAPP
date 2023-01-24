@@ -16,13 +16,14 @@ import com.example.japp.databinding.ApplicantItemBinding;
 import com.example.japp.model.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ApplicantsAdapter extends RecyclerView.Adapter<ApplicantsAdapter.ViewHolder> {
 
     private static final String TAG = "ApplicantsAdapter";
-    ArrayList<User> list;
+    List<User> list;
 
-    public ApplicantsAdapter(ArrayList<User> list) {
+    public ApplicantsAdapter(List<User> list) {
         this.list = list;
     }
 
@@ -37,11 +38,14 @@ public class ApplicantsAdapter extends RecyclerView.Adapter<ApplicantsAdapter.Vi
         holder.binding.tvApplicant.setText(list.get(position).getName());
         Log.i(TAG, list.get(position).toString());
         Log.i(TAG, String.valueOf(list.get(position)));
-        holder.binding.tvPresent.setText(list.get(position).getMatching() + "%");
+        holder.binding.tvPresent.setText((int) list.get(position).getMatching() + "%");
         holder.binding.progressBar.setProgress((int) list.get(position).getMatching());
         Glide.with(holder.binding.getRoot()).load(list.get(position).getPhoto()).placeholder(R.drawable.place_holder).into(holder.binding.ivApplicant);
         if (list.get(position).getCity() != null)
             holder.binding.tvDetails.setText(list.get(position).getCity());
+
+        if (list.get(position).getSkills() != null)
+            holder.binding.tvSkills.setText(list.get(position).getSkills().toString());
 
         holder.binding.ivPresent.setOnClickListener(v -> {
             if (holder.binding.cvDetails.getVisibility() == View.VISIBLE) {
@@ -53,7 +57,7 @@ public class ApplicantsAdapter extends RecyclerView.Adapter<ApplicantsAdapter.Vi
 
         holder.binding.getRoot().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putSerializable("user", list.get(holder.getAdapterPosition()));
+            bundle.putSerializable("user", list.get(position));
             Navigation.createNavigateOnClickListener(R.id.nav_job_details, bundle).onClick(v);
         });
     }

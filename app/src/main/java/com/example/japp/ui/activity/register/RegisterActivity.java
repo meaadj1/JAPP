@@ -121,6 +121,9 @@ public class RegisterActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(password)) {
             binding.inputPassword.setError(getString(R.string.pass_alert));
             valid = false;
+        } else if (!isContainCapital(password)) {
+            binding.inputPassword.setError(getString(R.string.pass_alert2));
+            valid = false;
         } else {
             binding.inputPassword.setError(null);
         }
@@ -130,5 +133,14 @@ public class RegisterActivity extends AppCompatActivity {
             valid = false;
         }
         return valid;
+    }
+
+    private boolean isContainCapital(String text) {
+        for (int i = 0; i < text.length(); i++) {
+            if (Character.isUpperCase(text.charAt(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 }

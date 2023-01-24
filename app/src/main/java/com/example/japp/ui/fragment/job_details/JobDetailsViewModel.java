@@ -1,7 +1,6 @@
 package com.example.japp.ui.fragment.job_details;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -10,38 +9,26 @@ import androidx.lifecycle.ViewModel;
 import com.example.japp.R;
 import com.example.japp.model.Job;
 import com.example.japp.model.User;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 public class JobDetailsViewModel extends ViewModel {
-
-    private static final String TAG = "JobDetailsViewModel";
-
     public MutableLiveData<Boolean> isDone = new MutableLiveData<>();
     MutableLiveData<Boolean> isApplied = new MutableLiveData<>();
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
-    public void applyJob(Context context, String uid, Job data, User user) {
+    public void applyJob(Context context, String uid, Job data, User user, List<String> items) {
         mDatabase.child("users").child(uid).child("jobs").get().addOnSuccessListener(dataSnapshot -> {
             float validate = 0;
-            if (data.getRequirements() != null) {
-                for (int i = 0; i < data.getRequirements().size(); i++) {
-                    if (user.getSkills() != null) {
-                        for (int j = 0; j < user.getSkills().size(); j++) {
-                            if (Objects.equals(data.getRequirements().get(i), user.getSkills().get(j)))
-                                validate++;
-                        }
-                    }
-                }
+            if (items != null) {
+                validate = items.size();
                 validate = (validate / data.getRequirements().size()) * 100;
             }
-            user.setMatching(validate);
+            user.setMatching((int) validate);
             data.setStatus("pending");
             mDatabase.child("users").child(uid).child("jobs").get().addOnSuccessListener(dataSnapshot13 -> {
                 dataSnapshot13.getChildren().forEach(dataSnapshot12 -> {
