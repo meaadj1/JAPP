@@ -1,6 +1,7 @@
 package com.example.japp.ui.fragment.job_details;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -13,23 +14,37 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class JobDetailsViewModel extends ViewModel {
+
+    private static final String TAG = "JobDetailsViewModel";
+
     public MutableLiveData<Boolean> isDone = new MutableLiveData<>();
     MutableLiveData<Boolean> isApplied = new MutableLiveData<>();
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
     public void applyJob(Context context, String uid, Job data, User user, List<String> items) {
+        float validate = 0;
+        HashMap<String, Integer> map;
+        if (data.getMatching() != null)
+            map = data.getMatching();
+        else
+            map = new HashMap<>();
+        if (items != null) {
+            validate = items.size();
+            validate = (validate / data.getRequirements().size()) * 100;
+        }
+        user.setMatching((int) validate);
+        Log.i(TAG, String.valueOf(validate));
+        map.put(uid, (int) validate);
+        data.setStatus("pending");
+        data.setMatching(map);
+        mDatabase.child("jobs").child(String.valueOf(data.getId())).setValue(data);
         mDatabase.child("users").child(uid).child("jobs").get().addOnSuccessListener(dataSnapshot -> {
-            float validate = 0;
-            if (items != null) {
-                validate = items.size();
-                validate = (validate / data.getRequirements().size()) * 100;
-            }
-            user.setMatching((int) validate);
-            data.setStatus("pending");
             mDatabase.child("users").child(uid).child("jobs").get().addOnSuccessListener(dataSnapshot13 -> {
                 dataSnapshot13.getChildren().forEach(dataSnapshot12 -> {
                     if (Objects.equals(Objects.requireNonNull(dataSnapshot12.getValue(Job.class)).getTitle(), data.getTitle())) {

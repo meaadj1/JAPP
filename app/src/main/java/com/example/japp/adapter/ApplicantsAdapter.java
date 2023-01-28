@@ -35,7 +35,7 @@ public class ApplicantsAdapter extends RecyclerView.Adapter<ApplicantsAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.binding.tvApplicant.setText(list.get(position).getName());
+        holder.binding.tvApplicant.setText(list.get(position).getFirstName() + " " + list.get(position).getLastName());
         Log.i(TAG, list.get(position).toString());
         Log.i(TAG, String.valueOf(list.get(position)));
         holder.binding.tvPresent.setText((int) list.get(position).getMatching() + "%");

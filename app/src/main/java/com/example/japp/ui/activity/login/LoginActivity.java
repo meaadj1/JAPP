@@ -69,7 +69,8 @@ public class LoginActivity extends AppCompatActivity {
                                         Gson gson = new Gson();
                                         String json = gson.toJson(user1);
                                         new SharedHelper().saveString(context, SharedHelper.user, json);
-                                        new SharedHelper().saveString(context, SharedHelper.name, user1.getName());
+                                        new SharedHelper().saveString(context, SharedHelper.firstName, user1.getFirstName());
+                                        new SharedHelper().saveString(context, SharedHelper.lastName, user1.getLastName());
                                         new SharedHelper().saveString(context, SharedHelper.type, user1.getType());
                                         new SharedHelper().saveString(context, SharedHelper.email, user1.getEmail());
                                         new SharedHelper().saveString(context, SharedHelper.phone, user1.getPhone());

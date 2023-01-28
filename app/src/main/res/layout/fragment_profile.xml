@@ -44,16 +44,16 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_profile"
-                app:shapeAppearanceOverlay="@style/circleImageView"
-                android:scaleType="centerCrop"
                 android:layout_width="@dimen/_60sdp"
                 android:layout_height="@dimen/_60sdp"
                 android:layout_margin="@dimen/_10sdp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/place_holder"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_profile" />
+                app:layout_constraintTop_toBottomOf="@id/tv_profile"
+                app:shapeAppearanceOverlay="@style/circleImageView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -109,16 +109,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="@string/name"
+                            android:text="@string/first_name"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_9ssp" />
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/edt_name"
-                            android:layout_width="@dimen/_100sdp"
+                            android:id="@+id/edt_first_name"
+                            android:layout_width="@dimen/_80sdp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/_8sdp"
+                            android:layout_marginStart="@dimen/_6sdp"
                             android:background="@drawable/job_button_bg"
                             android:inputType="textPersonName"
                             android:padding="@dimen/_3sdp"
@@ -130,22 +130,25 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/_15sdp"
-                            android:text="@string/gender"
+                            android:layout_marginStart="@dimen/_7sdp"
+                            android:text="@string/last_name"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_9ssp" />
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/edt_gender"
+                            android:id="@+id/edt_last_name"
                             android:layout_width="@dimen/_80sdp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginStart="@dimen/_6sdp"
                             android:background="@drawable/job_button_bg"
-                            android:inputType="text"
+                            android:inputType="textPersonName"
                             android:padding="@dimen/_3sdp"
                             android:textColor="@color/blue"
-                            android:textSize="@dimen/_10ssp" />
+                            android:textSize="@dimen/_10ssp"
+                            tools:text="name" />
+
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -241,6 +244,34 @@
                             android:padding="@dimen/_3sdp"
                             android:textColor="@color/blue"
                             android:textSize="@dimen/_10ssp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_8sdp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/gender"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_9ssp" />
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_gender"
+                            android:layout_width="@dimen/_80sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:background="@drawable/job_button_bg"
+                            android:inputType="text"
+                            android:padding="@dimen/_3sdp"
+                            android:textColor="@color/blue"
+                            android:textSize="@dimen/_10ssp" />
+
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

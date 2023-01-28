@@ -5,7 +5,8 @@ import android.content.SharedPreferences;
 
 public class SharedHelper {
 
-    public static String name = "NAME";
+    public static String firstName = "FIRST_NAME";
+    public static String lastName = "LAST_NAME";
     public static String uid = "UID";
     public static String type = "TYPE";
     public static String email = "EMAIL";

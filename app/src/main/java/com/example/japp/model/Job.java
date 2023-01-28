@@ -2,12 +2,21 @@ package com.example.japp.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Job implements Serializable {
 
     public Job() {
 
+    }
+
+    public HashMap<String, Integer> getMatching() {
+        return matching;
+    }
+
+    public void setMatching(HashMap<String, Integer> matching) {
+        this.matching = matching;
     }
 
     public String getTitle() {
@@ -135,6 +144,7 @@ public class Job implements Serializable {
     String title;
     String description;
     List<String> requirements;
+    HashMap<String, Integer> matching;
     String companyName;
     String companyImage;
 

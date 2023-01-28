@@ -173,7 +173,7 @@ public class SavedJobsFragment extends Fragment {
 
             String finalId = id;
             mDatabase.child("jobs").get().addOnSuccessListener(dataSnapshot -> {
-                Job data = new Job((int) dataSnapshot.getChildrenCount(), title, description, requirementsAdapter.getList(), new SharedHelper().getString(getContext(), SharedHelper.name), new SharedHelper().getString(getContext(), SharedHelper.photo), category, type, location, experience, "reject", new SharedHelper().getString(getContext(), SharedHelper.uid), specialization);
+                Job data = new Job((int) dataSnapshot.getChildrenCount(), title, description, requirementsAdapter.getList(), new SharedHelper().getString(getContext(), SharedHelper.firstName), new SharedHelper().getString(getContext(), SharedHelper.photo), category, type, location, experience, "reject", new SharedHelper().getString(getContext(), SharedHelper.uid), specialization);
                 if (finalId != null)
                     mDatabase.child("jobs").child(finalId).setValue(data);
                 else

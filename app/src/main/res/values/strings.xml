@@ -142,6 +142,10 @@
     <string name="eng">Engineering</string>
     <string name="translation">Translation</string>
     <string name="edit_photo">Edit photo</string>
+    <string name="filter">Filter</string>
+    <string name="first_name">First Name</string>
+    <string name="second_name">Second Name</string>
+    <string name="last_name">Last Name</string>
 
     <string-array name="type">
         <item>Full time</item>

@@ -61,14 +61,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void register() {
         if (!isValidForm()) return;
-        String name = Objects.requireNonNull(binding.edtName.getText()).toString().trim();
+        String firstName = Objects.requireNonNull(binding.edtFirstName.getText()).toString().trim();
+        String lastName = Objects.requireNonNull(binding.edtLastName.getText()).toString().trim();
         String phone = Objects.requireNonNull(binding.edtPhone.getText()).toString().trim();
         String email = Objects.requireNonNull(binding.edtEmail.getText()).toString().trim();
         String password = Objects.requireNonNull(binding.edtPassword.getText()).toString();
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, task -> {
             if (task.isSuccessful()) {
                 FirebaseUser user = mAuth.getCurrentUser();
-                User userData = new User(name, email, phone, USER_TYPE);
+                User userData = new User(firstName, lastName, email, phone, USER_TYPE);
                 assert user != null;
                 {
                     mDatabase.child("users").child(user.getUid()).setValue(userData);
@@ -86,16 +87,24 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean isValidForm() {
         boolean valid = true;
-        String name = Objects.requireNonNull(binding.edtName.getText()).toString().trim();
+        String firstName = Objects.requireNonNull(binding.edtFirstName.getText()).toString().trim();
+        String lastName = Objects.requireNonNull(binding.edtLastName.getText()).toString().trim();
         String email = Objects.requireNonNull(binding.edtEmail.getText()).toString().trim();
         String phone = Objects.requireNonNull(binding.edtPhone.getText()).toString().trim();
         String password = Objects.requireNonNull(binding.edtPassword.getText()).toString().trim();
 
-        if (TextUtils.isEmpty(name)) {
-            binding.inputName.setError(getString(R.string.name_alert));
+        if (TextUtils.isEmpty(firstName)) {
+            binding.inputFirstName.setError(getString(R.string.name_alert));
             valid = false;
         } else {
-            binding.inputName.setError(null);
+            binding.inputFirstName.setError(null);
+        }
+
+        if (TextUtils.isEmpty(lastName)) {
+            binding.inputLastName.setError(getString(R.string.name_alert));
+            valid = false;
+        } else {
+            binding.inputLastName.setError(null);
         }
 
         if (TextUtils.isEmpty(email)) {
@@ -111,11 +120,11 @@ public class RegisterActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(phone)) {
             binding.inputPhone.setError(getString(R.string.phone_alert));
             valid = false;
-        } else if (!Patterns.PHONE.matcher(phone).matches()) {
+        } else if (!checkPhone(phone)) {
             binding.inputPhone.setError(getString(R.string.phone_alert2));
             valid = false;
         } else {
-            binding.inputEmail.setError(null);
+            binding.inputPhone.setError(null);
         }
 
         if (TextUtils.isEmpty(password)) {
@@ -142,5 +151,14 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    private boolean checkPhone(String phone) {
+        if (phone.length() >= 10)
+            return false;
+        else if (!Patterns.PHONE.matcher(phone).matches())
+            return false;
+
+        return true;
     }
 }

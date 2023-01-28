@@ -1,6 +1,5 @@
 package com.example.japp.ui.fragment.search;
 
-import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,8 +15,9 @@ import com.example.japp.R;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.CategoriesAdapter;
 import com.example.japp.databinding.FragmentSearchBinding;
-import com.example.japp.databinding.SearchDialogBinding;
+import com.example.japp.databinding.SearchSheetBinding;
 import com.example.japp.model.Category;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -58,58 +58,60 @@ public class SearchFragment extends Fragment {
 
         binding.rvCategories.setAdapter(new CategoriesAdapter(categories));
 
-        binding.ivFilter.setOnClickListener(v -> {
-            SearchDialogBinding dialogBinding = SearchDialogBinding.inflate(LayoutInflater.from(binding.getRoot().getContext()), null, false);
-            Dialog dialog = new Dialog(binding.getRoot().getContext());
-            dialog.setContentView(dialogBinding.getRoot());
+        binding.ivFilter.setOnClickListener(v -> showFilterBottomSheet());
+    }
 
-            String type = new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.type);
-            String text = Objects.requireNonNull(binding.edtSearch.getText()).toString().trim();
+    private void showFilterBottomSheet() {
+        SearchSheetBinding sheetBinding = SearchSheetBinding.inflate(LayoutInflater.from(binding.getRoot().getContext()));
+        BottomSheetDialog dialog = new BottomSheetDialog(sheetBinding.getRoot().getContext());
+        dialog.setContentView(sheetBinding.getRoot());
 
-            dialogBinding.tvCity.setOnClickListener(v13 -> {
-                if (!text.isEmpty()) {
-                    if (Objects.equals(type, "JOB_SEEKER")) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("city", text);
-                        bundle.putString("category", "jobs");
-                        Navigation.findNavController(binding.getRoot()).navigate(R.id.resultFragment, bundle);
-                    } else {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("city", text);
-                        bundle.putString("category", "users");
-                        Navigation.findNavController(binding.getRoot()).navigate(R.id.resultFragment, bundle);
-                    }
-                } else {
-                    binding.edtSearch.setError(getString(R.string.edt_alert));
-                }
-                dialog.dismiss();
-            });
+        String type = new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.type);
+        String text = Objects.requireNonNull(binding.edtSearch.getText()).toString().trim();
 
-            dialogBinding.tvJobs.setOnClickListener(v12 -> {
-                if (!text.isEmpty()) {
+        sheetBinding.tvCity.setOnClickListener(v -> {
+            if (!text.isEmpty()) {
+                if (Objects.equals(type, "JOB_SEEKER")) {
                     Bundle bundle = new Bundle();
-                    bundle.putString("text", text);
+                    bundle.putString("city", text);
                     bundle.putString("category", "jobs");
                     Navigation.findNavController(binding.getRoot()).navigate(R.id.resultFragment, bundle);
                 } else {
-                    binding.edtSearch.setError(getString(R.string.edt_alert));
-                }
-                dialog.dismiss();
-            });
-
-            dialogBinding.tvOrg.setOnClickListener(v1 -> {
-                if (!text.isEmpty()) {
                     Bundle bundle = new Bundle();
-                    bundle.putString("text", text);
-                    bundle.putString("category", "org");
+                    bundle.putString("city", text);
+                    bundle.putString("category", "users");
                     Navigation.findNavController(binding.getRoot()).navigate(R.id.resultFragment, bundle);
-                } else {
-                    binding.edtSearch.setError(getString(R.string.edt_alert));
                 }
-                dialog.dismiss();
-            });
-
-            dialog.show();
+            } else {
+                binding.edtSearch.setError(getString(R.string.edt_alert));
+            }
+            dialog.dismiss();
         });
+
+        sheetBinding.tvJobs.setOnClickListener(v -> {
+            if (!text.isEmpty()) {
+                Bundle bundle = new Bundle();
+                bundle.putString("text", text);
+                bundle.putString("category", "jobs");
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.resultFragment, bundle);
+            } else {
+                binding.edtSearch.setError(getString(R.string.edt_alert));
+            }
+            dialog.dismiss();
+        });
+
+        sheetBinding.tvOrg.setOnClickListener(v -> {
+            if (!text.isEmpty()) {
+                Bundle bundle = new Bundle();
+                bundle.putString("text", text);
+                bundle.putString("category", "org");
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.resultFragment, bundle);
+            } else {
+                binding.edtSearch.setError(getString(R.string.edt_alert));
+            }
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
 }

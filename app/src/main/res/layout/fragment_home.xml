@@ -81,8 +81,8 @@
 
     <ImageView
         android:id="@+id/iv_not_found"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
         android:src="@drawable/ic_not_jobs"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -95,7 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
         android:text="@string/not_found"
-        android:textColor="@color/black"
+        android:textColor="@color/gray2"
         android:textSize="@dimen/_15ssp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

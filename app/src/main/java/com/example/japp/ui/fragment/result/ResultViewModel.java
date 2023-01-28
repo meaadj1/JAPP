@@ -36,7 +36,7 @@ public class ResultViewModel extends ViewModel {
             dataSnapshot.getChildren().forEach(dataSnapshot1 -> {
                 User user = dataSnapshot1.getValue(User.class);
                 assert user != null;
-                if (Objects.equals(user.getName(), name) && Objects.equals(user.getType(), "ORGANIZATION")) {
+                if (Objects.equals(user.getFirstName(), name) && Objects.equals(user.getType(), "ORGANIZATION")) {
                     list.add(user);
                 }
             });

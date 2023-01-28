@@ -9,15 +9,17 @@ public class User implements Serializable {
 
     }
 
-    public User(String name, String email, String phone, String type) {
-        this.name = name;
+    public User(String firstName, String lastName, String email, String phone, String type) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.type = type;
         this.phone = phone;
     }
 
-    public User(String name, String email, String phone, String gender, String type, String dateOfBirth, String country, String nationality, String city, ArrayList<String> skills, ArrayList<String> education, ArrayList<String> languages) {
-        this.name = name;
+    public User(String firstName, String lastName, String email, String phone, String gender, String type, String dateOfBirth, String country, String nationality, String city, ArrayList<String> skills, ArrayList<String> education, ArrayList<String> languages) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.type = type;
@@ -31,8 +33,9 @@ public class User implements Serializable {
         this.gender = gender;
     }
 
-    public User(String name, String email, String phone, String type, String country, String city, String companySize, String description) {
-        this.name = name;
+    public User(String firstName,String lastName, String email, String phone, String type, String country, String city, String companySize, String description) {
+        this.firstName = firstName;
+        this.lastName=lastName;
         this.email = email;
         this.phone = phone;
         this.type = type;
@@ -42,7 +45,8 @@ public class User implements Serializable {
         this.description = description;
     }
 
-    String name;
+    String firstName;
+    String lastName;
     String email;
     String type;
     String phone;
@@ -176,16 +180,24 @@ public class User implements Serializable {
         this.description = description;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getEmail() {
         return email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setEmail(String email) {

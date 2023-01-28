@@ -30,9 +30,6 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public class JobDetailsFragment extends Fragment {
-
-    private static final String TAG = "JobDetailsFragment";
-
     private FragmentJobDetailsBinding binding;
     JobDetailsViewModel viewModel;
     Context context;
@@ -105,7 +102,7 @@ public class JobDetailsFragment extends Fragment {
                 ex.printStackTrace();
             }
 
-            binding.tvTitle.setText(userData.getName());
+            binding.tvTitle.setText(userData.getFirstName());
             binding.tvCompany.setText(userData.getCountry());
             binding.tvCity.setText(userData.getCity());
             binding.tvPhone.setText(userData.getPhone());

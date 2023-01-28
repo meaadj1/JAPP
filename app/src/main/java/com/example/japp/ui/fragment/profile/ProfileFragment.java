@@ -98,8 +98,9 @@ public class ProfileFragment extends Fragment {
         if (!photo.isEmpty())
             Glide.with(context).load(photo).into(binding.ivProfile);
 
-        binding.edtName.setText(user.getName());
-        binding.edtOrgName.setText(user.getName());
+        binding.edtFirstName.setText(user.getFirstName());
+        binding.edtLastName.setText(user.getLastName());
+        binding.edtOrgName.setText(user.getFirstName());
         binding.edtOrgLocation.setText(user.getCountry());
         binding.edtOrgCity.setText(user.getCity());
         binding.edtOrgPhone.setText(user.getPhone());
@@ -161,7 +162,7 @@ public class ProfileFragment extends Fragment {
                 }).addOnFailureListener(e -> Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show()));
             }
 
-            User data = new User(Objects.requireNonNull(binding.edtName.getText()).toString(), user.getEmail(), user.getPhone(), Objects.requireNonNull(binding.edtGender.getText()).toString(), user.getType(), Objects.requireNonNull(binding.edtDate.getText()).toString(), Objects.requireNonNull(binding.edtCountry.getText()).toString(), Objects.requireNonNull(binding.edtNationality.getText()).toString(), Objects.requireNonNull(binding.edtCity.getText()).toString(), skillsAdapter.getList(), eduAdapter.getList(), langAdapter.getList());
+            User data = new User(Objects.requireNonNull(binding.edtFirstName.getText()).toString(), Objects.requireNonNull(binding.edtLastName.getText()).toString(), user.getEmail(), user.getPhone(), Objects.requireNonNull(binding.edtGender.getText()).toString(), user.getType(), Objects.requireNonNull(binding.edtDate.getText()).toString(), Objects.requireNonNull(binding.edtCountry.getText()).toString(), Objects.requireNonNull(binding.edtNationality.getText()).toString(), Objects.requireNonNull(binding.edtCity.getText()).toString(), skillsAdapter.getList(), eduAdapter.getList(), langAdapter.getList());
             data.setPhoto(photo);
             data.setCv(pdf);
             mDatabase.child("users").child(uid).setValue(data);
@@ -173,7 +174,8 @@ public class ProfileFragment extends Fragment {
                     Gson gson = new Gson();
                     String json1 = gson.toJson(user1);
                     new SharedHelper().saveString(getContext(), SharedHelper.user, json1);
-                    new SharedHelper().saveString(getContext(), SharedHelper.name, user1.getName());
+                    new SharedHelper().saveString(getContext(), SharedHelper.firstName, user1.getFirstName());
+                    new SharedHelper().saveString(getContext(), SharedHelper.lastName, user1.getLastName());
                     new SharedHelper().saveString(getContext(), SharedHelper.type, user1.getType());
                     new SharedHelper().saveString(getContext(), SharedHelper.email, user1.getEmail());
                     new SharedHelper().saveString(getContext(), SharedHelper.phone, user1.getPhone());
@@ -187,7 +189,7 @@ public class ProfileFragment extends Fragment {
             }
             saveImage();
 
-            User data = new User(Objects.requireNonNull(binding.edtOrgName.getText()).toString(), user.getEmail(), user.getPhone(), user.getType(), Objects.requireNonNull(binding.edtOrgLocation.getText()).toString(), Objects.requireNonNull(binding.edtOrgCity.getText()).toString(), companySize, Objects.requireNonNull(binding.edtDescription.getText()).toString());
+            User data = new User(Objects.requireNonNull(binding.edtOrgName.getText()).toString(), "", user.getEmail(), user.getPhone(), user.getType(), Objects.requireNonNull(binding.edtOrgLocation.getText()).toString(), Objects.requireNonNull(binding.edtOrgCity.getText()).toString(), companySize, Objects.requireNonNull(binding.edtDescription.getText()).toString());
 
             mDatabase.child("users").child(uid).setValue(data);
             Toast.makeText(getContext(), getString(R.string.save_data), Toast.LENGTH_SHORT).show();
@@ -198,7 +200,8 @@ public class ProfileFragment extends Fragment {
                     Gson gson = new Gson();
                     String json1 = gson.toJson(user1);
                     new SharedHelper().saveString(getContext(), SharedHelper.user, json1);
-                    new SharedHelper().saveString(getContext(), SharedHelper.name, user1.getName());
+                    new SharedHelper().saveString(getContext(), SharedHelper.firstName, user1.getFirstName());
+                    new SharedHelper().saveString(getContext(), SharedHelper.lastName, user1.getLastName());
                     new SharedHelper().saveString(getContext(), SharedHelper.type, user1.getType());
                     new SharedHelper().saveString(getContext(), SharedHelper.email, user1.getEmail());
                     new SharedHelper().saveString(getContext(), SharedHelper.phone, user1.getPhone());

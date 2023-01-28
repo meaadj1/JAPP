@@ -18,14 +18,14 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_company"
-            app:shapeAppearanceOverlay="@style/circleImageView"
-            android:scaleType="centerCrop"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_margin="@dimen/_10sdp"
+            android:scaleType="centerCrop"
             android:src="@drawable/place_holder"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/circleImageView" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -155,7 +155,7 @@
                 android:layout_height="@dimen/_50sdp"
                 android:indeterminateOnly="false"
                 android:max="100"
-                android:progress="100"
+                android:progress="0"
                 android:progressDrawable="@drawable/circular_progress_bar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
