@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:outlineAmbientShadowColor="@color/white"
         android:outlineSpotShadowColor="@color/white"
-        android:visibility="gone"
+        android:visibility="visible"
         app:cardCornerRadius="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="@id/cl_item"
         app:layout_constraintStart_toStartOf="@id/cl_item"

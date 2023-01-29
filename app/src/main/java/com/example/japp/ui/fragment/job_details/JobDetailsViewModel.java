@@ -37,6 +37,7 @@ public class JobDetailsViewModel extends ViewModel {
         if (items != null) {
             validate = items.size();
             validate = (validate / data.getRequirements().size()) * 100;
+            user.setMatchingList((ArrayList<String>) items);
         }
         user.setMatching((int) validate);
         Log.i(TAG, String.valueOf(validate));
@@ -49,6 +50,7 @@ public class JobDetailsViewModel extends ViewModel {
                 dataSnapshot13.getChildren().forEach(dataSnapshot12 -> {
                     if (Objects.equals(Objects.requireNonNull(dataSnapshot12.getValue(Job.class)).getTitle(), data.getTitle())) {
                         isApplied.setValue(true);
+                        Toast.makeText(context, "you already applied this job before", Toast.LENGTH_SHORT).show();
                     }
                 });
                 if (!Boolean.TRUE.equals(isApplied.getValue())) {

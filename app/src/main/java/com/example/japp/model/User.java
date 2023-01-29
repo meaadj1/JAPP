@@ -33,9 +33,9 @@ public class User implements Serializable {
         this.gender = gender;
     }
 
-    public User(String firstName,String lastName, String email, String phone, String type, String country, String city, String companySize, String description) {
+    public User(String firstName, String lastName, String email, String phone, String type, String country, String city, String companySize, String description) {
         this.firstName = firstName;
-        this.lastName=lastName;
+        this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.type = type;
@@ -63,23 +63,7 @@ public class User implements Serializable {
     String companySize;
     String description;
     float matching;
-
-    public ArrayList<Job> getJobs() {
-        return jobs;
-    }
-
-    public void setJobs(ArrayList<Job> jobs) {
-        this.jobs = jobs;
-    }
-
-    public int getJobId() {
-        return jobId;
-    }
-
-    public void setJobId(int jobId) {
-        this.jobId = jobId;
-    }
-
+    ArrayList<String> matchingList;
     ArrayList<User> applicants;
     String gender;
     int jobId;
@@ -234,5 +218,29 @@ public class User implements Serializable {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public ArrayList<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(ArrayList<Job> jobs) {
+        this.jobs = jobs;
+    }
+
+    public int getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(int jobId) {
+        this.jobId = jobId;
+    }
+
+    public ArrayList<String> getMatchingList() {
+        return matchingList;
+    }
+
+    public void setMatchingList(ArrayList<String> matchingList) {
+        this.matchingList = matchingList;
     }
 }

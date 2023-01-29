@@ -61,15 +61,14 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void register() {
         if (!isValidForm()) return;
-        String firstName = Objects.requireNonNull(binding.edtFirstName.getText()).toString().trim();
-        String lastName = Objects.requireNonNull(binding.edtLastName.getText()).toString().trim();
+        String firstName = Objects.requireNonNull(binding.edtName.getText()).toString().trim();
         String phone = Objects.requireNonNull(binding.edtPhone.getText()).toString().trim();
         String email = Objects.requireNonNull(binding.edtEmail.getText()).toString().trim();
         String password = Objects.requireNonNull(binding.edtPassword.getText()).toString();
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, task -> {
             if (task.isSuccessful()) {
                 FirebaseUser user = mAuth.getCurrentUser();
-                User userData = new User(firstName, lastName, email, phone, USER_TYPE);
+                User userData = new User(firstName, "", email, phone, USER_TYPE);
                 assert user != null;
                 {
                     mDatabase.child("users").child(user.getUid()).setValue(userData);
@@ -87,24 +86,16 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean isValidForm() {
         boolean valid = true;
-        String firstName = Objects.requireNonNull(binding.edtFirstName.getText()).toString().trim();
-        String lastName = Objects.requireNonNull(binding.edtLastName.getText()).toString().trim();
+        String firstName = Objects.requireNonNull(binding.edtName.getText()).toString().trim();
         String email = Objects.requireNonNull(binding.edtEmail.getText()).toString().trim();
         String phone = Objects.requireNonNull(binding.edtPhone.getText()).toString().trim();
         String password = Objects.requireNonNull(binding.edtPassword.getText()).toString().trim();
 
         if (TextUtils.isEmpty(firstName)) {
-            binding.inputFirstName.setError(getString(R.string.name_alert));
+            binding.inputName.setError(getString(R.string.name_alert));
             valid = false;
         } else {
-            binding.inputFirstName.setError(null);
-        }
-
-        if (TextUtils.isEmpty(lastName)) {
-            binding.inputLastName.setError(getString(R.string.name_alert));
-            valid = false;
-        } else {
-            binding.inputLastName.setError(null);
+            binding.inputName.setError(null);
         }
 
         if (TextUtils.isEmpty(email)) {
@@ -154,11 +145,10 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean checkPhone(String phone) {
-        if (phone.length() >= 10)
+        if (phone.length() != 10)
             return false;
         else if (!Patterns.PHONE.matcher(phone).matches())
             return false;
-
-        return true;
+        else return phone.startsWith("05");
     }
 }

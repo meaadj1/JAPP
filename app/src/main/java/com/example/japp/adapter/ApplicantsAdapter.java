@@ -47,6 +47,9 @@ public class ApplicantsAdapter extends RecyclerView.Adapter<ApplicantsAdapter.Vi
         if (list.get(position).getSkills() != null)
             holder.binding.tvSkills.setText(list.get(position).getSkills().toString());
 
+        if (list.get(position).getMatchingList() != null)
+            holder.binding.tvSkills.setText(list.get(position).getMatchingList().toString());
+
         holder.binding.ivPresent.setOnClickListener(v -> {
             if (holder.binding.cvDetails.getVisibility() == View.VISIBLE) {
                 holder.binding.cvDetails.setVisibility(View.GONE);

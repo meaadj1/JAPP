@@ -1,6 +1,7 @@
 package com.example.japp.ui.fragment.home;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -20,6 +21,9 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public class HomeViewModel extends ViewModel {
+
+    private static final String TAG = "HomeViewModel";
+
     MutableLiveData<ArrayList<Job>> jobs = new MutableLiveData<>();
     MutableLiveData<List<User>> applicants = new MutableLiveData<>();
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -59,12 +63,16 @@ public class HomeViewModel extends ViewModel {
             Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_SHORT).show();
         }).addOnSuccessListener(dataSnapshot -> {
             ArrayList<Job> list = new ArrayList<>();
-            for (int i = 0; i < dataSnapshot.getChildrenCount(); i++) {
-                Job item = dataSnapshot.child(String.valueOf(i)).getValue(Job.class);
-                assert item != null;
-                if (Objects.equals(item.getType(), "Full time"))
-                    list.add(item);
-            }
+            dataSnapshot.getChildren().forEach(new Consumer<DataSnapshot>() {
+                @Override
+                public void accept(DataSnapshot dataSnapshot) {
+                    Job item = dataSnapshot.getValue(Job.class);
+                    if (item != null) {
+                        if (Objects.equals(item.getType(), "Full time"))
+                            list.add(item);
+                    }
+                }
+            });
             jobs.setValue(list);
         });
     }
@@ -75,12 +83,17 @@ public class HomeViewModel extends ViewModel {
             Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_SHORT).show();
         }).addOnSuccessListener(dataSnapshot -> {
             ArrayList<Job> list = new ArrayList<>();
-            for (int i = 0; i < dataSnapshot.getChildrenCount(); i++) {
-                Job item = dataSnapshot.child(String.valueOf(i)).getValue(Job.class);
-                assert item != null;
-                if (Objects.equals(item.getType(), "Part time"))
-                    list.add(item);
-            }
+            dataSnapshot.getChildren().forEach(new Consumer<DataSnapshot>() {
+                @Override
+                public void accept(DataSnapshot dataSnapshot) {
+                    Job item = dataSnapshot.getValue(Job.class);
+                    if (item != null) {
+                        Log.i(TAG, "DONE");
+                        if (Objects.equals(item.getType(), "Part time"))
+                            list.add(item);
+                    }
+                }
+            });
             jobs.setValue(list);
         });
     }
