@@ -146,6 +146,8 @@
     <string name="first_name">First Name</string>
     <string name="second_name">Second Name</string>
     <string name="last_name">Last Name</string>
+    <string name="value">Value</string>
+    <string name="job_title">Job title</string>
 
     <string-array name="type">
         <item>Full time</item>

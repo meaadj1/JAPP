@@ -92,6 +92,7 @@ public class JobDetailsFragment extends Fragment {
                     viewModel.applyJob(context, uid, data, user, null);
             });
 
+            binding.tvCompany.setOnClickListener(v -> viewModel.getUserData(context, data.getCompanyUid()));
         } else {
             binding.llJob.setVisibility(View.GONE);
             binding.llUser.setVisibility(View.VISIBLE);
@@ -113,12 +114,18 @@ public class JobDetailsFragment extends Fragment {
             if (userData.getLanguages() != null)
                 binding.tvLang.setText(userData.getLanguages().toString());
 
-            if (userData.getCv() == null) {
+            if (userData.getCv() == null || Objects.equals(userData.getCv(), "")) {
                 binding.tvCv.setVisibility(View.GONE);
                 binding.btnShowCv.setVisibility(View.GONE);
             } else {
                 binding.tvCv.setVisibility(View.VISIBLE);
                 binding.btnShowCv.setVisibility(View.VISIBLE);
+            }
+
+            if (userData.getJobId() == -1) {
+                binding.btnShowCv.setVisibility(View.GONE);
+                binding.tvAccept.setVisibility(View.GONE);
+                binding.tvReject.setVisibility(View.GONE);
             }
 
             binding.btnShowCv.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(userData.getCv()))));
@@ -133,6 +140,15 @@ public class JobDetailsFragment extends Fragment {
         viewModel.isDone.observe(getViewLifecycleOwner(), aBoolean -> {
             if (aBoolean) {
                 Navigation.findNavController(binding.getRoot()).navigateUp();
+            }
+        });
+
+        viewModel.userData.observe(getViewLifecycleOwner(), user -> {
+            if (user != null) {
+                user.setJobId(-1);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user", user);
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.nav_job_details, bundle);
             }
         });
 

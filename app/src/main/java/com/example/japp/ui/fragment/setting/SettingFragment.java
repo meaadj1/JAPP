@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.japp.R;
 import com.example.japp.Utils.LocaleHelper;
+import com.example.japp.Utils.SharedHelper;
 import com.example.japp.databinding.FragmentSettingBinding;
 import com.example.japp.databinding.SheetLogoutBinding;
 import com.example.japp.ui.activity.login.LoginActivity;
@@ -76,6 +77,8 @@ public class SettingFragment extends Fragment {
         sheetBinding.btnYes.setOnClickListener(v -> {
             binding.getRoot().getContext().deleteSharedPreferences("app_data");
             FirebaseAuth.getInstance().signOut();
+            new SharedHelper().saveString(binding.getRoot().getContext(), SharedHelper.uid, "");
+            new SharedHelper().saveString(binding.getRoot().getContext(), SharedHelper.type, "");
             startActivity(new Intent(sheetBinding.getRoot().getContext(), LoginActivity.class));
             requireActivity().finish();
         });

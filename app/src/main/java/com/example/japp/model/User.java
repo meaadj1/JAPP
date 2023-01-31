@@ -63,7 +63,7 @@ public class User implements Serializable {
     String companySize;
     String description;
     float matching;
-    ArrayList<String> matchingList;
+    ArrayList<Requirement> matchingList;
     ArrayList<User> applicants;
     String gender;
     int jobId;
@@ -236,11 +236,11 @@ public class User implements Serializable {
         this.jobId = jobId;
     }
 
-    public ArrayList<String> getMatchingList() {
+    public ArrayList<Requirement> getMatchingList() {
         return matchingList;
     }
 
-    public void setMatchingList(ArrayList<String> matchingList) {
+    public void setMatchingList(ArrayList<Requirement> matchingList) {
         this.matchingList = matchingList;
     }
 }

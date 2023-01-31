@@ -18,11 +18,14 @@ import android.widget.Toast;
 
 import com.example.japp.R;
 import com.example.japp.Utils.SharedHelper;
+import com.example.japp.adapter.AddingRequirementsAdapter;
 import com.example.japp.adapter.JobsAdapter;
+import com.example.japp.adapter.RequirementsAdapter;
 import com.example.japp.adapter.SkillsAdapter;
 import com.example.japp.databinding.AddingItemLayoutBinding;
 import com.example.japp.databinding.FragmentSavedJobsBinding;
 import com.example.japp.model.Job;
+import com.example.japp.model.Requirement;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -57,7 +60,7 @@ public class SavedJobsFragment extends Fragment {
             jobData = (Job) getArguments().get("data");
         }
 
-        SkillsAdapter requirementsAdapter = new SkillsAdapter(new ArrayList<>());
+        AddingRequirementsAdapter requirementsAdapter = new AddingRequirementsAdapter(new ArrayList<>());
 
         if (Objects.equals(new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.type), "JOB_SEEKER")) {
             binding.rvJobs.setVisibility(View.VISIBLE);
@@ -126,7 +129,7 @@ public class SavedJobsFragment extends Fragment {
             binding.edtSpecialization.setText(jobData.getSpecialization());
             binding.edtLocation.setText(jobData.getLocation());
             binding.edtExperience.setText(jobData.getExperience());
-            requirementsAdapter.setList((ArrayList<String>) jobData.getRequirements());
+            requirementsAdapter.setList((ArrayList<Requirement>) jobData.getRequirements());
             binding.btnSave.setText(getString(R.string.edit));
             if (Objects.equals(jobData.getType(), "Full part"))
                 binding.spinnerType.setSelection(0);
@@ -245,15 +248,16 @@ public class SavedJobsFragment extends Fragment {
         return valid;
     }
 
-    void addingItem(SkillsAdapter adapter) {
+    void addingItem(AddingRequirementsAdapter adapter) {
         AddingItemLayoutBinding dialogBinding = AddingItemLayoutBinding.inflate(LayoutInflater.from(getContext()), null, false);
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(dialogBinding.getRoot());
+        dialogBinding.cvEdtValue.setVisibility(View.VISIBLE);
         dialogBinding.tvCancel.setOnClickListener(v -> dialog.dismiss());
 
         dialogBinding.tvSave.setOnClickListener(v -> {
             if (dialogBinding.edtItem.getText() != null) {
-                adapter.addingItem(dialogBinding.edtItem.getText().toString());
+                adapter.addingItem(new Requirement(dialogBinding.edtItem.getText().toString(), Integer.parseInt(dialogBinding.edtValue.getText().toString())));
                 dialog.dismiss();
             } else
                 Toast.makeText(getContext(), getString(R.string.edt_alert), Toast.LENGTH_SHORT).show();

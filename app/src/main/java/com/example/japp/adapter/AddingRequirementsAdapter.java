@@ -3,6 +3,7 @@ package com.example.japp.adapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -12,27 +13,31 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.japp.R;
 import com.example.japp.databinding.AddingItemLayoutBinding;
 import com.example.japp.databinding.SkillItemBinding;
+import com.example.japp.model.Requirement;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.ViewHolder> {
+public class AddingRequirementsAdapter extends RecyclerView.Adapter<AddingRequirementsAdapter.ViewHolder> {
 
-    ArrayList<String> skills = new ArrayList<>();
+    ArrayList<Requirement> skills = new ArrayList<>();
 
-    public SkillsAdapter(ArrayList<String> skills) {
+    public AddingRequirementsAdapter(ArrayList<Requirement> skills) {
         if (skills != null)
             this.skills.addAll(skills);
     }
 
     @NonNull
     @Override
-    public SkillsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AddingRequirementsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(SkillItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SkillsAdapter.ViewHolder holder, int position) {
-        holder.binding.textView.setText(skills.get(position));
+    public void onBindViewHolder(@NonNull AddingRequirementsAdapter.ViewHolder holder, int position) {
+        holder.binding.edtValue.setVisibility(View.VISIBLE);
+        holder.binding.textView.setText(skills.get(position).getText());
+        holder.binding.edtValue.setText(String.valueOf(skills.get(position).getValue()));
         holder.binding.ivDelete.setOnClickListener(v -> {
             skills.remove(skills.get(position));
             notifyDataSetChanged();
@@ -49,16 +54,16 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.ViewHolder
             return 0;
     }
 
-    public void addingItem(String item) {
+    public void addingItem(Requirement item) {
         skills.add(item);
         notifyDataSetChanged();
     }
 
-    public ArrayList<String> getList() {
+    public ArrayList<Requirement> getList() {
         return skills;
     }
 
-    public void setList(ArrayList<String> list) {
+    public void setList(ArrayList<Requirement> list) {
         skills = list;
         notifyDataSetChanged();
     }
@@ -67,12 +72,14 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.ViewHolder
         AddingItemLayoutBinding dialogBinding = AddingItemLayoutBinding.inflate(LayoutInflater.from(context), null, false);
         Dialog dialog = new Dialog(context);
         dialog.setContentView(dialogBinding.getRoot());
-        dialogBinding.edtItem.setText(skills.get(position));
+        dialogBinding.cvEdtValue.setVisibility(View.VISIBLE);
+        dialogBinding.edtItem.setText(skills.get(position).getText());
+        dialogBinding.edtValue.setText(String.valueOf(skills.get(position).getValue()));
         dialogBinding.tvCancel.setOnClickListener(v -> dialog.dismiss());
 
         dialogBinding.tvSave.setOnClickListener(v -> {
-            if (dialogBinding.edtItem.getText() != null) {
-                skills.set(position, dialogBinding.edtItem.getText().toString());
+            if (dialogBinding.edtItem.getText() != null || dialogBinding.edtValue.getText() != null) {
+                skills.set(position, new Requirement(dialogBinding.edtItem.getText().toString(), Integer.parseInt(Objects.requireNonNull(dialogBinding.edtValue.getText()).toString())));
                 notifyDataSetChanged();
                 dialog.dismiss();
             } else

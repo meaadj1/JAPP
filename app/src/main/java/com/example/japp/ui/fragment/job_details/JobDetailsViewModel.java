@@ -4,12 +4,17 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.japp.R;
 import com.example.japp.model.Job;
+import com.example.japp.model.Requirement;
 import com.example.japp.model.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -18,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class JobDetailsViewModel extends ViewModel {
 
@@ -25,23 +31,22 @@ public class JobDetailsViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> isDone = new MutableLiveData<>();
     MutableLiveData<Boolean> isApplied = new MutableLiveData<>();
+    MutableLiveData<User> userData = new MutableLiveData<>();
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
-    public void applyJob(Context context, String uid, Job data, User user, List<String> items) {
-        float validate = 0;
+    public void applyJob(Context context, String uid, Job data, User user, ArrayList<Requirement> items) {
+        final float[] validate = {0};
         HashMap<String, Integer> map;
         if (data.getMatching() != null)
             map = data.getMatching();
         else
             map = new HashMap<>();
         if (items != null) {
-            validate = items.size();
-            validate = (validate / data.getRequirements().size()) * 100;
-            user.setMatchingList((ArrayList<String>) items);
+            items.forEach(requirement -> validate[0] += requirement.getValue());
+            user.setMatchingList(items);
         }
-        user.setMatching((int) validate);
-        Log.i(TAG, String.valueOf(validate));
-        map.put(uid, (int) validate);
+        user.setMatching((int) validate[0]);
+        map.put(uid, (int) validate[0]);
         data.setStatus("pending");
         data.setMatching(map);
         mDatabase.child("jobs").child(String.valueOf(data.getId())).setValue(data);
@@ -112,6 +117,20 @@ public class JobDetailsViewModel extends ViewModel {
                 }
             });
             dataSnapshot.getRef().setValue(list);
+        });
+    }
+
+    public void getUserData(Context context, String uid) {
+        mDatabase.child("users").child(uid).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                userData.setValue(dataSnapshot.getValue(User.class));
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                userData.setValue(null);
+            }
         });
     }
 }

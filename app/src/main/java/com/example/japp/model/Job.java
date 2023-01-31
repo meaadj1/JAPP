@@ -107,7 +107,7 @@ public class Job implements Serializable {
         this.companyUid = companyUid;
     }
 
-    public Job(int id, String title, String description, ArrayList<String> requirements, String companyName, String companyImage, String category, String type, String location, String experience, String status, String companyUid, String specialization) {
+    public Job(int id, String title, String description, ArrayList<Requirement> requirements, String companyName, String companyImage, String category, String type, String location, String experience, String status, String companyUid, String specialization) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -123,11 +123,11 @@ public class Job implements Serializable {
         this.specialization = specialization;
     }
 
-    public List<String> getRequirements() {
+    public List<Requirement> getRequirements() {
         return requirements;
     }
 
-    public void setRequirements(List<String> requirements) {
+    public void setRequirements(List<Requirement> requirements) {
         this.requirements = requirements;
     }
 
@@ -139,15 +139,6 @@ public class Job implements Serializable {
         this.id = id;
     }
 
-
-    int id;
-    String title;
-    String description;
-    List<String> requirements;
-    HashMap<String, Integer> matching;
-    String companyName;
-    String companyImage;
-
     public ArrayList<String> getSaved() {
         return saved;
     }
@@ -155,12 +146,6 @@ public class Job implements Serializable {
     public void setSaved(ArrayList<String> saved) {
         this.saved = saved;
     }
-
-    String category;
-    String type;
-    String location;
-    String experience;
-    String status;
 
     public ArrayList<User> getApplicants() {
         return applicants;
@@ -170,6 +155,18 @@ public class Job implements Serializable {
         this.applicants = applicants;
     }
 
+    int id;
+    String title;
+    String description;
+    List<Requirement> requirements;
+    HashMap<String, Integer> matching;
+    String companyName;
+    String companyImage;
+    String category;
+    String type;
+    String location;
+    String experience;
+    String status;
     String specialization;
     String companyUid;
     ArrayList<String> saved;
