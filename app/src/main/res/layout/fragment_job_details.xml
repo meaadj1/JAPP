@@ -325,6 +325,24 @@
                 tools:text="the requirements is test" />
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:text="@string/matching_requirements"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_matching"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                tools:text="the requirements is test" />
+
+            <TextView
                 android:id="@+id/tv_cv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

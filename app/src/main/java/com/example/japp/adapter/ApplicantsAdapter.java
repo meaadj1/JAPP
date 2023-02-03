@@ -13,16 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.japp.R;
 import com.example.japp.databinding.ApplicantItemBinding;
-import com.example.japp.model.Requirement;
 import com.example.japp.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class ApplicantsAdapter extends RecyclerView.Adapter<ApplicantsAdapter.ViewHolder> {
 
-    private static final String TAG = "ApplicantsAdapter";
     List<User> list;
 
     public ApplicantsAdapter(List<User> list) {
@@ -38,8 +34,6 @@ public class ApplicantsAdapter extends RecyclerView.Adapter<ApplicantsAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.binding.tvApplicant.setText(list.get(position).getFirstName() + " " + list.get(position).getLastName());
-        Log.i(TAG, list.get(position).toString());
-        Log.i(TAG, String.valueOf(list.get(position)));
         holder.binding.tvPresent.setText((int) list.get(position).getMatching() + "%");
         holder.binding.progressBar.setProgress((int) list.get(position).getMatching());
         Glide.with(holder.binding.getRoot()).load(list.get(position).getPhoto()).placeholder(R.drawable.place_holder).into(holder.binding.ivApplicant);
@@ -47,12 +41,8 @@ public class ApplicantsAdapter extends RecyclerView.Adapter<ApplicantsAdapter.Vi
             holder.binding.tvDetails.setText(list.get(position).getCity());
 
         if (list.get(position).getMatchingList() != null) {
-            Log.i(TAG, "not null");
             final String[] skills = {""};
-            Log.i(TAG, list.get(position).getMatchingList().toString());
             list.get(position).getMatchingList().forEach(requirement -> skills[0] += requirement.getText() + " ");
-            Log.i(TAG, skills[0]);
-            holder.binding.tvSkills.setText(skills[0]);
         }
 
 

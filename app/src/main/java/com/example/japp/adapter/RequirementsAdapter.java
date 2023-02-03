@@ -2,7 +2,6 @@ package com.example.japp.adapter;
 
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -13,6 +12,7 @@ import com.example.japp.model.Requirement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class RequirementsAdapter extends RecyclerView.Adapter<RequirementsAdapter.ViewHolder> {
 
@@ -32,6 +32,11 @@ public class RequirementsAdapter extends RecyclerView.Adapter<RequirementsAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.binding.tvItem.setText(list.get(position).getText());
+        checkedList.forEach(requirement -> {
+            if (Objects.equals(requirement.getText(), list.get(position).getText())) {
+                holder.binding.tvItem.setChecked(true);
+            }
+        });
         holder.binding.tvItem.setOnClickListener(v -> {
             if (holder.binding.tvItem.isChecked()) {
                 holder.binding.tvItem.setChecked(false);
@@ -46,6 +51,11 @@ public class RequirementsAdapter extends RecyclerView.Adapter<RequirementsAdapte
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public void setCheckedList(ArrayList<Requirement> checkedList) {
+        this.checkedList = checkedList;
+        notifyDataSetChanged();
     }
 
     public ArrayList<Requirement> getCheckedList() {

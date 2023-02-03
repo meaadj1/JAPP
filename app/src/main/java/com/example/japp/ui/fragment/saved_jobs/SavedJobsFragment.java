@@ -8,8 +8,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +22,6 @@ import com.example.japp.R;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.AddingRequirementsAdapter;
 import com.example.japp.adapter.JobsAdapter;
-import com.example.japp.adapter.RequirementsAdapter;
-import com.example.japp.adapter.SkillsAdapter;
 import com.example.japp.databinding.AddingItemLayoutBinding;
 import com.example.japp.databinding.FragmentSavedJobsBinding;
 import com.example.japp.model.Job;
@@ -33,11 +33,11 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class SavedJobsFragment extends Fragment {
-
     private FragmentSavedJobsBinding binding;
     private DatabaseReference mDatabase;
     private String type = "Full time";
     private String category = "Education";
+    private int counter = 0;
 
     public SavedJobsFragment() {
         // Required empty public constructor
@@ -124,6 +124,13 @@ public class SavedJobsFragment extends Fragment {
         });
 
         if (jobData != null) {
+            binding.edtTitle.setEnabled(false);
+            binding.edtDescription.setEnabled(false);
+            binding.edtSpecialization.setEnabled(false);
+            binding.edtLocation.setEnabled(false);
+            binding.edtExperience.setEnabled(false);
+            binding.spinnerType.setEnabled(false);
+            binding.spinnerCategory.setEnabled(false);
             binding.edtTitle.setText(jobData.getTitle());
             binding.edtDescription.setText(jobData.getDescription());
             binding.edtSpecialization.setText(jobData.getSpecialization());
@@ -152,21 +159,34 @@ public class SavedJobsFragment extends Fragment {
 
         Job finalJobData = jobData;
         binding.btnSave.setOnClickListener(v -> {
-            if (!isValidForm())
+            if (!isValidForm(requirementsAdapter))
                 return;
+
+            String id = "";
+
+            if (finalJobData != null) {
+                if (counter >= 1) {
+                    counter = 0;
+                    id = String.valueOf(finalJobData.getId());
+                } else {
+                    counter++;
+                    binding.edtTitle.setEnabled(true);
+                    binding.edtDescription.setEnabled(true);
+                    binding.edtSpecialization.setEnabled(true);
+                    binding.edtLocation.setEnabled(true);
+                    binding.edtExperience.setEnabled(true);
+                    binding.spinnerType.setEnabled(true);
+                    binding.spinnerCategory.setEnabled(true);
+                    binding.btnSave.setText(getString(R.string.save));
+                    return;
+                }
+            }
 
             ProgressDialog loading = new ProgressDialog(binding.getRoot().getContext());
             loading.setTitle("loading");
             loading.setMessage("Wait while loading...");
             loading.setCancelable(false);
             loading.show();
-
-            String id = null;
-
-            if (finalJobData != null) {
-                id = String.valueOf(finalJobData.getId());
-            }
-
 
             String title = Objects.requireNonNull(binding.edtTitle.getText()).toString();
             String description = Objects.requireNonNull(binding.edtDescription.getText()).toString();
@@ -176,11 +196,13 @@ public class SavedJobsFragment extends Fragment {
 
             String finalId = id;
             mDatabase.child("jobs").get().addOnSuccessListener(dataSnapshot -> {
-                Job data = new Job((int) dataSnapshot.getChildrenCount(), title, description, requirementsAdapter.getList(), new SharedHelper().getString(getContext(), SharedHelper.firstName), new SharedHelper().getString(getContext(), SharedHelper.photo), category, type, location, experience, "reject", new SharedHelper().getString(getContext(), SharedHelper.uid), specialization);
-                if (finalId != null)
-                    mDatabase.child("jobs").child(finalId).setValue(data);
-                else
-                    mDatabase.child("jobs").child(String.valueOf(dataSnapshot.getChildrenCount())).setValue(data);
+                if (!finalId.equals("")) {
+                    mDatabase.child("jobs").child(finalId).setValue(new Job(Integer.parseInt(finalId), title, description, requirementsAdapter.getList(), new SharedHelper().getString(getContext(), SharedHelper.firstName), new SharedHelper().getString(getContext(), SharedHelper.photo), category, type, location, experience, "reject", new SharedHelper().getString(getContext(), SharedHelper.uid), specialization))
+                    ;
+                } else {
+                    mDatabase.child("jobs").child(String.valueOf(dataSnapshot.getChildrenCount())).setValue(new Job((int) dataSnapshot.getChildrenCount(), title, description, requirementsAdapter.getList(), new SharedHelper().getString(getContext(), SharedHelper.firstName), new SharedHelper().getString(getContext(), SharedHelper.photo), category, type, location, experience, "reject", new SharedHelper().getString(getContext(), SharedHelper.uid), specialization))
+                    ;
+                }
 
                 loading.dismiss();
                 binding.edtTitle.setText("");
@@ -191,6 +213,7 @@ public class SavedJobsFragment extends Fragment {
                 requirementsAdapter.setList(new ArrayList<>());
 
                 Toast.makeText(binding.getRoot().getContext(), getString(R.string.save_data), Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.pendingJobsFragment);
             });
         });
 
@@ -201,7 +224,7 @@ public class SavedJobsFragment extends Fragment {
         });
     }
 
-    private boolean isValidForm() {
+    private boolean isValidForm(AddingRequirementsAdapter adapter) {
         boolean valid = true;
 
         String title = Objects.requireNonNull(binding.edtTitle.getText()).toString();
@@ -245,6 +268,11 @@ public class SavedJobsFragment extends Fragment {
             binding.edtSpecialization.setError(null);
         }
 
+        if (adapter.getListCount() > 100) {
+            valid = false;
+            Toast.makeText(binding.getRoot().getContext(), "requirements value more than 100%", Toast.LENGTH_SHORT).show();
+        }
+
         return valid;
     }
 
@@ -252,12 +280,13 @@ public class SavedJobsFragment extends Fragment {
         AddingItemLayoutBinding dialogBinding = AddingItemLayoutBinding.inflate(LayoutInflater.from(getContext()), null, false);
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(dialogBinding.getRoot());
-        dialogBinding.cvEdtValue.setVisibility(View.VISIBLE);
+        dialogBinding.tvTitle.setText(getString(R.string.adding_requirement));
+        dialogBinding.llValue.setVisibility(View.VISIBLE);
         dialogBinding.tvCancel.setOnClickListener(v -> dialog.dismiss());
 
         dialogBinding.tvSave.setOnClickListener(v -> {
             if (dialogBinding.edtItem.getText() != null) {
-                adapter.addingItem(new Requirement(dialogBinding.edtItem.getText().toString(), Integer.parseInt(dialogBinding.edtValue.getText().toString())));
+                adapter.addingItem(new Requirement(dialogBinding.edtItem.getText().toString(), Integer.parseInt(Objects.requireNonNull(dialogBinding.edtValue.getText()).toString())));
                 dialog.dismiss();
             } else
                 Toast.makeText(getContext(), getString(R.string.edt_alert), Toast.LENGTH_SHORT).show();

@@ -32,6 +32,7 @@ public class JobDetailsViewModel extends ViewModel {
     public MutableLiveData<Boolean> isDone = new MutableLiveData<>();
     MutableLiveData<Boolean> isApplied = new MutableLiveData<>();
     MutableLiveData<User> userData = new MutableLiveData<>();
+    MutableLiveData<User> companyData = new MutableLiveData<>();
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
     public void applyJob(Context context, String uid, Job data, User user, ArrayList<Requirement> items) {
@@ -132,5 +133,9 @@ public class JobDetailsViewModel extends ViewModel {
                 userData.setValue(null);
             }
         });
+    }
+
+    public void getCompanyData(String uid) {
+        mDatabase.child("users").child(uid).get().addOnSuccessListener(dataSnapshot -> companyData.setValue(dataSnapshot.getValue(User.class))).addOnFailureListener(e -> companyData.setValue(null));
     }
 }

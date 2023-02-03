@@ -8,11 +8,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +21,7 @@ import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.RequirementsAdapter;
 import com.example.japp.databinding.FragmentJobDetailsBinding;
 import com.example.japp.model.Job;
+import com.example.japp.model.Requirement;
 import com.example.japp.model.User;
 import com.google.gson.Gson;
 
@@ -60,6 +59,8 @@ public class JobDetailsFragment extends Fragment {
         RequirementsAdapter requirementsAdapter = null;
 
         if (data != null) {
+            viewModel.getCompanyData(data.getCompanyUid());
+
             binding.llJob.setVisibility(View.VISIBLE);
             binding.llUser.setVisibility(View.GONE);
 
@@ -86,6 +87,9 @@ public class JobDetailsFragment extends Fragment {
 
             RequirementsAdapter finalRequirementsAdapter = requirementsAdapter;
             binding.btnApply.setOnClickListener(v -> {
+                if (binding.btnApply.getText() == getString(R.string.pending))
+                    return;
+
                 if (finalRequirementsAdapter != null)
                     viewModel.applyJob(context, uid, data, user, finalRequirementsAdapter.getCheckedList());
                 else
@@ -113,6 +117,12 @@ public class JobDetailsFragment extends Fragment {
                 binding.tvEdu.setText(userData.getEducation().toString());
             if (userData.getLanguages() != null)
                 binding.tvLang.setText(userData.getLanguages().toString());
+            if (userData.getMatchingList() != null) {
+                final String[] matching = {""};
+                userData.getMatchingList().forEach(requirement -> matching[0] += requirement.getText() + ", ");
+                binding.tvMatching.setText(matching[0]);
+            }
+
 
             if (userData.getCv() == null || Objects.equals(userData.getCv(), "")) {
                 binding.tvCv.setVisibility(View.GONE);
@@ -152,13 +162,17 @@ public class JobDetailsFragment extends Fragment {
             }
         });
 
-//        viewModel.isApplied.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-//            @Override
-//            public void onChanged(Boolean aBoolean) {
-//                if(!aBoolean){
-//
-//                }
-//            }
-//        });
+        RequirementsAdapter finalRequirementsAdapter1 = requirementsAdapter;
+        viewModel.companyData.observe(getViewLifecycleOwner(), user -> {
+            if (user.getApplicants() != null) {
+                user.getApplicants().forEach(user1 -> {
+                    if (Objects.equals(user1.getEmail(), new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.email)) && data.getId() == user1.getJobId()) {
+                        binding.btnApply.setEnabled(false);
+                        binding.btnApply.setText(getString(R.string.pending));
+                        finalRequirementsAdapter1.setCheckedList(user1.getMatchingList());
+                    }
+                });
+            }
+        });
     }
 }

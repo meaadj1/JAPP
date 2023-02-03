@@ -148,6 +148,9 @@
     <string name="last_name">Last Name</string>
     <string name="value">Value</string>
     <string name="job_title">Job title</string>
+    <string name="adding_requirement">Adding requirement</string>
+    <string name="priority_of_requirement">priority of requirement :</string>
+    <string name="matching_requirements">Matching requirements</string>
 
     <string-array name="type">
         <item>Full time</item>

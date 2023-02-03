@@ -50,4 +50,9 @@
         android:name="com.example.japp.ui.fragment.saved_jobs.SavedJobsFragment"
         android:label="fragment_saved_jobs"
         tools:layout="@layout/fragment_saved_jobs" />
+    <fragment
+        android:id="@+id/pendingJobsFragment"
+        android:name="com.example.japp.ui.fragment.pending_jobs.PendingJobsFragment"
+        android:label="fragment_pending_jobs"
+        tools:layout="@layout/fragment_pending_jobs" />
 </navigation>

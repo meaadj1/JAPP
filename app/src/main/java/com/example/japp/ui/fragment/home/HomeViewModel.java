@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -11,6 +12,8 @@ import com.example.japp.R;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.model.Job;
 import com.example.japp.model.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -26,6 +29,7 @@ public class HomeViewModel extends ViewModel {
 
     MutableLiveData<ArrayList<Job>> jobs = new MutableLiveData<>();
     MutableLiveData<List<User>> applicants = new MutableLiveData<>();
+    public MutableLiveData<User> companyData = new MutableLiveData<>();
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
     public void getJobs(Context context) {
@@ -112,5 +116,9 @@ public class HomeViewModel extends ViewModel {
             });
             dataSnapshot.getRef().setValue(list);
         });
+    }
+
+    public void getCompanyData(String uid) {
+        mDatabase.child("users").child(uid).get().addOnSuccessListener(dataSnapshot -> companyData.setValue(dataSnapshot.getValue(User.class))).addOnFailureListener(e -> companyData.setValue(null));
     }
 }

@@ -84,7 +84,7 @@
                 android:maxWidth="@dimen/_150sdp"
                 android:text="@string/your_compatibility_percentage_with_this_job"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toTopOf="@id/tv_skills"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/progressBar"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -109,21 +109,9 @@
                 android:max="100"
                 android:progress="100"
                 android:progressDrawable="@drawable/circular_progress_bar"
-                app:layout_constraintBottom_toTopOf="@id/tv_skills"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tv_present_details"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_skills"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/progressBar"
-                tools:text="Html,Kotlin,Java" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

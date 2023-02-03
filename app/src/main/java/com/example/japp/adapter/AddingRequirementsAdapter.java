@@ -21,6 +21,7 @@ import java.util.Objects;
 public class AddingRequirementsAdapter extends RecyclerView.Adapter<AddingRequirementsAdapter.ViewHolder> {
 
     ArrayList<Requirement> skills = new ArrayList<>();
+    int count = 0;
 
     public AddingRequirementsAdapter(ArrayList<Requirement> skills) {
         if (skills != null)
@@ -56,11 +57,16 @@ public class AddingRequirementsAdapter extends RecyclerView.Adapter<AddingRequir
 
     public void addingItem(Requirement item) {
         skills.add(item);
+        count += item.getValue();
         notifyDataSetChanged();
     }
 
     public ArrayList<Requirement> getList() {
         return skills;
+    }
+
+    public int getListCount() {
+        return count;
     }
 
     public void setList(ArrayList<Requirement> list) {
