@@ -46,16 +46,6 @@ public class JobDetailsViewModel extends ViewModel {
         map.put(uid, (int) validate[0]);
         data.setStatus("pending");
         data.setMatching(map);
-        if (data.getApplicants() == null) {
-            ArrayList<User> list = new ArrayList<>();
-            list.add(user);
-            data.setApplicants(list);
-        } else {
-            ArrayList<User> list = data.getApplicants();
-            list.add(user);
-            data.setApplicants(list);
-        }
-
         mDatabase.child("jobs").child(String.valueOf(data.getId())).setValue(data);
         mDatabase.child("users").child(uid).child("jobs").get().addOnSuccessListener(dataSnapshot -> {
             mDatabase.child("users").child(uid).child("jobs").get().addOnSuccessListener(dataSnapshot13 -> {
@@ -79,48 +69,80 @@ public class JobDetailsViewModel extends ViewModel {
         });
     }
 
-    public void rejectUser(Context context, String email, int jobId, String uid) {
+    public void rejectUser(Context context, String email, int jobId, String uid, User user) {
         mDatabase.child("users").get().addOnSuccessListener(dataSnapshot -> dataSnapshot.getChildren().forEach(dataSnapshot1 -> {
-            User user = dataSnapshot1.getValue(User.class);
-            assert user != null;
-            if (Objects.equals(user.getEmail(), email)) {
+            User user1 = dataSnapshot1.getValue(User.class);
+            assert user1 != null;
+            if (Objects.equals(user1.getEmail(), email)) {
                 dataSnapshot1.child("jobs").child(String.valueOf(jobId)).child("status").getRef().setValue("reject");
                 Toast.makeText(context, context.getString(R.string.reject_user), Toast.LENGTH_SHORT).show();
                 isDone.setValue(true);
             }
         })).addOnFailureListener(e -> Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_SHORT).show());
+
+        mDatabase.child("jobs").child(String.valueOf(jobId)).get().addOnSuccessListener(dataSnapshot -> {
+            Job job = dataSnapshot.getValue(Job.class);
+            assert job != null;
+            if (job.getApplicants() == null) {
+                ArrayList<User> list = new ArrayList<>();
+                list.add(user);
+                job.setApplicants(list);
+            } else {
+                ArrayList<User> list = job.getApplicants();
+                list.add(user);
+                job.setApplicants(list);
+            }
+            dataSnapshot.getRef().setValue(job);
+        });
+
         mDatabase.child("users").child(uid).child("applicants").get().addOnSuccessListener(dataSnapshot -> {
             ArrayList<User> list = new ArrayList<>();
             dataSnapshot.getChildren().forEach(dataSnapshot12 -> {
-                User user = dataSnapshot12.getValue(User.class);
-                assert user != null;
-                if (Objects.equals(user.getEmail(), email) && user.getJobId() == jobId) {
+                User user1 = dataSnapshot12.getValue(User.class);
+                assert user1 != null;
+                if (Objects.equals(user1.getEmail(), email) && user1.getJobId() == jobId) {
                 } else {
-                    list.add(user);
+                    list.add(user1);
                 }
             });
             dataSnapshot.getRef().setValue(list);
         });
     }
 
-    public void acceptUser(Context context, String email, int jobId, String uid) {
+    public void acceptUser(Context context, String email, int jobId, String uid, User user) {
         mDatabase.child("users").get().addOnSuccessListener(dataSnapshot -> dataSnapshot.getChildren().forEach(dataSnapshot1 -> {
-            User user = dataSnapshot1.getValue(User.class);
-            assert user != null;
-            if (Objects.equals(user.getEmail(), email)) {
+            User user1 = dataSnapshot1.getValue(User.class);
+            assert user1 != null;
+            if (Objects.equals(user1.getEmail(), email)) {
                 dataSnapshot1.child("jobs").child(String.valueOf(jobId)).child("status").getRef().setValue("accept");
                 Toast.makeText(context, context.getString(R.string.accept_user), Toast.LENGTH_SHORT).show();
                 isDone.setValue(true);
             }
         })).addOnFailureListener(e -> Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_SHORT).show());
+
+        mDatabase.child("jobs").child(String.valueOf(jobId)).get().addOnSuccessListener(dataSnapshot -> {
+            Job job = dataSnapshot.getValue(Job.class);
+            assert job != null;
+            if (job.getApplicants() == null) {
+                ArrayList<User> list = new ArrayList<>();
+                list.add(user);
+                job.setApplicants(list);
+            } else {
+                ArrayList<User> list = job.getApplicants();
+                list.add(user);
+                job.setApplicants(list);
+            }
+            dataSnapshot.getRef().setValue(job);
+        });
+
         mDatabase.child("users").child(uid).child("applicants").get().addOnSuccessListener(dataSnapshot -> {
             ArrayList<User> list = new ArrayList<>();
             dataSnapshot.getChildren().forEach(dataSnapshot12 -> {
-                User user = dataSnapshot12.getValue(User.class);
-                assert user != null;
-                if (Objects.equals(user.getEmail(), email) && user.getJobId() == jobId) {
+                User user1 = dataSnapshot12.getValue(User.class);
+                assert user1 != null;
+                if (Objects.equals(user1.getEmail(), email) && user1.getJobId() == jobId) {
                 } else {
-                    list.add(user);
+                    list.add(user1);
                 }
             });
             dataSnapshot.getRef().setValue(list);

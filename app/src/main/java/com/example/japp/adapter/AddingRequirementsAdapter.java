@@ -22,6 +22,7 @@ public class AddingRequirementsAdapter extends RecyclerView.Adapter<AddingRequir
 
     ArrayList<Requirement> skills = new ArrayList<>();
     int count = 0;
+    boolean isEdit = false;
 
     public AddingRequirementsAdapter(ArrayList<Requirement> skills) {
         if (skills != null)
@@ -40,11 +41,16 @@ public class AddingRequirementsAdapter extends RecyclerView.Adapter<AddingRequir
         holder.binding.textView.setText(skills.get(position).getText());
         holder.binding.edtValue.setText(String.valueOf(skills.get(position).getValue()));
         holder.binding.ivDelete.setOnClickListener(v -> {
-            skills.remove(skills.get(position));
-            notifyDataSetChanged();
+            if (!isEdit) {
+                skills.remove(skills.get(position));
+                notifyDataSetChanged();
+            }
         });
 
-        holder.binding.ivEdit.setOnClickListener(v -> editItem(holder.binding.getRoot().getContext(), position));
+        holder.binding.ivEdit.setOnClickListener(v -> {
+            if (!isEdit)
+                editItem(holder.binding.getRoot().getContext(), position);
+        });
     }
 
     @Override
@@ -70,6 +76,8 @@ public class AddingRequirementsAdapter extends RecyclerView.Adapter<AddingRequir
     }
 
     public void setList(ArrayList<Requirement> list) {
+        if (!list.isEmpty())
+            isEdit = true;
         skills = list;
         notifyDataSetChanged();
     }

@@ -61,6 +61,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_edt_value"
+            android:layout_margin="@dimen/_3sdp"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="wrap_content"
             app:cardCornerRadius="@dimen/_7sdp">

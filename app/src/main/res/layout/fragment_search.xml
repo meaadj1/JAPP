@@ -53,10 +53,17 @@
             </androidx.cardview.widget.CardView>
 
             <ImageView
+                android:id="@+id/iv_enter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:src="@drawable/ic_enter" />
+
+            <ImageView
                 android:id="@+id/iv_filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:src="@drawable/ic_filter" />
 
         </LinearLayout>

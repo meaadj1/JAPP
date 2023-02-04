@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class SavedJobsFragment extends Fragment {
+
+    private static final String TAG = "SavedJobsFragment";
+    
     private FragmentSavedJobsBinding binding;
     private DatabaseReference mDatabase;
     private String type = "Full time";
@@ -130,6 +134,7 @@ public class SavedJobsFragment extends Fragment {
             binding.edtExperience.setEnabled(false);
             binding.spinnerType.setEnabled(false);
             binding.spinnerCategory.setEnabled(false);
+            binding.btnAdd.setEnabled(false);
             binding.edtTitle.setText(jobData.getTitle());
             binding.edtDescription.setText(jobData.getDescription());
             binding.edtSpecialization.setText(jobData.getSpecialization());
@@ -184,11 +189,10 @@ public class SavedJobsFragment extends Fragment {
                     binding.edtExperience.setEnabled(true);
                     binding.spinnerType.setEnabled(true);
                     binding.spinnerCategory.setEnabled(true);
+                    binding.btnAdd.setEnabled(true);
                     binding.btnSave.setText(getString(R.string.save));
                     return;
                 }
-            } else {
-                viewModel.uploadNotification(new SharedHelper().getString(getContext(), SharedHelper.firstName), Objects.requireNonNull(binding.edtTitle.getText()).toString());
             }
 
             ProgressDialog loading = new ProgressDialog(binding.getRoot().getContext());

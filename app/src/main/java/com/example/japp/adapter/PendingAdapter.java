@@ -51,7 +51,7 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
         holder.binding.getRoot().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("data", list.get(holder.getAdapterPosition()));
-            Navigation.createNavigateOnClickListener(R.id.savedJobsFragment, bundle).onClick(v);
+            Navigation.createNavigateOnClickListener(R.id.nav_job_details, bundle).onClick(v);
         });
     }
 

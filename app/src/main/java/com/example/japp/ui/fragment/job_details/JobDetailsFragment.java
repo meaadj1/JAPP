@@ -21,12 +21,10 @@ import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.RequirementsAdapter;
 import com.example.japp.databinding.FragmentJobDetailsBinding;
 import com.example.japp.model.Job;
-import com.example.japp.model.Requirement;
 import com.example.japp.model.User;
 import com.google.gson.Gson;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 
 public class JobDetailsFragment extends Fragment {
     private FragmentJobDetailsBinding binding;
@@ -140,9 +138,9 @@ public class JobDetailsFragment extends Fragment {
 
             binding.btnShowCv.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(userData.getCv()))));
 
-            binding.tvAccept.setOnClickListener(v -> viewModel.acceptUser(context, userData.getEmail(), userData.getJobId(), uid));
+            binding.tvAccept.setOnClickListener(v -> viewModel.acceptUser(context, userData.getEmail(), userData.getJobId(), uid, user));
 
-            binding.tvReject.setOnClickListener(v -> viewModel.rejectUser(context, userData.getEmail(), userData.getJobId(), uid));
+            binding.tvReject.setOnClickListener(v -> viewModel.rejectUser(context, userData.getEmail(), userData.getJobId(), uid, user));
         }
 
         binding.ivBack.setOnClickListener(v -> Navigation.findNavController(binding.getRoot()).navigateUp());
@@ -164,14 +162,17 @@ public class JobDetailsFragment extends Fragment {
 
         RequirementsAdapter finalRequirementsAdapter1 = requirementsAdapter;
         viewModel.companyData.observe(getViewLifecycleOwner(), user -> {
-            if (user.getApplicants() != null) {
-                user.getApplicants().forEach(user1 -> {
-                    if (Objects.equals(user1.getEmail(), new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.email)) && data.getId() == user1.getJobId()) {
-                        binding.btnApply.setEnabled(false);
-                        binding.btnApply.setText(getString(R.string.pending));
-                        finalRequirementsAdapter1.setCheckedList(user1.getMatchingList());
-                    }
-                });
+            if (user != null) {
+                if (user.getApplicants() != null) {
+                    user.getApplicants().forEach(user1 -> {
+                        if (Objects.equals(user1.getEmail(), new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.email)) && data.getId() == user1.getJobId()) {
+                            binding.btnApply.setEnabled(false);
+                            binding.btnApply.setText(getString(R.string.pending));
+                            assert finalRequirementsAdapter1 != null;
+                            finalRequirementsAdapter1.setCheckedList(user1.getMatchingList());
+                        }
+                    });
+                }
             }
         });
     }
