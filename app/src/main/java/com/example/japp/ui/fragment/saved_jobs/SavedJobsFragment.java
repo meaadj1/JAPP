@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -143,17 +142,25 @@ public class SavedJobsFragment extends Fragment {
             else
                 binding.spinnerType.setSelection(1);
 
-
+            category = jobData.getCategory();
             if (Objects.equals(jobData.getCategory(), "Education"))
                 binding.spinnerCategory.setSelection(0);
-            else if (Objects.equals(jobData.getCategory(), "Finance"))
+            else if (Objects.equals(jobData.getCategory(), "Engineering"))
                 binding.spinnerCategory.setSelection(1);
-            else if (Objects.equals(jobData.getCategory(), "Restaurant"))
+            else if (Objects.equals(jobData.getCategory(), "Finance"))
                 binding.spinnerCategory.setSelection(2);
-            else if (Objects.equals(jobData.getCategory(), "Programming"))
+            else if (Objects.equals(jobData.getCategory(), "Translation"))
                 binding.spinnerCategory.setSelection(3);
-            else
+            else if (Objects.equals(jobData.getCategory(), "Marketing"))
                 binding.spinnerCategory.setSelection(4);
+            else if (Objects.equals(jobData.getCategory(), "Food"))
+                binding.spinnerCategory.setSelection(5);
+            else if (Objects.equals(jobData.getCategory(), "Law"))
+                binding.spinnerCategory.setSelection(6);
+            else if (Objects.equals(jobData.getCategory(), "Technology"))
+                binding.spinnerCategory.setSelection(7);
+            else
+                binding.spinnerCategory.setSelection(8);
         }
 
 
@@ -180,6 +187,8 @@ public class SavedJobsFragment extends Fragment {
                     binding.btnSave.setText(getString(R.string.save));
                     return;
                 }
+            } else {
+                viewModel.uploadNotification(new SharedHelper().getString(getContext(), SharedHelper.firstName), Objects.requireNonNull(binding.edtTitle.getText()).toString());
             }
 
             ProgressDialog loading = new ProgressDialog(binding.getRoot().getContext());

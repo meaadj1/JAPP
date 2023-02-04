@@ -14,14 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.japp.R;
-import com.example.japp.Utils.MergeSort;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.ApplicantsAdapter;
 import com.example.japp.adapter.JobsAdapter;
 import com.example.japp.databinding.FragmentHomeBinding;
+import com.example.japp.model.Job;
 import com.example.japp.model.User;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -73,10 +74,7 @@ public class HomeFragment extends Fragment {
                 binding.ivNotFound.setVisibility(View.GONE);
                 binding.tvNotFound.setVisibility(View.GONE);
                 binding.rvJob.setVisibility(View.VISIBLE);
-                String json = new SharedHelper().getString(context, SharedHelper.user);
-                String uid = new SharedHelper().getString(context, SharedHelper.uid);
-                User user = new Gson().fromJson(json, User.class);
-                binding.rvJob.setAdapter(new JobsAdapter(jobs, uid, user.getSkills(), viewModel, "HOME"));
+                handleJobs(jobs, new SharedHelper().getString(context, SharedHelper.uid), new Gson().fromJson(new SharedHelper().getString(context, SharedHelper.user), User.class));
             } else {
                 binding.ivNotFound.setVisibility(View.VISIBLE);
                 binding.tvNotFound.setVisibility(View.VISIBLE);
@@ -102,8 +100,27 @@ public class HomeFragment extends Fragment {
     }
 
     private void handleApplicants(List<User> users) {
-        MergeSort ob = new MergeSort();
-        ob.mergeSort(users, 0, users.size() - 1);
+//        MergeSort ob = new MergeSort();
+//        ob.mergeSort(users, 0, users.size() - 1);
         binding.rvJob.setAdapter(new ApplicantsAdapter(users));
+    }
+
+    private void handleJobs(ArrayList<Job> jobs, String uid, User user) {
+        ArrayList<Job> userJobs = new ArrayList<>();
+        jobs.forEach(job -> {
+            final Boolean[] isFound = {false};
+            if (job.getApplicants() != null) {
+                job.getApplicants().forEach(user1 -> {
+                    if (Objects.equals(user1.getEmail(), user.getEmail())) {
+                        isFound[0] = true;
+                    }
+                });
+            }
+            if (!isFound[0])
+                userJobs.add(job);
+        });
+
+
+        binding.rvJob.setAdapter(new JobsAdapter(userJobs, uid, user.getSkills(), viewModel, "HOME"));
     }
 }

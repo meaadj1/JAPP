@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.model.Job;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -31,5 +33,9 @@ public class SavedViewModel extends ViewModel {
             }
             jobs.setValue(list);
         });
+    }
+
+    public void uploadNotification(String name, String jobTitle) {
+        mDatabase.child("notification").get().addOnSuccessListener(dataSnapshot -> dataSnapshot.child(String.valueOf(dataSnapshot.getChildrenCount())).getRef().setValue(name + " uploaded a new Job " + jobTitle));
     }
 }

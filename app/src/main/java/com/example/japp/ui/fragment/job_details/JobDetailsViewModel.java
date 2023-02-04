@@ -1,7 +1,6 @@
 package com.example.japp.ui.fragment.job_details;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,10 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 public class JobDetailsViewModel extends ViewModel {
 
@@ -50,6 +46,16 @@ public class JobDetailsViewModel extends ViewModel {
         map.put(uid, (int) validate[0]);
         data.setStatus("pending");
         data.setMatching(map);
+        if (data.getApplicants() == null) {
+            ArrayList<User> list = new ArrayList<>();
+            list.add(user);
+            data.setApplicants(list);
+        } else {
+            ArrayList<User> list = data.getApplicants();
+            list.add(user);
+            data.setApplicants(list);
+        }
+
         mDatabase.child("jobs").child(String.valueOf(data.getId())).setValue(data);
         mDatabase.child("users").child(uid).child("jobs").get().addOnSuccessListener(dataSnapshot -> {
             mDatabase.child("users").child(uid).child("jobs").get().addOnSuccessListener(dataSnapshot13 -> {

@@ -14,7 +14,6 @@ import com.example.japp.model.Category;
 
 import java.util.ArrayList;
 
-
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
 
     ArrayList<Category> list;
