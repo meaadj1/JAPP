@@ -7,17 +7,19 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.japp.R;
+import com.example.japp.Utils.SharedHelper;
 import com.example.japp.model.Job;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
+import com.example.japp.model.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NotificationViewModel extends ViewModel {
 
     MutableLiveData<ArrayList<Job>> jobs = new MutableLiveData<>();
+    MutableLiveData<List<User>> applicants = new MutableLiveData<>();
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
@@ -32,14 +34,16 @@ public class NotificationViewModel extends ViewModel {
         });
     }
 
-    public void getNotifications(String uid) {
-        mDatabase.child("notification").child(uid).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-
+    public void getApplicants(Context context) {
+        mDatabase.child("users").child(new SharedHelper().getString(context, SharedHelper.uid)).child("applicants").get().addOnSuccessListener(dataSnapshot -> {
+            ArrayList<User> list = new ArrayList<>();
+            for (int i = 0; i < dataSnapshot.getChildrenCount(); i++) {
+                list.add(dataSnapshot.child(String.valueOf(i)).getValue(User.class));
             }
+            applicants.setValue(list);
+        }).addOnFailureListener(e -> {
+            applicants.setValue(null);
+            Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_SHORT).show();
         });
     }
-
-
 }

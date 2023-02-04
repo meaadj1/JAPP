@@ -138,9 +138,11 @@ public class JobDetailsFragment extends Fragment {
 
             binding.btnShowCv.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(userData.getCv()))));
 
-            binding.tvAccept.setOnClickListener(v -> viewModel.acceptUser(context, userData.getEmail(), userData.getJobId(), uid, user));
 
-            binding.tvReject.setOnClickListener(v -> viewModel.rejectUser(context, userData.getEmail(), userData.getJobId(), uid, user));
+
+            binding.tvAccept.setOnClickListener(v -> viewModel.acceptUser(context, userData.getEmail(), userData.getJobId(), uid, userData));
+
+            binding.tvReject.setOnClickListener(v -> viewModel.rejectUser(context, userData.getEmail(), userData.getJobId(), uid, userData));
         }
 
         binding.ivBack.setOnClickListener(v -> Navigation.findNavController(binding.getRoot()).navigateUp());

@@ -14,11 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.japp.Utils.SharedHelper;
+import com.example.japp.adapter.ApplicantsAdapter;
 import com.example.japp.adapter.JobsAdapter;
 import com.example.japp.adapter.NotificationAdapter;
 import com.example.japp.adapter.PendingAdapter;
 import com.example.japp.databinding.FragmentNotificationBinding;
 import com.example.japp.model.Job;
+import com.example.japp.model.User;
 import com.example.japp.ui.fragment.saved_jobs.SavedViewModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -56,7 +59,7 @@ public class NotificationFragment extends Fragment {
         if (Objects.equals(type, "JOB_SEEKER")) {
             viewModel.getJobs(binding.getRoot().getContext());
         } else {
-
+            viewModel.getApplicants(binding.getRoot().getContext());
         }
 
         viewModel.jobs.observe(getViewLifecycleOwner(), jobs -> {
@@ -65,6 +68,19 @@ public class NotificationFragment extends Fragment {
                 binding.ivNotFound.setVisibility(View.GONE);
                 binding.rvNotification.setVisibility(View.VISIBLE);
                 binding.rvNotification.setAdapter(new JobsAdapter(jobs, "SAVED"));
+            } else {
+                binding.tvNotFound.setVisibility(View.VISIBLE);
+                binding.ivNotFound.setVisibility(View.VISIBLE);
+                binding.rvNotification.setVisibility(View.GONE);
+            }
+        });
+
+        viewModel.applicants.observe(getViewLifecycleOwner(), users -> {
+            if (!users.isEmpty()) {
+                binding.tvNotFound.setVisibility(View.GONE);
+                binding.ivNotFound.setVisibility(View.GONE);
+                binding.rvNotification.setVisibility(View.VISIBLE);
+                binding.rvNotification.setAdapter(new ApplicantsAdapter(users));
             } else {
                 binding.tvNotFound.setVisibility(View.VISIBLE);
                 binding.ivNotFound.setVisibility(View.VISIBLE);

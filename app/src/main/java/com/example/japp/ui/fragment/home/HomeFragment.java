@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class HomeFragment extends Fragment {
 
@@ -106,6 +107,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void handleJobs(ArrayList<Job> jobs, String uid, User user) {
+        jobs.forEach(job -> Log.i(TAG, job.getTitle()));
         ArrayList<Job> userJobs = new ArrayList<>();
         jobs.forEach(job -> {
             final Boolean[] isFound = {false};
@@ -120,7 +122,12 @@ public class HomeFragment extends Fragment {
                 userJobs.add(job);
         });
 
-
-        binding.rvJob.setAdapter(new JobsAdapter(userJobs, uid, user.getSkills(), viewModel, "HOME"));
+        if (userJobs.isEmpty()) {
+            binding.ivNotFound.setVisibility(View.VISIBLE);
+            binding.tvNotFound.setVisibility(View.VISIBLE);
+            binding.rvJob.setVisibility(View.GONE);
+        } else {
+            binding.rvJob.setAdapter(new JobsAdapter(userJobs, uid, user.getSkills(), viewModel, "HOME"));
+        }
     }
 }
