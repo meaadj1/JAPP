@@ -22,9 +22,10 @@ public class ActiveViewModel extends ViewModel {
             ArrayList<Job> list = new ArrayList<>();
             for (int i = 0; i < dataSnapshot.getChildrenCount(); i++) {
                 Job item = dataSnapshot.child(String.valueOf(i)).getValue(Job.class);
-                assert item != null;
-                if (Objects.equals(item.getStatus(), "reject") || Objects.equals(item.getStatus(), "accept"))
-                    list.add(item);
+                if (item != null) {
+                    if (Objects.equals(item.getStatus(), "reject") || Objects.equals(item.getStatus(), "accept"))
+                        list.add(item);
+                }
             }
             jobs.setValue(list);
         });

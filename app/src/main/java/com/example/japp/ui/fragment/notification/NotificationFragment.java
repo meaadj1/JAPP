@@ -5,10 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,27 +14,18 @@ import android.view.ViewGroup;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.ApplicantsAdapter;
 import com.example.japp.adapter.JobsAdapter;
-import com.example.japp.adapter.NotificationAdapter;
-import com.example.japp.adapter.PendingAdapter;
 import com.example.japp.databinding.FragmentNotificationBinding;
 import com.example.japp.model.Job;
 import com.example.japp.model.User;
-import com.example.japp.ui.fragment.saved_jobs.SavedViewModel;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 public class NotificationFragment extends Fragment {
 
     private FragmentNotificationBinding binding;
     private NotificationViewModel viewModel;
-    private static final String TAG = "NotificationFragment";
 
     public NotificationFragment() {
         // Required empty public constructor
@@ -55,19 +44,19 @@ public class NotificationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         String type = new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.type);
+        User user = new Gson().fromJson(new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.user), User.class);
 
-        if (Objects.equals(type, "JOB_SEEKER")) {
+        if (Objects.equals(type, "JOB_SEEKER"))
             viewModel.getJobs(binding.getRoot().getContext());
-        } else {
+        else
             viewModel.getApplicants(binding.getRoot().getContext());
-        }
 
         viewModel.jobs.observe(getViewLifecycleOwner(), jobs -> {
             if (!jobs.isEmpty()) {
                 binding.tvNotFound.setVisibility(View.GONE);
                 binding.ivNotFound.setVisibility(View.GONE);
                 binding.rvNotification.setVisibility(View.VISIBLE);
-                binding.rvNotification.setAdapter(new JobsAdapter(jobs, "SAVED"));
+                handleJobs(jobs, user);
             } else {
                 binding.tvNotFound.setVisibility(View.VISIBLE);
                 binding.ivNotFound.setVisibility(View.VISIBLE);
@@ -87,5 +76,28 @@ public class NotificationFragment extends Fragment {
                 binding.rvNotification.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void handleJobs(ArrayList<Job> jobs, User user) {
+        ArrayList<Job> userJobs = new ArrayList<>();
+        jobs.forEach(job -> {
+            final Boolean[] isFound = {false};
+            if (job.getApplicants() != null) {
+                job.getApplicants().forEach(user1 -> {
+                    if (Objects.equals(user1.getEmail(), user.getEmail())) {
+                        isFound[0] = true;
+                    }
+                });
+            }
+            if (!isFound[0])
+                userJobs.add(job);
+        });
+
+        if (userJobs.isEmpty()) {
+            binding.ivNotFound.setVisibility(View.VISIBLE);
+            binding.tvNotFound.setVisibility(View.VISIBLE);
+            binding.rvNotification.setVisibility(View.GONE);
+        } else
+            binding.rvNotification.setAdapter(new JobsAdapter(userJobs, "SAVED"));
     }
 }

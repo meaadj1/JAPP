@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class JobDetailsViewModel extends ViewModel {
 
@@ -49,7 +50,7 @@ public class JobDetailsViewModel extends ViewModel {
         data.setMatching(map);
         mDatabase.child("jobs").child(String.valueOf(data.getId())).setValue(data);
         mDatabase.child("users").child(uid).child("jobs").get().addOnSuccessListener(dataSnapshot -> {
-            mDatabase.child("users").child(uid).child("jobs").get().addOnSuccessListener(dataSnapshot13 -> {
+            dataSnapshot.getRef().get().addOnSuccessListener(dataSnapshot13 -> {
                 dataSnapshot13.getChildren().forEach(dataSnapshot12 -> {
                     if (Objects.equals(Objects.requireNonNull(dataSnapshot12.getValue(Job.class)).getTitle(), data.getTitle())) {
                         isApplied.setValue(true);
@@ -75,7 +76,14 @@ public class JobDetailsViewModel extends ViewModel {
             User user1 = dataSnapshot1.getValue(User.class);
             assert user1 != null;
             if (Objects.equals(user1.getEmail(), email)) {
-                dataSnapshot1.child("jobs").child(String.valueOf(jobId)).child("status").getRef().setValue("reject");
+                dataSnapshot1.child("jobs").getChildren().forEach(dataSnapshot2 -> {
+                    Job job = dataSnapshot2.getValue(Job.class);
+                    if (job != null) {
+                        if (Objects.equals(job.getCompanyUid(), uid)) {
+                            dataSnapshot2.child("status").getRef().setValue("reject");
+                        }
+                    }
+                });
                 Toast.makeText(context, context.getString(R.string.reject_user), Toast.LENGTH_SHORT).show();
                 isDone.setValue(true);
             }
@@ -83,17 +91,18 @@ public class JobDetailsViewModel extends ViewModel {
 
         mDatabase.child("jobs").child(String.valueOf(jobId)).get().addOnSuccessListener(dataSnapshot -> {
             Job job = dataSnapshot.getValue(Job.class);
-            assert job != null;
-            if (job.getApplicants() == null) {
-                ArrayList<User> list = new ArrayList<>();
-                list.add(user);
-                job.setApplicants(list);
-            } else {
-                ArrayList<User> list = job.getApplicants();
-                list.add(user);
-                job.setApplicants(list);
+            if (job != null) {
+                if (job.getApplicants() == null) {
+                    ArrayList<User> list = new ArrayList<>();
+                    list.add(user);
+                    job.setApplicants(list);
+                } else {
+                    ArrayList<User> list = job.getApplicants();
+                    list.add(user);
+                    job.setApplicants(list);
+                }
+                dataSnapshot.getRef().setValue(job);
             }
-            dataSnapshot.getRef().setValue(job);
         });
 
         mDatabase.child("users").child(uid).child("applicants").get().addOnSuccessListener(dataSnapshot -> {
@@ -115,7 +124,14 @@ public class JobDetailsViewModel extends ViewModel {
             User user1 = dataSnapshot1.getValue(User.class);
             assert user1 != null;
             if (Objects.equals(user1.getEmail(), email)) {
-                dataSnapshot1.child("jobs").child(String.valueOf(jobId)).child("status").getRef().setValue("accept");
+                dataSnapshot1.child("jobs").getChildren().forEach(dataSnapshot2 -> {
+                    Job job = dataSnapshot2.getValue(Job.class);
+                    if (job != null) {
+                        if (Objects.equals(job.getCompanyUid(), uid)) {
+                            dataSnapshot2.child("status").getRef().setValue("accept");
+                        }
+                    }
+                });
                 Toast.makeText(context, context.getString(R.string.accept_user), Toast.LENGTH_SHORT).show();
                 isDone.setValue(true);
             }
@@ -123,17 +139,18 @@ public class JobDetailsViewModel extends ViewModel {
 
         mDatabase.child("jobs").child(String.valueOf(jobId)).get().addOnSuccessListener(dataSnapshot -> {
             Job job = dataSnapshot.getValue(Job.class);
-            assert job != null;
-            if (job.getApplicants() == null) {
-                ArrayList<User> list = new ArrayList<>();
-                list.add(user);
-                job.setApplicants(list);
-            } else {
-                ArrayList<User> list = job.getApplicants();
-                list.add(user);
-                job.setApplicants(list);
+            if (job != null) {
+                if (job.getApplicants() == null) {
+                    ArrayList<User> list = new ArrayList<>();
+                    list.add(user);
+                    job.setApplicants(list);
+                } else {
+                    ArrayList<User> list = job.getApplicants();
+                    list.add(user);
+                    job.setApplicants(list);
+                }
+                dataSnapshot.getRef().setValue(job);
             }
-            dataSnapshot.getRef().setValue(job);
         });
 
         mDatabase.child("users").child(uid).child("applicants").get().addOnSuccessListener(dataSnapshot -> {

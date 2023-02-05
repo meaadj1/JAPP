@@ -153,6 +153,7 @@
     <string name="matching_requirements">Matching requirements</string>
     <string name="engineering">Engineering</string>
     <string name="technology">Technology</string>
+    <string name="done">DONE</string>
 
     <string-array name="type">
         <item>Full time</item>

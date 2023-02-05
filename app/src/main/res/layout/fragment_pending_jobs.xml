@@ -33,6 +33,7 @@
         android:id="@+id/rv_jobs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/_20sdp"
         android:padding="@dimen/_15sdp"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

@@ -38,8 +38,7 @@ public class JobDetailsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentJobDetailsBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(this).get(JobDetailsViewModel.class);
         return binding.getRoot();

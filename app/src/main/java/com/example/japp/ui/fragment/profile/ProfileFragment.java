@@ -38,8 +38,6 @@ import java.util.Calendar;
 import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
-    private static final String TAG = "ProfileFragment";
-
     private static final int RESULT_LOAD_IMG = 5;
     private static final int RESULT_LOAD_PDF = 1;
     private FragmentProfileBinding binding;
@@ -54,7 +52,7 @@ public class ProfileFragment extends Fragment {
     static String thirdCompanySize = "25-49";
     static String fourthCompanySize = "50-149";
     static String fifthCompanySize = "+200";
-    private ArrayList<String> categories = new ArrayList<>();
+    private final ArrayList<String> categories = new ArrayList<>();
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -78,14 +76,60 @@ public class ProfileFragment extends Fragment {
         storageReference = storage.getReference();
         photo = new SharedHelper().getString(context, SharedHelper.photo);
         pdf = new SharedHelper().getString(context, SharedHelper.pdf);
+        String education = "Education";
+        String engineering = "Engineering";
+        String finance = "Finance";
+        String translation = "Translation";
+        String marketing = "Marketing";
+        String food = "Food";
+        String law = "law";
+        String technology = "Technology";
+        String health = "Health";
 
         binding.ivSetting.setOnClickListener(v -> Navigation.createNavigateOnClickListener(R.id.nav_settings).onClick(v));
 
         binding.btnEdit.setOnClickListener(v -> getImage());
 
+        String json = new SharedHelper().getString(getContext(), SharedHelper.user);
+        User user = new Gson().fromJson(json, User.class);
+
+        if (user.getCategories() != null)
+            categories.addAll(user.getCategories());
+
         if (Objects.equals(new SharedHelper().getString(context, SharedHelper.type), "JOB_SEEKER")) {
             binding.llSeeker.setVisibility(View.VISIBLE);
             binding.llOrg.setVisibility(View.GONE);
+
+            if (user.getCv() != null && !Objects.equals(user.getCv(), "")) {
+                binding.tvCv.setText(getString(R.string.done));
+            }
+
+            if (categories.contains(education))
+                binding.tvEdu.setChecked(true);
+
+            if (categories.contains(engineering))
+                binding.tvEng.setChecked(true);
+
+            if (categories.contains(finance))
+                binding.tvFinance.setChecked(true);
+
+            if (categories.contains(translation))
+                binding.tvTranslation.setChecked(true);
+
+            if (categories.contains(marketing))
+                binding.tvMarketing.setChecked(true);
+
+            if (categories.contains(food))
+                binding.tvFood.setChecked(true);
+
+            if (categories.contains(law))
+                binding.tvLaw.setChecked(true);
+
+            if (categories.contains(technology))
+                binding.tvTech.setChecked(true);
+
+            if (categories.contains(health))
+                binding.tvHealth.setChecked(true);
 
             binding.tvEdu.setOnClickListener(v -> {
                 if (binding.tvEdu.isChecked()) {
@@ -176,16 +220,12 @@ public class ProfileFragment extends Fragment {
                     categories.add(binding.tvHealth.getText().toString());
                 }
             });
-
         } else {
             binding.llSeeker.setVisibility(View.GONE);
             binding.llOrg.setVisibility(View.VISIBLE);
         }
 
         binding.edtDate.setOnClickListener(v -> new DatePickerDialog(context, (view1, year, month, dayOfMonth) -> binding.edtDate.setText(dayOfMonth + "-" + month + 1 + "-" + year), Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH)).show());
-
-        String json = new SharedHelper().getString(getContext(), SharedHelper.user);
-        User user = new Gson().fromJson(json, User.class);
 
         if (!photo.isEmpty())
             Glide.with(context).load(photo).into(binding.ivProfile);
@@ -276,9 +316,8 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.btnOrgSave.setOnClickListener(v -> {
-            if (!isValidation()) {
+            if (!isValidation())
                 return;
-            }
             saveImage();
 
             User data = new User(Objects.requireNonNull(binding.edtOrgName.getText()).toString(), "", user.getEmail(), user.getPhone(), user.getType(), Objects.requireNonNull(binding.edtOrgLocation.getText()).toString(), Objects.requireNonNull(binding.edtOrgCity.getText()).toString(), companySize, Objects.requireNonNull(binding.edtDescription.getText()).toString());
@@ -326,7 +365,6 @@ public class ProfileFragment extends Fragment {
 
     private void saveImage() {
         if (imagePath != null) {
-            Log.i(TAG, "not null");
             StorageReference ref = storageReference.child("images/" + uid);
             ref.putFile(imagePath).addOnSuccessListener(taskSnapshot -> taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri -> {
                 mDatabase.child("users").child(uid).child("photo").setValue(uri.toString()).addOnSuccessListener(unused -> new SharedHelper().saveString(context, SharedHelper.photo, uri.toString())).addOnFailureListener(e -> Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show());
@@ -353,7 +391,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == RESULT_LOAD_IMG) {
             try {
                 if (data != null) {
@@ -375,10 +412,7 @@ public class ProfileFragment extends Fragment {
             } catch (Exception e) {
                 Toast.makeText(binding.getRoot().getContext(), getString(R.string.error), Toast.LENGTH_LONG).show();
             }
-
-        } else {
+        } else
             Toast.makeText(binding.getRoot().getContext(), getString(R.string.picked_file), Toast.LENGTH_LONG).show();
-
-        }
     }
 }

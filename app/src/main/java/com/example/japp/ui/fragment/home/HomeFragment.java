@@ -117,8 +117,7 @@ public class HomeFragment extends Fragment {
             binding.ivNotFound.setVisibility(View.VISIBLE);
             binding.tvNotFound.setVisibility(View.VISIBLE);
             binding.rvJob.setVisibility(View.GONE);
-        } else {
+        } else
             binding.rvJob.setAdapter(new JobsAdapter(userJobs, uid, user.getSkills(), viewModel, "HOME"));
-        }
     }
 }
