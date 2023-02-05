@@ -24,9 +24,6 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public class JobDetailsViewModel extends ViewModel {
-
-    private static final String TAG = "JobDetailsViewModel";
-
     public MutableLiveData<Boolean> isDone = new MutableLiveData<>();
     MutableLiveData<Boolean> isApplied = new MutableLiveData<>();
     MutableLiveData<User> userData = new MutableLiveData<>();
@@ -157,10 +154,11 @@ public class JobDetailsViewModel extends ViewModel {
             ArrayList<User> list = new ArrayList<>();
             dataSnapshot.getChildren().forEach(dataSnapshot12 -> {
                 User user1 = dataSnapshot12.getValue(User.class);
-                assert user1 != null;
-                if (Objects.equals(user1.getEmail(), email) && user1.getJobId() == jobId) {
-                } else {
-                    list.add(user1);
+                if (user != null) {
+                    if (Objects.equals(user1.getEmail(), email) && user1.getJobId() == jobId) {
+                    } else {
+                        list.add(user1);
+                    }
                 }
             });
             dataSnapshot.getRef().setValue(list);

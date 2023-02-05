@@ -135,7 +135,14 @@ public class JobDetailsFragment extends Fragment {
                 binding.tvReject.setVisibility(View.GONE);
             }
 
-            binding.btnShowCv.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(userData.getCv()))));
+
+            binding.btnShowCv.setOnClickListener(v -> {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(userData.getCv())));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
 
 
             binding.tvAccept.setOnClickListener(v -> viewModel.acceptUser(context, userData.getEmail(), userData.getJobId(), uid, userData));

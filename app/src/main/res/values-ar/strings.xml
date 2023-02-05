@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="welcome">مرحبا</string>
-    <string name="email">البريد اﻻلكترونى</string>
+    <string name="email">البريد اﻻليكترونى</string>
     <string name="password">كلمة المرور</string>
     <string name="forget_password">هل نسيت كلمة السر</string>
     <string name="sign_in">تسجيل الدخول</string>
@@ -144,9 +144,9 @@
     <string name="job_title">المسمى الوظيفى</string>
     <string name="adding_requirement">Adding requirement</string>
     <string name="priority_of_requirement">priority of requirement % :</string>
-    <string name="matching_requirements">Matching requirements</string>
-    <string name="engineering">Engineering</string>
-    <string name="technology">Technology</string>
+    <string name="matching_requirements">متطلبات المطابقة</string>
+    <string name="engineering">هندسة</string>
+    <string name="technology">تكنولوجيا</string>
     <string name="done">DONE</string>
 
     <string-array name="type">

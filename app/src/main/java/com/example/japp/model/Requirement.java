@@ -1,6 +1,8 @@
 package com.example.japp.model;
 
-public class Requirement {
+import java.io.Serializable;
+
+public class Requirement implements Serializable {
 
     public Requirement() {
 
