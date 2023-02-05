@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                                         new SharedHelper().saveString(context, SharedHelper.type, user1.getType());
                                         new SharedHelper().saveString(context, SharedHelper.email, user1.getEmail());
                                         new SharedHelper().saveString(context, SharedHelper.phone, user1.getPhone());
+                                        new SharedHelper().saveString(context, SharedHelper.photo, user1.getPhoto());
                                     }
                                     startActivity(new Intent(context, HomeActivity.class));
                                 });

@@ -54,6 +54,7 @@ public class ProfileFragment extends Fragment {
     static String thirdCompanySize = "25-49";
     static String fourthCompanySize = "50-149";
     static String fifthCompanySize = "+200";
+    private ArrayList<String> categories = new ArrayList<>();
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -85,6 +86,97 @@ public class ProfileFragment extends Fragment {
         if (Objects.equals(new SharedHelper().getString(context, SharedHelper.type), "JOB_SEEKER")) {
             binding.llSeeker.setVisibility(View.VISIBLE);
             binding.llOrg.setVisibility(View.GONE);
+
+            binding.tvEdu.setOnClickListener(v -> {
+                if (binding.tvEdu.isChecked()) {
+                    binding.tvEdu.setChecked(false);
+                    categories.remove(binding.tvEdu.getText().toString());
+                } else {
+                    binding.tvEdu.setChecked(true);
+                    categories.add(binding.tvEdu.getText().toString());
+                }
+            });
+
+            binding.tvEng.setOnClickListener(v -> {
+                if (binding.tvEng.isChecked()) {
+                    binding.tvEng.setChecked(false);
+                    categories.remove(binding.tvEng.getText().toString());
+                } else {
+                    binding.tvEng.setChecked(true);
+                    categories.add(binding.tvEng.getText().toString());
+                }
+            });
+
+            binding.tvFinance.setOnClickListener(v -> {
+                if (binding.tvFinance.isChecked()) {
+                    binding.tvFinance.setChecked(false);
+                    categories.remove(binding.tvFinance.getText().toString());
+                } else {
+                    binding.tvFinance.setChecked(true);
+                    categories.add(binding.tvFinance.getText().toString());
+                }
+            });
+
+            binding.tvTranslation.setOnClickListener(v -> {
+                if (binding.tvTranslation.isChecked()) {
+                    binding.tvTranslation.setChecked(false);
+                    categories.remove(binding.tvTranslation.getText().toString());
+                } else {
+                    binding.tvTranslation.setChecked(true);
+                    categories.add(binding.tvTranslation.getText().toString());
+                }
+            });
+
+            binding.tvMarketing.setOnClickListener(v -> {
+                if (binding.tvMarketing.isChecked()) {
+                    binding.tvMarketing.setChecked(false);
+                    categories.remove(binding.tvMarketing.getText().toString());
+                } else {
+                    binding.tvMarketing.setChecked(true);
+                    categories.add(binding.tvMarketing.getText().toString());
+                }
+            });
+
+            binding.tvFood.setOnClickListener(v -> {
+                if (binding.tvFood.isChecked()) {
+                    binding.tvFood.setChecked(false);
+                    categories.remove(binding.tvFood.getText().toString());
+                } else {
+                    binding.tvFood.setChecked(true);
+                    categories.add(binding.tvFood.getText().toString());
+                }
+            });
+
+            binding.tvLaw.setOnClickListener(v -> {
+                if (binding.tvLaw.isChecked()) {
+                    binding.tvLaw.setChecked(false);
+                    categories.remove(binding.tvLaw.getText().toString());
+                } else {
+                    binding.tvLaw.setChecked(true);
+                    categories.add(binding.tvLaw.getText().toString());
+                }
+            });
+
+            binding.tvTech.setOnClickListener(v -> {
+                if (binding.tvTech.isChecked()) {
+                    binding.tvTech.setChecked(false);
+                    categories.remove(binding.tvTech.getText().toString());
+                } else {
+                    binding.tvTech.setChecked(true);
+                    categories.add(binding.tvTech.getText().toString());
+                }
+            });
+
+            binding.tvHealth.setOnClickListener(v -> {
+                if (binding.tvHealth.isChecked()) {
+                    binding.tvHealth.setChecked(false);
+                    categories.remove(binding.tvHealth.getText().toString());
+                } else {
+                    binding.tvHealth.setChecked(true);
+                    categories.add(binding.tvHealth.getText().toString());
+                }
+            });
+
         } else {
             binding.llSeeker.setVisibility(View.GONE);
             binding.llOrg.setVisibility(View.VISIBLE);
@@ -162,7 +254,7 @@ public class ProfileFragment extends Fragment {
                 }).addOnFailureListener(e -> Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show()));
             }
 
-            User data = new User(Objects.requireNonNull(binding.edtFirstName.getText()).toString(), Objects.requireNonNull(binding.edtLastName.getText()).toString(), user.getEmail(), user.getPhone(), Objects.requireNonNull(binding.edtGender.getText()).toString(), user.getType(), Objects.requireNonNull(binding.edtDate.getText()).toString(), Objects.requireNonNull(binding.edtCountry.getText()).toString(), Objects.requireNonNull(binding.edtNationality.getText()).toString(), Objects.requireNonNull(binding.edtCity.getText()).toString(), skillsAdapter.getList(), eduAdapter.getList(), langAdapter.getList());
+            User data = new User(Objects.requireNonNull(binding.edtFirstName.getText()).toString(), Objects.requireNonNull(binding.edtLastName.getText()).toString(), user.getEmail(), user.getPhone(), Objects.requireNonNull(binding.edtGender.getText()).toString(), user.getType(), Objects.requireNonNull(binding.edtDate.getText()).toString(), Objects.requireNonNull(binding.edtCountry.getText()).toString(), Objects.requireNonNull(binding.edtNationality.getText()).toString(), Objects.requireNonNull(binding.edtCity.getText()).toString(), skillsAdapter.getList(), eduAdapter.getList(), langAdapter.getList(), categories);
             data.setPhoto(photo);
             data.setCv(pdf);
             mDatabase.child("users").child(uid).setValue(data);
@@ -244,7 +336,7 @@ public class ProfileFragment extends Fragment {
 
     private boolean isValidation() {
         boolean validation = true;
-        String phone = binding.edtOrgPhone.getText().toString().trim();
+        String phone = Objects.requireNonNull(binding.edtOrgPhone.getText()).toString().trim();
         if (!Patterns.PHONE.matcher(phone).matches()) {
             binding.edtOrgPhone.setError(getString(R.string.phone_alert2));
             validation = false;

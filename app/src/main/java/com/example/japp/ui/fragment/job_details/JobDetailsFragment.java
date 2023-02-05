@@ -94,7 +94,7 @@ public class JobDetailsFragment extends Fragment {
                     viewModel.applyJob(context, uid, data, user, null);
             });
 
-            binding.tvCompany.setOnClickListener(v -> viewModel.getUserData(context, data.getCompanyUid()));
+            binding.tvCompany.setOnClickListener(v -> viewModel.getUserData(data.getCompanyUid()));
         } else {
             binding.llJob.setVisibility(View.GONE);
             binding.llUser.setVisibility(View.VISIBLE);
@@ -137,7 +137,6 @@ public class JobDetailsFragment extends Fragment {
             }
 
             binding.btnShowCv.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(userData.getCv()))));
-
 
 
             binding.tvAccept.setOnClickListener(v -> viewModel.acceptUser(context, userData.getEmail(), userData.getJobId(), uid, userData));

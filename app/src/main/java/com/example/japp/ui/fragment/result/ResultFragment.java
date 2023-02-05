@@ -52,6 +52,8 @@ public class ResultFragment extends Fragment {
         } else {
             if (Objects.equals(new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.type), "JOB_SEEKER"))
                 viewModel.getJobsByCategory(requireArguments().getString("category"));
+            else
+                viewModel.getUsersByCategory(requireArguments().getString("category"));
         }
 
         viewModel.users.observe(getViewLifecycleOwner(), list -> {

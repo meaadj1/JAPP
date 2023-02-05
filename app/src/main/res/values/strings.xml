@@ -151,6 +151,8 @@
     <string name="adding_requirement">Adding requirement</string>
     <string name="priority_of_requirement">priority of requirement % :</string>
     <string name="matching_requirements">Matching requirements</string>
+    <string name="engineering">Engineering</string>
+    <string name="technology">Technology</string>
 
     <string-array name="type">
         <item>Full time</item>

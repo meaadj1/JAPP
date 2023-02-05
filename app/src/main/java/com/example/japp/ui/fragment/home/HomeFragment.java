@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +24,8 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 public class HomeFragment extends Fragment {
-
-    private static final String TAG = "HomeFragment";
-
     private FragmentHomeBinding binding;
     private HomeViewModel viewModel;
     Context context;
@@ -88,11 +83,8 @@ public class HomeFragment extends Fragment {
                 binding.ivNotFound.setVisibility(View.GONE);
                 binding.tvNotFound.setVisibility(View.GONE);
                 binding.rvJob.setVisibility(View.VISIBLE);
-                Log.i(TAG, "Not empty");
-                Log.i(TAG, String.valueOf(users.size()));
                 handleApplicants(users);
             } else {
-                Log.i(TAG, "empty");
                 binding.ivNotFound.setVisibility(View.VISIBLE);
                 binding.tvNotFound.setVisibility(View.VISIBLE);
                 binding.rvJob.setVisibility(View.GONE);
@@ -107,7 +99,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void handleJobs(ArrayList<Job> jobs, String uid, User user) {
-        jobs.forEach(job -> Log.i(TAG, job.getTitle()));
         ArrayList<Job> userJobs = new ArrayList<>();
         jobs.forEach(job -> {
             final Boolean[] isFound = {false};

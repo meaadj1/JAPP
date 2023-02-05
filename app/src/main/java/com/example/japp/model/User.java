@@ -17,7 +17,7 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
-    public User(String firstName, String lastName, String email, String phone, String gender, String type, String dateOfBirth, String country, String nationality, String city, ArrayList<String> skills, ArrayList<String> education, ArrayList<String> languages) {
+    public User(String firstName, String lastName, String email, String phone, String gender, String type, String dateOfBirth, String country, String nationality, String city, ArrayList<String> skills, ArrayList<String> education, ArrayList<String> languages, ArrayList<String> categories) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -31,6 +31,7 @@ public class User implements Serializable {
         this.education = education;
         this.languages = languages;
         this.gender = gender;
+        this.categories = categories;
     }
 
     public User(String firstName, String lastName, String email, String phone, String type, String country, String city, String companySize, String description) {
@@ -67,6 +68,15 @@ public class User implements Serializable {
     ArrayList<User> applicants;
     String gender;
     int jobId;
+    ArrayList<String> categories;
+
+    public ArrayList<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(ArrayList<String> categories) {
+        this.categories = categories;
+    }
 
     public String getPhone() {
         return phone;

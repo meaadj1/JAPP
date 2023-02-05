@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.japp.R;
+import com.example.japp.Utils.SharedHelper;
 import com.example.japp.databinding.PendingItemBinding;
 import com.example.japp.model.Job;
 import com.example.japp.ui.fragment.pending_jobs.PendingViewModel;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHolder> {
 
@@ -49,9 +51,15 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
         );
 
         holder.binding.getRoot().setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("data", list.get(holder.getAdapterPosition()));
-            Navigation.createNavigateOnClickListener(R.id.nav_job_details, bundle).onClick(v);
+            if (Objects.equals(new SharedHelper().getString(holder.binding.getRoot().getContext(), SharedHelper.type), "JOB_SEEKER")){
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data", list.get(holder.getAdapterPosition()));
+                Navigation.createNavigateOnClickListener(R.id.nav_job_details, bundle).onClick(v);
+            }else{
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data", list.get(holder.getAdapterPosition()));
+                Navigation.createNavigateOnClickListener(R.id.savedJobsFragment, bundle).onClick(v);
+            }
         });
     }
 

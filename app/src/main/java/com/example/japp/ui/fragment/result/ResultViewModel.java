@@ -5,11 +5,14 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.japp.model.Job;
 import com.example.japp.model.User;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class ResultViewModel extends ViewModel {
     MutableLiveData<ArrayList<User>> users = new MutableLiveData<>();
@@ -24,6 +27,24 @@ public class ResultViewModel extends ViewModel {
                 assert user != null;
                 if (Objects.equals(user.getCity(), city) && Objects.equals(user.getType(), "JOB_SEEKER")) {
                     list.add(user);
+                }
+            });
+            users.setValue(list);
+        });
+    }
+
+    public void getUsersByCategory(String category) {
+        mDatabase.child("users").get().addOnSuccessListener(dataSnapshot -> {
+            ArrayList<User> list = new ArrayList<>();
+            dataSnapshot.getChildren().forEach(dataSnapshot1 -> {
+                User user = dataSnapshot1.getValue(User.class);
+                assert user != null;
+                if (Objects.equals(user.getType(), "JOB_SEEKER") && user.getCategories() != null) {
+                    user.getCategories().forEach(s -> {
+                        if (Objects.equals(s, category)) {
+                            list.add(user);
+                        }
+                    });
                 }
             });
             users.setValue(list);

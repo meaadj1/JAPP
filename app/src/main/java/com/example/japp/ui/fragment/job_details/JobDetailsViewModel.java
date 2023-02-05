@@ -1,6 +1,7 @@
 package com.example.japp.ui.fragment.job_details;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -149,18 +150,8 @@ public class JobDetailsViewModel extends ViewModel {
         });
     }
 
-    public void getUserData(Context context, String uid) {
-        mDatabase.child("users").child(uid).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                userData.setValue(dataSnapshot.getValue(User.class));
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                userData.setValue(null);
-            }
-        });
+    public void getUserData(String uid) {
+        mDatabase.child("users").child(uid).get().addOnSuccessListener(dataSnapshot -> userData.setValue(dataSnapshot.getValue(User.class))).addOnFailureListener(e -> userData.setValue(null));
     }
 
     public void getCompanyData(String uid) {
