@@ -28,43 +28,56 @@
             android:textSize="@dimen/_20ssp"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:id="@+id/ll_job_type"
+
+        <RadioGroup
+            android:id="@+id/rg_job_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/drawable_radio_group_tab_background"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_full_time"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
-                android:background="@drawable/button_bg"
-                android:paddingStart="@dimen/_30sdp"
-                android:paddingEnd="@dimen/_30sdp"
+            <RadioButton
+                android:id="@+id/rb_full_time"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_weight="0.50"
+                android:background="@drawable/drawable_units_tab_selector"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
                 android:text="@string/full_time"
-                android:textAllCaps="false" />
+                android:textColor="@drawable/drawable_units_tab_text_color_selector"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btn_part_time"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:background="@drawable/button_bg"
-                android:paddingStart="@dimen/_30sdp"
-                android:paddingEnd="@dimen/_30sdp"
+            <RadioButton
+                android:id="@+id/rb_part_time"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_weight="0.50"
+                android:background="@drawable/drawable_units_tab_selector"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
                 android:text="@string/part_time"
-                android:textAllCaps="false" />
+                android:textColor="@drawable/drawable_units_tab_text_color_selector"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btn_all"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:background="@drawable/button_bg"
+            <RadioButton
+                android:id="@+id/rb_all"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_weight="0.50"
+                android:background="@drawable/drawable_units_tab_selector"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
                 android:text="@string/all"
-                android:textAllCaps="false" />
-
-        </LinearLayout>
+                android:textColor="@drawable/drawable_units_tab_text_color_selector"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </RadioGroup>
     </LinearLayout>
 
     <TextView

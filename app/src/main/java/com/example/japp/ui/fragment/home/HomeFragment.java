@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 
 import com.example.japp.R;
 import com.example.japp.Utils.SharedHelper;
@@ -49,21 +50,25 @@ public class HomeFragment extends Fragment {
 
         if (Objects.equals(type, "JOB_SEEKER")) {
             binding.tvTitle.setText(getString(R.string.find_your_job));
-            binding.llJobType.setVisibility(View.VISIBLE);
+            binding.rgJobType.setVisibility(View.VISIBLE);
             binding.tvJob.setText(getString(R.string.job_list));
             viewModel.getJobs(context);
         } else {
             binding.tvTitle.setText(getString(R.string.find_your_employee));
-            binding.llJobType.setVisibility(View.GONE);
+            binding.rgJobType.setVisibility(View.GONE);
             binding.tvJob.setText(getString(R.string.applicant_list));
             viewModel.getApplicants(context);
         }
 
-        binding.btnFullTime.setOnClickListener(v -> viewModel.getFullTimeJobs(binding.getRoot().getContext()));
-
-        binding.btnPartTime.setOnClickListener(v -> viewModel.getPartTimeJobs(binding.getRoot().getContext()));
-
-        binding.btnAll.setOnClickListener(v -> viewModel.getJobs(binding.getRoot().getContext()));
+        binding.rgJobType.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.rb_full_time) {
+                viewModel.getFullTimeJobs(binding.getRoot().getContext());
+            } else if (checkedId == R.id.rb_part_time) {
+                viewModel.getPartTimeJobs(binding.getRoot().getContext());
+            } else {
+                viewModel.getJobs(binding.getRoot().getContext());
+            }
+        });
 
         viewModel.jobs.observe(getViewLifecycleOwner(), jobs -> {
             if (!jobs.isEmpty()) {

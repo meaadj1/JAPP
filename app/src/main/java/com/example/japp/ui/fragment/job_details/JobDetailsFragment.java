@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,9 @@ import com.google.gson.Gson;
 import java.util.Objects;
 
 public class JobDetailsFragment extends Fragment {
+
+    private static final String TAG = "JobDetailsFragment";
+
     private FragmentJobDetailsBinding binding;
     JobDetailsViewModel viewModel;
     Context context;
@@ -60,6 +64,7 @@ public class JobDetailsFragment extends Fragment {
 
             binding.llJob.setVisibility(View.VISIBLE);
             binding.llUser.setVisibility(View.GONE);
+            binding.llCompany.setVisibility(View.GONE);
 
             try {
                 Glide.with(binding.getRoot()).load(data.getCompanyImage()).placeholder(R.drawable.place_holder).into(binding.ivCompany);
@@ -93,10 +98,71 @@ public class JobDetailsFragment extends Fragment {
                     viewModel.applyJob(context, uid, data, user, null);
             });
 
+            binding.ivCompany.setOnClickListener(v -> viewModel.getUserData(data.getCompanyUid()));
             binding.tvCompany.setOnClickListener(v -> viewModel.getUserData(data.getCompanyUid()));
         } else {
-            binding.llJob.setVisibility(View.GONE);
-            binding.llUser.setVisibility(View.VISIBLE);
+
+            if (Objects.equals(userData.getType(), "JOB_SEEKER")) {
+                binding.llJob.setVisibility(View.GONE);
+                binding.llCompany.setVisibility(View.GONE);
+                binding.llUser.setVisibility(View.VISIBLE);
+
+                binding.tvCity.setText(userData.getCity());
+                binding.tvPhone.setText(userData.getPhone());
+                if (userData.getSkills() != null)
+                    binding.tvSkills.setText(userData.getSkills().toString());
+                if (userData.getEducation() != null)
+                    binding.tvEdu.setText(userData.getEducation().toString());
+                if (userData.getLanguages() != null)
+                    binding.tvLang.setText(userData.getLanguages().toString());
+                if (userData.getMatchingList() != null) {
+                    final String[] matching = {""};
+                    userData.getMatchingList().forEach(requirement -> matching[0] += requirement.getText() + ", ");
+                    binding.tvMatching.setText(matching[0]);
+                }
+
+
+                if (userData.getCv() == null || Objects.equals(userData.getCv(), "")) {
+                    binding.tvCv.setVisibility(View.GONE);
+                    binding.btnShowCv.setVisibility(View.GONE);
+                } else {
+                    binding.tvCv.setVisibility(View.VISIBLE);
+                    binding.btnShowCv.setVisibility(View.VISIBLE);
+                }
+
+                if (userData.getJobId() == -1) {
+                    binding.btnShowCv.setVisibility(View.GONE);
+                    binding.tvAccept.setVisibility(View.GONE);
+                    binding.tvReject.setVisibility(View.GONE);
+                }
+
+
+                binding.btnShowCv.setOnClickListener(v -> {
+                    try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(userData.getCv())));
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                });
+
+
+                binding.tvAccept.setOnClickListener(v -> viewModel.acceptUser(context, userData.getEmail(), userData.getJobId(), uid, userData));
+
+                binding.tvReject.setOnClickListener(v -> viewModel.rejectUser(context, userData.getEmail(), userData.getJobId(), uid, userData));
+
+            } else {
+                binding.llJob.setVisibility(View.GONE);
+                binding.llCompany.setVisibility(View.VISIBLE);
+                binding.llUser.setVisibility(View.GONE);
+
+                binding.tvCompanyCity.setText(userData.getCity());
+                binding.tvCompanySize.setText(userData.getCompanySize());
+                binding.tvCompanyCountry.setText(userData.getCountry());
+                binding.tvCompanyPhone.setText(userData.getPhone());
+                binding.tvDescription.setText(userData.getDescription());
+
+            }
+
 
             try {
                 Glide.with(binding.getRoot()).load(userData.getPhoto()).placeholder(R.drawable.place_holder).into(binding.ivCompany);
@@ -106,51 +172,16 @@ public class JobDetailsFragment extends Fragment {
 
             binding.tvTitle.setText(userData.getFirstName());
             binding.tvCompany.setText(userData.getCountry());
-            binding.tvCity.setText(userData.getCity());
-            binding.tvPhone.setText(userData.getPhone());
-            if (userData.getSkills() != null)
-                binding.tvSkills.setText(userData.getSkills().toString());
-            if (userData.getEducation() != null)
-                binding.tvEdu.setText(userData.getEducation().toString());
-            if (userData.getLanguages() != null)
-                binding.tvLang.setText(userData.getLanguages().toString());
-            if (userData.getMatchingList() != null) {
-                final String[] matching = {""};
-                userData.getMatchingList().forEach(requirement -> matching[0] += requirement.getText() + ", ");
-                binding.tvMatching.setText(matching[0]);
-            }
 
-
-            if (userData.getCv() == null || Objects.equals(userData.getCv(), "")) {
-                binding.tvCv.setVisibility(View.GONE);
-                binding.btnShowCv.setVisibility(View.GONE);
-            } else {
-                binding.tvCv.setVisibility(View.VISIBLE);
-                binding.btnShowCv.setVisibility(View.VISIBLE);
-            }
-
-            if (userData.getJobId() == -1) {
-                binding.btnShowCv.setVisibility(View.GONE);
-                binding.tvAccept.setVisibility(View.GONE);
-                binding.tvReject.setVisibility(View.GONE);
-            }
-
-
-            binding.btnShowCv.setOnClickListener(v -> {
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(userData.getCv())));
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            });
-
-
-            binding.tvAccept.setOnClickListener(v -> viewModel.acceptUser(context, userData.getEmail(), userData.getJobId(), uid, userData));
-
-            binding.tvReject.setOnClickListener(v -> viewModel.rejectUser(context, userData.getEmail(), userData.getJobId(), uid, userData));
         }
 
-        binding.ivBack.setOnClickListener(v -> Navigation.findNavController(binding.getRoot()).navigateUp());
+
+        binding.ivBack.setOnClickListener(v -> {
+                    requireActivity().onBackPressed();
+                    boolean back = Navigation.findNavController(binding.getRoot()).navigateUp();
+                    Log.i(TAG, Boolean.toString(back));
+                }
+        );
 
         viewModel.isDone.observe(getViewLifecycleOwner(), aBoolean -> {
             if (aBoolean) {

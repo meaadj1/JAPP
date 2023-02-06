@@ -154,6 +154,7 @@
     <string name="engineering">Engineering</string>
     <string name="technology">Technology</string>
     <string name="done">DONE</string>
+    <string name="company_size">Company size</string>
 
     <string-array name="type">
         <item>Full time</item>

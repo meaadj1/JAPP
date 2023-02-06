@@ -41,6 +41,10 @@ public class JobDetailsViewModel extends ViewModel {
             items.forEach(requirement -> validate[0] += requirement.getValue());
             user.setMatchingList(items);
         }
+        if (validate[0] > 100) {
+            Toast.makeText(context, "some thing wrong", Toast.LENGTH_SHORT).show();
+            return;
+        }
         user.setMatching((int) validate[0]);
         map.put(uid, (int) validate[0]);
         data.setStatus("pending");
@@ -56,14 +60,13 @@ public class JobDetailsViewModel extends ViewModel {
                 });
                 if (!Boolean.TRUE.equals(isApplied.getValue())) {
                     isApplied.setValue(false);
-                    mDatabase.child("users").child(uid).child("jobs").child(String.valueOf(dataSnapshot13.getChildrenCount())).setValue(data);
+                    mDatabase.child("users").child(uid).child("jobs").child(String.valueOf(dataSnapshot13.getChildrenCount())).setValue(data).addOnSuccessListener(unused -> Toast.makeText(context, context.getString(R.string.apply_job), Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
                     mDatabase.child("users").child(data.getCompanyUid()).child("applicants").get().addOnSuccessListener(dataSnapshot1 -> {
                         user.setJobId(data.getId());
                         mDatabase.child("users").child(data.getCompanyUid()).child("applicants").child(String.valueOf(dataSnapshot1.getChildrenCount())).setValue(user);
                     });
                 }
             });
-            Toast.makeText(context, context.getString(R.string.apply_job), Toast.LENGTH_SHORT).show();
             isDone.setValue(true);
         });
     }

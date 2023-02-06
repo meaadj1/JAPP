@@ -13,7 +13,6 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -134,90 +133,90 @@ public class ProfileFragment extends Fragment {
             binding.tvEdu.setOnClickListener(v -> {
                 if (binding.tvEdu.isChecked()) {
                     binding.tvEdu.setChecked(false);
-                    categories.remove(binding.tvEdu.getText().toString());
+                    categories.remove(education);
                 } else {
                     binding.tvEdu.setChecked(true);
-                    categories.add(binding.tvEdu.getText().toString());
+                    categories.add(education);
                 }
             });
 
             binding.tvEng.setOnClickListener(v -> {
                 if (binding.tvEng.isChecked()) {
                     binding.tvEng.setChecked(false);
-                    categories.remove(binding.tvEng.getText().toString());
+                    categories.remove(engineering);
                 } else {
                     binding.tvEng.setChecked(true);
-                    categories.add(binding.tvEng.getText().toString());
+                    categories.add(engineering);
                 }
             });
 
             binding.tvFinance.setOnClickListener(v -> {
                 if (binding.tvFinance.isChecked()) {
                     binding.tvFinance.setChecked(false);
-                    categories.remove(binding.tvFinance.getText().toString());
+                    categories.remove(finance);
                 } else {
                     binding.tvFinance.setChecked(true);
-                    categories.add(binding.tvFinance.getText().toString());
+                    categories.add(finance);
                 }
             });
 
             binding.tvTranslation.setOnClickListener(v -> {
                 if (binding.tvTranslation.isChecked()) {
                     binding.tvTranslation.setChecked(false);
-                    categories.remove(binding.tvTranslation.getText().toString());
+                    categories.remove(translation);
                 } else {
                     binding.tvTranslation.setChecked(true);
-                    categories.add(binding.tvTranslation.getText().toString());
+                    categories.add(translation);
                 }
             });
 
             binding.tvMarketing.setOnClickListener(v -> {
                 if (binding.tvMarketing.isChecked()) {
                     binding.tvMarketing.setChecked(false);
-                    categories.remove(binding.tvMarketing.getText().toString());
+                    categories.remove(marketing);
                 } else {
                     binding.tvMarketing.setChecked(true);
-                    categories.add(binding.tvMarketing.getText().toString());
+                    categories.add(marketing);
                 }
             });
 
             binding.tvFood.setOnClickListener(v -> {
                 if (binding.tvFood.isChecked()) {
                     binding.tvFood.setChecked(false);
-                    categories.remove(binding.tvFood.getText().toString());
+                    categories.remove(food);
                 } else {
                     binding.tvFood.setChecked(true);
-                    categories.add(binding.tvFood.getText().toString());
+                    categories.add(food);
                 }
             });
 
             binding.tvLaw.setOnClickListener(v -> {
                 if (binding.tvLaw.isChecked()) {
                     binding.tvLaw.setChecked(false);
-                    categories.remove(binding.tvLaw.getText().toString());
+                    categories.remove(law);
                 } else {
                     binding.tvLaw.setChecked(true);
-                    categories.add(binding.tvLaw.getText().toString());
+                    categories.add(law);
                 }
             });
 
             binding.tvTech.setOnClickListener(v -> {
                 if (binding.tvTech.isChecked()) {
                     binding.tvTech.setChecked(false);
-                    categories.remove(binding.tvTech.getText().toString());
+                    categories.remove(technology);
                 } else {
                     binding.tvTech.setChecked(true);
-                    categories.add(binding.tvTech.getText().toString());
+                    categories.add(technology);
                 }
             });
 
             binding.tvHealth.setOnClickListener(v -> {
                 if (binding.tvHealth.isChecked()) {
                     binding.tvHealth.setChecked(false);
-                    categories.remove(binding.tvHealth.getText().toString());
+                    categories.remove(health);
                 } else {
                     binding.tvHealth.setChecked(true);
-                    categories.add(binding.tvHealth.getText().toString());
+                    categories.add(health);
                 }
             });
         } else {

@@ -35,7 +35,7 @@ import java.util.Objects;
 public class SavedJobsFragment extends Fragment {
 
     private static final String TAG = "SavedJobsFragment";
-    
+
     private FragmentSavedJobsBinding binding;
     private DatabaseReference mDatabase;
     private String type = "Full time";
@@ -284,6 +284,9 @@ public class SavedJobsFragment extends Fragment {
         if (adapter.getListCount() > 100) {
             valid = false;
             Toast.makeText(binding.getRoot().getContext(), "requirements value more than 100%", Toast.LENGTH_SHORT).show();
+        } else if (adapter.getListCount() == 0) {
+            valid = false;
+            Toast.makeText(binding.getRoot().getContext(), "you should add requirements", Toast.LENGTH_SHORT).show();
         }
 
         return valid;

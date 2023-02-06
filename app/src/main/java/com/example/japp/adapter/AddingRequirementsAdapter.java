@@ -42,6 +42,7 @@ public class AddingRequirementsAdapter extends RecyclerView.Adapter<AddingRequir
         holder.binding.edtValue.setText(String.valueOf(skills.get(position).getValue()));
         holder.binding.ivDelete.setOnClickListener(v -> {
             if (!isEdit) {
+                count -= skills.get(position).getValue();
                 skills.remove(skills.get(position));
                 notifyDataSetChanged();
             }
@@ -86,7 +87,7 @@ public class AddingRequirementsAdapter extends RecyclerView.Adapter<AddingRequir
         AddingItemLayoutBinding dialogBinding = AddingItemLayoutBinding.inflate(LayoutInflater.from(context), null, false);
         Dialog dialog = new Dialog(context);
         dialog.setContentView(dialogBinding.getRoot());
-        dialogBinding.cvEdtValue.setVisibility(View.VISIBLE);
+        dialogBinding.llValue.setVisibility(View.VISIBLE);
         dialogBinding.edtItem.setText(skills.get(position).getText());
         dialogBinding.edtValue.setText(String.valueOf(skills.get(position).getValue()));
         dialogBinding.tvCancel.setOnClickListener(v -> dialog.dismiss());
