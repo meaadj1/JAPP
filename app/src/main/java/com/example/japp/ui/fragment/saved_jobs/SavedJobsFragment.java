@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.example.japp.R;
+import com.example.japp.Utils.LocaleHelper;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.AddingRequirementsAdapter;
 import com.example.japp.adapter.JobsAdapter;
@@ -57,6 +58,9 @@ public class SavedJobsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SavedViewModel viewModel = new ViewModelProvider(this).get(SavedViewModel.class);
+
+
+        LocaleHelper.setLocale(binding.getRoot().getContext(), LocaleHelper.getLanguage(binding.getRoot().getContext()));
 
         Job jobData = null;
         if (getArguments() != null) {
@@ -171,13 +175,16 @@ public class SavedJobsFragment extends Fragment {
 
         Job finalJobData = jobData;
         binding.btnSave.setOnClickListener(v -> {
-            if (!isValidForm(requirementsAdapter))
-                return;
-
             String id = "";
 
             if (finalJobData != null) {
+                Log.i(TAG, String.valueOf(counter));
                 if (counter >= 1) {
+                    if (!isValidForm(requirementsAdapter)) {
+                        Log.i(TAG, "not validation");
+                        counter++;
+                        return;
+                    }
                     counter = 0;
                     id = String.valueOf(finalJobData.getId());
                 } else {
@@ -190,6 +197,7 @@ public class SavedJobsFragment extends Fragment {
                     binding.spinnerType.setEnabled(true);
                     binding.spinnerCategory.setEnabled(true);
                     binding.btnAdd.setEnabled(true);
+                    requirementsAdapter.setEdit(false);
                     binding.btnSave.setText(getString(R.string.save));
                     return;
                 }
@@ -210,11 +218,9 @@ public class SavedJobsFragment extends Fragment {
             String finalId = id;
             mDatabase.child("jobs").get().addOnSuccessListener(dataSnapshot -> {
                 if (!finalId.equals("")) {
-                    mDatabase.child("jobs").child(finalId).setValue(new Job(Integer.parseInt(finalId), title, description, requirementsAdapter.getList(), new SharedHelper().getString(getContext(), SharedHelper.firstName), new SharedHelper().getString(getContext(), SharedHelper.photo), category, type, location, experience, "reject", new SharedHelper().getString(getContext(), SharedHelper.uid), specialization))
-                    ;
+                    mDatabase.child("jobs").child(finalId).setValue(new Job(Integer.parseInt(finalId), title, description, requirementsAdapter.getList(), new SharedHelper().getString(getContext(), SharedHelper.firstName), new SharedHelper().getString(getContext(), SharedHelper.photo), category, type, location, experience, "reject", new SharedHelper().getString(getContext(), SharedHelper.uid), specialization));
                 } else {
-                    mDatabase.child("jobs").child(String.valueOf(dataSnapshot.getChildrenCount())).setValue(new Job((int) dataSnapshot.getChildrenCount(), title, description, requirementsAdapter.getList(), new SharedHelper().getString(getContext(), SharedHelper.firstName), new SharedHelper().getString(getContext(), SharedHelper.photo), category, type, location, experience, "reject", new SharedHelper().getString(getContext(), SharedHelper.uid), specialization))
-                    ;
+                    mDatabase.child("jobs").child(String.valueOf(dataSnapshot.getChildrenCount())).setValue(new Job((int) dataSnapshot.getChildrenCount(), title, description, requirementsAdapter.getList(), new SharedHelper().getString(getContext(), SharedHelper.firstName), new SharedHelper().getString(getContext(), SharedHelper.photo), category, type, location, experience, "reject", new SharedHelper().getString(getContext(), SharedHelper.uid), specialization));
                 }
 
                 loading.dismiss();

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.japp.Utils.LocaleHelper;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.PendingAdapter;
 import com.example.japp.databinding.FragmentPendingJobsBinding;
@@ -35,6 +36,8 @@ public class PendingJobsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         PendingViewModel viewModel = new ViewModelProvider(this).get(PendingViewModel.class);
+
+        LocaleHelper.setLocale(binding.getRoot().getContext(), LocaleHelper.getLanguage(binding.getRoot().getContext()));
 
         if (Objects.equals(new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.type), "JOB_SEEKER"))
             viewModel.getPendingJobs(getContext());

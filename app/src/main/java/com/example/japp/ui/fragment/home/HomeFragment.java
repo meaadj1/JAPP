@@ -11,9 +11,9 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioGroup;
 
 import com.example.japp.R;
+import com.example.japp.Utils.LocaleHelper;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.ApplicantsAdapter;
 import com.example.japp.adapter.JobsAdapter;
@@ -45,6 +45,10 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         context = binding.getRoot().getContext();
+
+        LocaleHelper.setLocale(context, LocaleHelper.getLanguage(binding.getRoot().getContext()));
+
+
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         String type = new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.type);
 

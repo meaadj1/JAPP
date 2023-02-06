@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.japp.Utils.LocaleHelper;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.JobsPagerAdapter;
 import com.example.japp.databinding.FragmentJobsBinding;
@@ -37,6 +38,9 @@ public class JobsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         context = binding.getRoot().getContext();
+
+        LocaleHelper.setLocale(context, LocaleHelper.getLanguage(binding.getRoot().getContext()));
+
 
         JobsPagerAdapter adapter = new JobsPagerAdapter(context, requireActivity(), new SharedHelper().getString(context, SharedHelper.type));
         binding.viewPager.setAdapter(adapter);

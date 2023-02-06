@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.japp.Utils.LocaleHelper;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.ApplicantsAdapter;
 import com.example.japp.adapter.JobsAdapter;
@@ -38,6 +39,8 @@ public class ResultFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ResultViewModel viewModel = new ViewModelProvider(this).get(ResultViewModel.class);
+
+        LocaleHelper.setLocale(binding.getRoot().getContext(), LocaleHelper.getLanguage(binding.getRoot().getContext()));
 
         if (Objects.equals(requireArguments().getString("category"), "jobs")) {
             if (Objects.equals(requireArguments().getString("city", ""), "")) {

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.japp.Utils.LocaleHelper;
 import com.example.japp.adapter.ActiveAdapter;
 import com.example.japp.databinding.FragmentActiveJobsBinding;
 import com.example.japp.model.Job;
@@ -38,6 +39,9 @@ public class ActiveJobsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ActiveViewModel viewModel = new ViewModelProvider(this).get(ActiveViewModel.class);
+
+        LocaleHelper.setLocale(binding.getRoot().getContext(), LocaleHelper.getLanguage(binding.getRoot().getContext()));
+
 
         viewModel.getActiveJobs(getContext());
 

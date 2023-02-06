@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.japp.R;
+import com.example.japp.Utils.LocaleHelper;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.SkillsAdapter;
 import com.example.japp.databinding.AddingItemLayoutBinding;
@@ -69,6 +70,10 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         context = binding.getRoot().getContext();
+
+        LocaleHelper.setLocale(context, LocaleHelper.getLanguage(binding.getRoot().getContext()));
+
+
         uid = new SharedHelper().getString(context, SharedHelper.uid);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         storage = FirebaseStorage.getInstance();

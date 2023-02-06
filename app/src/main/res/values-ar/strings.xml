@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="welcome">مرحبا</string>
-    <string name="email">البريد اﻻليكترونى</string>
+    <string name="email">البريد الالكتروني</string>
     <string name="password">كلمة المرور</string>
     <string name="forget_password">هل نسيت كلمة السر</string>
     <string name="sign_in">تسجيل الدخول</string>

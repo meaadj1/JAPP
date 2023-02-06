@@ -17,11 +17,11 @@ import com.example.japp.model.Requirement;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class AddingRequirementsAdapter extends RecyclerView.Adapter<AddingRequirementsAdapter.ViewHolder> {
 
     ArrayList<Requirement> skills = new ArrayList<>();
-    int count = 0;
     boolean isEdit = false;
 
     public AddingRequirementsAdapter(ArrayList<Requirement> skills) {
@@ -42,7 +42,6 @@ public class AddingRequirementsAdapter extends RecyclerView.Adapter<AddingRequir
         holder.binding.edtValue.setText(String.valueOf(skills.get(position).getValue()));
         holder.binding.ivDelete.setOnClickListener(v -> {
             if (!isEdit) {
-                count -= skills.get(position).getValue();
                 skills.remove(skills.get(position));
                 notifyDataSetChanged();
             }
@@ -64,7 +63,6 @@ public class AddingRequirementsAdapter extends RecyclerView.Adapter<AddingRequir
 
     public void addingItem(Requirement item) {
         skills.add(item);
-        count += item.getValue();
         notifyDataSetChanged();
     }
 
@@ -72,8 +70,10 @@ public class AddingRequirementsAdapter extends RecyclerView.Adapter<AddingRequir
         return skills;
     }
 
-    public int getListCount() {
-        return count;
+    public float getListCount() {
+        final float[] count = {0};
+        skills.forEach(requirement -> count[0] += requirement.getValue());
+        return count[0];
     }
 
     public void setList(ArrayList<Requirement> list) {
@@ -81,6 +81,10 @@ public class AddingRequirementsAdapter extends RecyclerView.Adapter<AddingRequir
             isEdit = true;
         skills = list;
         notifyDataSetChanged();
+    }
+
+    public void setEdit(boolean edit) {
+        isEdit = edit;
     }
 
     void editItem(Context context, int position) {

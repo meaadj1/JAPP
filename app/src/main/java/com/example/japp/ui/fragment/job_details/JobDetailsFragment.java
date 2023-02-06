@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.example.japp.R;
+import com.example.japp.Utils.LocaleHelper;
 import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.RequirementsAdapter;
 import com.example.japp.databinding.FragmentJobDetailsBinding;
@@ -53,6 +54,10 @@ public class JobDetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         context = binding.getRoot().getContext();
+
+        LocaleHelper.setLocale(context, LocaleHelper.getLanguage(binding.getRoot().getContext()));
+
+
         uid = new SharedHelper().getString(context, SharedHelper.uid);
         Job data = (Job) requireArguments().get("data");
         User userData = (User) requireArguments().get("user");
