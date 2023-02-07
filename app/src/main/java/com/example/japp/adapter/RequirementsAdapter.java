@@ -18,6 +18,7 @@ public class RequirementsAdapter extends RecyclerView.Adapter<RequirementsAdapte
 
     private List<Requirement> list;
     private ArrayList<Requirement> checkedList = new ArrayList<>();
+    private boolean isEdit = true;
 
     public RequirementsAdapter(List<Requirement> list) {
         this.list = list;
@@ -38,12 +39,14 @@ public class RequirementsAdapter extends RecyclerView.Adapter<RequirementsAdapte
             }
         });
         holder.binding.tvItem.setOnClickListener(v -> {
-            if (holder.binding.tvItem.isChecked()) {
-                holder.binding.tvItem.setChecked(false);
-                checkedList.remove(holder.binding.tvItem.getText());
-            } else {
-                holder.binding.tvItem.setChecked(true);
-                checkedList.add(list.get(position));
+            if (isEdit) {
+                if (holder.binding.tvItem.isChecked()) {
+                    holder.binding.tvItem.setChecked(false);
+                    checkedList.remove(holder.binding.tvItem.getText());
+                } else {
+                    holder.binding.tvItem.setChecked(true);
+                    checkedList.add(list.get(position));
+                }
             }
         });
     }
@@ -55,6 +58,7 @@ public class RequirementsAdapter extends RecyclerView.Adapter<RequirementsAdapte
 
     public void setCheckedList(ArrayList<Requirement> checkedList) {
         this.checkedList = checkedList;
+        isEdit = false;
         notifyDataSetChanged();
     }
 

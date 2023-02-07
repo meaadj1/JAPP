@@ -32,7 +32,7 @@ public class VerifyActivity extends AppCompatActivity {
 
         type = getIntent().getStringExtra("type");
         String email = getIntent().getStringExtra("email");
-        binding.tvEmail.setText(getString(R.string.we_have_sent_the_verification_code_to_email_address) + email);
+        binding.tvEmail.setText(getString(R.string.we_have_sent_the_verification_code_to_email_address) + " " + email);
 
         binding.btnEmail.setOnClickListener(v -> {
             try {

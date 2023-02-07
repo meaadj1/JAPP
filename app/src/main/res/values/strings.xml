@@ -113,7 +113,7 @@
     <string name="location">Location</string>
     <string name="verify">Verify</string>
     <string name="check_your_email">Check Your Email</string>
-    <string name="we_have_sent_the_verification_code_to_email_address">We have sent the verification code to email address</string>
+    <string name="we_have_sent_the_verification_code_to_email_address">We have sent the verification code to email address </string>
     <string name="open_your_email">open your email</string>
     <string name="back_to_sign_in">back to sign in</string>
     <string name="you_have_not_received_the_email">you have not received the email?</string>

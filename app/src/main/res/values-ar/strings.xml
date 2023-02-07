@@ -107,7 +107,7 @@
     <string name="location">موقع</string>
     <string name="verify">تحقق</string>
     <string name="check_your_email">تحقق من بريدك الالكتروني</string>
-    <string name="we_have_sent_the_verification_code_to_email_address">لقد أرسلنا رمز التحقق إلى عنوان البريد الإلكتروني</string>
+    <string name="we_have_sent_the_verification_code_to_email_address"> لقد أرسلنا رمز التحقق إلى عنوان البريد الإلكتروني</string>
     <string name="open_your_email">افتح بريدك الإلكتروني</string>
     <string name="back_to_sign_in">العودة لتسجيل الدخول</string>
     <string name="you_have_not_received_the_email">لم تتلق البريد الإلكتروني؟</string>

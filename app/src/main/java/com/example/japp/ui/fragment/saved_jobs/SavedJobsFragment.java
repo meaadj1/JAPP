@@ -203,6 +203,9 @@ public class SavedJobsFragment extends Fragment {
                 }
             }
 
+            if (!isValidForm(requirementsAdapter))
+                return;
+
             ProgressDialog loading = new ProgressDialog(binding.getRoot().getContext());
             loading.setTitle("loading");
             loading.setMessage("Wait while loading...");

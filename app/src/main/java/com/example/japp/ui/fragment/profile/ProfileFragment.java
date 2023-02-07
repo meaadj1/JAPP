@@ -13,10 +13,12 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -38,6 +40,9 @@ import java.util.Calendar;
 import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
+
+    private static final String TAG = "ProfileFragment";
+
     private static final int RESULT_LOAD_IMG = 5;
     private static final int RESULT_LOAD_PDF = 1;
     private FragmentProfileBinding binding;
@@ -247,6 +252,24 @@ public class ProfileFragment extends Fragment {
         binding.edtCity.setText(user.getCity());
         binding.edtNationality.setText(user.getNationality());
 
+        if (Objects.equals(user.getCompanySize(), firstCompanySize)) {
+            RadioButton b = (RadioButton) binding.rgSize.getChildAt(0);
+            b.setChecked(true);
+        } else if (Objects.equals(user.getCompanySize(), secondCompanySize)) {
+            RadioButton b = (RadioButton) binding.rgSize.getChildAt(1);
+            b.setChecked(true);
+        } else if (Objects.equals(user.getCompanySize(), thirdCompanySize)) {
+            RadioButton b = (RadioButton) binding.rgSize.getChildAt(2);
+            b.setChecked(true);
+        } else if (Objects.equals(user.getCompanySize(), fourthCompanySize)) {
+            RadioButton b = (RadioButton) binding.rgSize.getChildAt(3);
+            b.setChecked(true);
+        } else {
+            RadioButton b = (RadioButton) binding.rgSize.getChildAt(4);
+            b.setChecked(true);
+        }
+
+
         binding.rgSize.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.rb_1)
                 companySize = firstCompanySize;
@@ -382,7 +405,7 @@ public class ProfileFragment extends Fragment {
         if (!Patterns.PHONE.matcher(phone).matches()) {
             binding.edtOrgPhone.setError(getString(R.string.phone_alert2));
             validation = false;
-        } else if (phone.length() > 10) {
+        } else if (phone.length() != 10) {
             binding.edtOrgPhone.setError(getString(R.string.phone_alert2));
             validation = false;
         } else if (!phone.startsWith("05")) {
