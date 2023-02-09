@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class NotificationFragment extends Fragment {
-
     private FragmentNotificationBinding binding;
     private NotificationViewModel viewModel;
 
@@ -43,7 +42,6 @@ public class NotificationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
         LocaleHelper.setLocale(binding.getRoot().getContext(), LocaleHelper.getLanguage(binding.getRoot().getContext()));
 
@@ -73,7 +71,7 @@ public class NotificationFragment extends Fragment {
                 binding.tvNotFound.setVisibility(View.GONE);
                 binding.ivNotFound.setVisibility(View.GONE);
                 binding.rvNotification.setVisibility(View.VISIBLE);
-                binding.rvNotification.setAdapter(new ApplicantsAdapter(users));
+                binding.rvNotification.setAdapter(new ApplicantsAdapter(users,false));
             } else {
                 binding.tvNotFound.setVisibility(View.VISIBLE);
                 binding.ivNotFound.setVisibility(View.VISIBLE);

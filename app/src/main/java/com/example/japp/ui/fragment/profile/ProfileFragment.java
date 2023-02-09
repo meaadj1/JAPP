@@ -40,9 +40,6 @@ import java.util.Calendar;
 import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
-
-    private static final String TAG = "ProfileFragment";
-
     private static final int RESULT_LOAD_IMG = 5;
     private static final int RESULT_LOAD_PDF = 1;
     private FragmentProfileBinding binding;
@@ -330,6 +327,7 @@ public class ProfileFragment extends Fragment {
             mDatabase.child("users").child(uid).get().addOnSuccessListener(dataSnapshot -> {
                 User user1 = dataSnapshot.getValue(User.class);
                 if (user1 != null) {
+
                     Gson gson = new Gson();
                     String json1 = gson.toJson(user1);
                     new SharedHelper().saveString(getContext(), SharedHelper.user, json1);

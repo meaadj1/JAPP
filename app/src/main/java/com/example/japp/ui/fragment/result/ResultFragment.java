@@ -64,7 +64,7 @@ public class ResultFragment extends Fragment {
                 binding.ivNotFound.setVisibility(View.GONE);
                 binding.tvNotFound.setVisibility(View.GONE);
                 binding.rvJob.setVisibility(View.VISIBLE);
-                binding.rvJob.setAdapter(new ApplicantsAdapter(list));
+                binding.rvJob.setAdapter(new ApplicantsAdapter(list,true));
             } else {
                 binding.ivNotFound.setVisibility(View.VISIBLE);
                 binding.tvNotFound.setVisibility(View.VISIBLE);

@@ -61,10 +61,12 @@ public class JobDetailsFragment extends Fragment {
         uid = new SharedHelper().getString(context, SharedHelper.uid);
         Job data = (Job) requireArguments().get("data");
         User userData = (User) requireArguments().get("user");
+        boolean isSearch = requireArguments().getBoolean("isSearch");
         user = new Gson().fromJson(new SharedHelper().getString(context, SharedHelper.user), User.class);
         RequirementsAdapter requirementsAdapter = null;
 
         if (data != null) {
+
             viewModel.getCompanyData(data.getCompanyUid());
 
             binding.llJob.setVisibility(View.VISIBLE);
@@ -106,8 +108,10 @@ public class JobDetailsFragment extends Fragment {
             binding.ivCompany.setOnClickListener(v -> viewModel.getUserData(data.getCompanyUid()));
             binding.tvCompany.setOnClickListener(v -> viewModel.getUserData(data.getCompanyUid()));
         } else {
-
             if (Objects.equals(userData.getType(), "JOB_SEEKER")) {
+
+                Log.i(TAG, String.valueOf(isSearch));
+
                 binding.llJob.setVisibility(View.GONE);
                 binding.llCompany.setVisibility(View.GONE);
                 binding.llUser.setVisibility(View.VISIBLE);
@@ -126,7 +130,6 @@ public class JobDetailsFragment extends Fragment {
                     binding.tvMatching.setText(matching[0]);
                 }
 
-
                 if (userData.getCv() == null || Objects.equals(userData.getCv(), "")) {
                     binding.tvCv.setVisibility(View.GONE);
                     binding.btnShowCv.setVisibility(View.GONE);
@@ -141,6 +144,12 @@ public class JobDetailsFragment extends Fragment {
                     binding.tvReject.setVisibility(View.GONE);
                 }
 
+                if (isSearch) {
+                    binding.llApp.setVisibility(View.GONE);
+                    binding.tvMatchingTitle.setVisibility(View.GONE);
+                    binding.tvMatching.setVisibility(View.GONE);
+                    binding.btnShowCv.setVisibility(View.GONE);
+                }
 
                 binding.btnShowCv.setOnClickListener(v -> {
                     try {
@@ -164,8 +173,7 @@ public class JobDetailsFragment extends Fragment {
                 binding.tvCompanySize.setText(userData.getCompanySize());
                 binding.tvCompanyCountry.setText(userData.getCountry());
                 binding.tvCompanyPhone.setText(userData.getPhone());
-                binding.tvDescription.setText(userData.getDescription());
-
+                binding.tvCompanyDescription.setText(userData.getDescription());
             }
 
 
@@ -183,8 +191,7 @@ public class JobDetailsFragment extends Fragment {
 
         binding.ivBack.setOnClickListener(v -> {
                     requireActivity().onBackPressed();
-                    boolean back = Navigation.findNavController(binding.getRoot()).navigateUp();
-                    Log.i(TAG, Boolean.toString(back));
+                    Navigation.findNavController(binding.getRoot()).navigateUp();
                 }
         );
 

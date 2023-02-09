@@ -52,6 +52,9 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
             holder.binding.btnCategory.setText(list.get(position).getCategory());
             holder.binding.btnTime.setText(list.get(position).getType());
 
+            if (list.get(position).getCompanyImage() != null)
+                Glide.with(holder.binding.getRoot()).load(list.get(position).getCompanyImage()).placeholder(R.drawable.place_holder).into(holder.binding.ivCompany);
+
             holder.binding.ivPercentage.setVisibility(View.GONE);
             holder.binding.ivSave.setVisibility(View.GONE);
             holder.binding.btnReadMore.setVisibility(View.GONE);

@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,9 +33,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class SavedJobsFragment extends Fragment {
-
-    private static final String TAG = "SavedJobsFragment";
-
     private FragmentSavedJobsBinding binding;
     private DatabaseReference mDatabase;
     private String type = "Full time";
@@ -172,16 +168,13 @@ public class SavedJobsFragment extends Fragment {
                 binding.spinnerCategory.setSelection(8);
         }
 
-
         Job finalJobData = jobData;
         binding.btnSave.setOnClickListener(v -> {
             String id = "";
 
             if (finalJobData != null) {
-                Log.i(TAG, String.valueOf(counter));
                 if (counter >= 1) {
                     if (!isValidForm(requirementsAdapter)) {
-                        Log.i(TAG, "not validation");
                         counter++;
                         return;
                     }

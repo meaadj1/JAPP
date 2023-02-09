@@ -1,6 +1,7 @@
 package com.example.japp.adapter;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,15 @@ import java.util.List;
 public class ApplicantsAdapter extends RecyclerView.Adapter<ApplicantsAdapter.ViewHolder> {
 
     List<User> list;
+    boolean isSearch;
 
-    public ApplicantsAdapter(List<User> list) {
+    private static final String TAG = "ApplicantsAdapter";
+
+
+    public ApplicantsAdapter(List<User> list, boolean isSearch) {
         this.list = list;
+        Log.i(TAG, String.valueOf(isSearch));
+        this.isSearch = isSearch;
     }
 
     @NonNull
@@ -56,6 +63,7 @@ public class ApplicantsAdapter extends RecyclerView.Adapter<ApplicantsAdapter.Vi
         holder.binding.getRoot().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("user", list.get(position));
+            bundle.putBoolean("isSearch", isSearch);
             Navigation.createNavigateOnClickListener(R.id.nav_job_details, bundle).onClick(v);
         });
     }

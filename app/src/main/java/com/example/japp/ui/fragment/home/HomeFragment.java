@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment {
     private void handleApplicants(List<User> users) {
 //        MergeSort ob = new MergeSort();
 //        ob.mergeSort(users, 0, users.size() - 1);
-        binding.rvJob.setAdapter(new ApplicantsAdapter(users));
+        binding.rvJob.setAdapter(new ApplicantsAdapter(users,false));
     }
 
     private void handleJobs(ArrayList<Job> jobs, String uid, User user) {

@@ -21,9 +21,7 @@ import com.example.japp.model.Job;
 import java.util.ArrayList;
 
 public class ActiveJobsFragment extends Fragment {
-
     private FragmentActiveJobsBinding binding;
-
     public ActiveJobsFragment() {
         // Required empty public constructor
     }
@@ -41,7 +39,6 @@ public class ActiveJobsFragment extends Fragment {
         ActiveViewModel viewModel = new ViewModelProvider(this).get(ActiveViewModel.class);
 
         LocaleHelper.setLocale(binding.getRoot().getContext(), LocaleHelper.getLanguage(binding.getRoot().getContext()));
-
 
         viewModel.getActiveJobs(getContext());
 
