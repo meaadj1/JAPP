@@ -13,7 +13,6 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +27,7 @@ import com.example.japp.Utils.SharedHelper;
 import com.example.japp.adapter.SkillsAdapter;
 import com.example.japp.databinding.AddingItemLayoutBinding;
 import com.example.japp.databinding.FragmentProfileBinding;
+import com.example.japp.model.Job;
 import com.example.japp.model.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -107,7 +107,8 @@ public class ProfileFragment extends Fragment {
             binding.llOrg.setVisibility(View.GONE);
 
             if (user.getCv() != null && !Objects.equals(user.getCv(), "")) {
-                binding.tvCv.setText(getString(R.string.done));
+//                binding.tvCv.setText(getString(R.string.done));
+                binding.btnShowCv.setVisibility(View.VISIBLE);
             }
 
             if (categories.contains(education))
@@ -224,6 +225,14 @@ public class ProfileFragment extends Fragment {
                 } else {
                     binding.tvHealth.setChecked(true);
                     categories.add(health);
+                }
+            });
+
+            binding.btnShowCv.setOnClickListener(v -> {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(user.getCv())));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             });
         } else {
@@ -393,6 +402,15 @@ public class ProfileFragment extends Fragment {
             StorageReference ref = storageReference.child("images/" + uid);
             ref.putFile(imagePath).addOnSuccessListener(taskSnapshot -> taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri -> {
                 mDatabase.child("users").child(uid).child("photo").setValue(uri.toString()).addOnSuccessListener(unused -> new SharedHelper().saveString(context, SharedHelper.photo, uri.toString())).addOnFailureListener(e -> Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show());
+                mDatabase.child("jobs").get().addOnSuccessListener(dataSnapshot -> dataSnapshot.getChildren().forEach(dataSnapshot1 -> {
+                    Job job = dataSnapshot1.getValue(Job.class);
+                    if (job != null) {
+                        if (Objects.equals(job.getCompanyUid(), uid)) {
+                            job.setCompanyImage(uri.toString());
+                            dataSnapshot1.getRef().setValue(job);
+                        }
+                    }
+                }));
             }));
         }
     }
@@ -432,6 +450,8 @@ public class ProfileFragment extends Fragment {
                     pdfPath = data.getData();
                     DocumentFile file = DocumentFile.fromSingleUri(binding.getRoot().getContext(), data.getData());
                     assert file != null;
+
+
                     binding.tvCv.setText(file.getName());
                 }
             } catch (Exception e) {

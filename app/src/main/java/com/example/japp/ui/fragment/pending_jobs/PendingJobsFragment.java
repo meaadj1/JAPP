@@ -19,7 +19,6 @@ import com.example.japp.databinding.FragmentPendingJobsBinding;
 import java.util.Objects;
 
 public class PendingJobsFragment extends Fragment {
-
     private FragmentPendingJobsBinding binding;
 
     public PendingJobsFragment() {
@@ -36,7 +35,6 @@ public class PendingJobsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         PendingViewModel viewModel = new ViewModelProvider(this).get(PendingViewModel.class);
-
         LocaleHelper.setLocale(binding.getRoot().getContext(), LocaleHelper.getLanguage(binding.getRoot().getContext()));
 
         if (Objects.equals(new SharedHelper().getString(binding.getRoot().getContext(), SharedHelper.type), "JOB_SEEKER"))

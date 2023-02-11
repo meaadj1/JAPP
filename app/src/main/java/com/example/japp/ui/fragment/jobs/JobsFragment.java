@@ -25,10 +25,8 @@ public class JobsFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentJobsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -38,15 +36,11 @@ public class JobsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         context = binding.getRoot().getContext();
-
         LocaleHelper.setLocale(context, LocaleHelper.getLanguage(binding.getRoot().getContext()));
-
 
         JobsPagerAdapter adapter = new JobsPagerAdapter(context, requireActivity(), new SharedHelper().getString(context, SharedHelper.type));
         binding.viewPager.setAdapter(adapter);
 
         new TabLayoutMediator(binding.tabLayout, binding.viewPager, true, (tab, position) -> tab.setText(adapter.getPageTitle(position))).attach();
-
-
     }
 }

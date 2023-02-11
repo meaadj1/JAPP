@@ -42,6 +42,7 @@ public class ApplicantsAdapter extends RecyclerView.Adapter<ApplicantsAdapter.Vi
         holder.binding.tvApplicant.setText(list.get(position).getFirstName() + " " + list.get(position).getLastName());
         holder.binding.tvPresent.setText((int) list.get(position).getMatching() + "%");
         holder.binding.progressBar.setProgress((int) list.get(position).getMatching());
+        holder.binding.tvPresentDetails.setText(R.string.your_compatibility_percentage_with_this_job_seeker);
         Glide.with(holder.binding.getRoot()).load(list.get(position).getPhoto()).placeholder(R.drawable.place_holder).into(holder.binding.ivApplicant);
         if (list.get(position).getCity() != null)
             holder.binding.tvDetails.setText(list.get(position).getCity());

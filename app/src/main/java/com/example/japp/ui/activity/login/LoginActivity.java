@@ -77,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                                         new SharedHelper().saveString(context, SharedHelper.photo, user1.getPhoto());
                                     }
                                     startActivity(new Intent(context, HomeActivity.class));
+                                    finish();
                                 });
                             } else {
                                 verify(user);
@@ -131,9 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                 intent.putExtra("email", email);
                 intent.putExtra("type", "password");
                 startActivity(intent);
-            }).addOnFailureListener(e -> {
-                Toast.makeText(binding.getRoot().getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-            });
+            }).addOnFailureListener(e -> Toast.makeText(binding.getRoot().getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
         }
     }
 }

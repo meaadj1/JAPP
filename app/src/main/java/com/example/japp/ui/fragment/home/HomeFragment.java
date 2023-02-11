@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 
 import com.example.japp.R;
 import com.example.japp.Utils.LocaleHelper;
@@ -64,6 +65,9 @@ public class HomeFragment extends Fragment {
             viewModel.getApplicants(context);
         }
 
+        RadioButton b = (RadioButton) binding.rgJobType.getChildAt(2);
+        b.setChecked(true);
+
         binding.rgJobType.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.rb_full_time) {
                 viewModel.getFullTimeJobs(binding.getRoot().getContext());
@@ -104,7 +108,7 @@ public class HomeFragment extends Fragment {
     private void handleApplicants(List<User> users) {
 //        MergeSort ob = new MergeSort();
 //        ob.mergeSort(users, 0, users.size() - 1);
-        binding.rvJob.setAdapter(new ApplicantsAdapter(users,false));
+        binding.rvJob.setAdapter(new ApplicantsAdapter(users, false));
     }
 
     private void handleJobs(ArrayList<Job> jobs, String uid, User user) {

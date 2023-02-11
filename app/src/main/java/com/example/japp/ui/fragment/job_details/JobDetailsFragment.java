@@ -29,9 +29,6 @@ import com.google.gson.Gson;
 import java.util.Objects;
 
 public class JobDetailsFragment extends Fragment {
-
-    private static final String TAG = "JobDetailsFragment";
-
     private FragmentJobDetailsBinding binding;
     JobDetailsViewModel viewModel;
     Context context;
@@ -66,7 +63,6 @@ public class JobDetailsFragment extends Fragment {
         RequirementsAdapter requirementsAdapter = null;
 
         if (data != null) {
-
             viewModel.getCompanyData(data.getCompanyUid());
 
             binding.llJob.setVisibility(View.VISIBLE);
@@ -109,9 +105,6 @@ public class JobDetailsFragment extends Fragment {
             binding.tvCompany.setOnClickListener(v -> viewModel.getUserData(data.getCompanyUid()));
         } else {
             if (Objects.equals(userData.getType(), "JOB_SEEKER")) {
-
-                Log.i(TAG, String.valueOf(isSearch));
-
                 binding.llJob.setVisibility(View.GONE);
                 binding.llCompany.setVisibility(View.GONE);
                 binding.llUser.setVisibility(View.VISIBLE);
@@ -163,7 +156,6 @@ public class JobDetailsFragment extends Fragment {
                 binding.tvAccept.setOnClickListener(v -> viewModel.acceptUser(context, userData.getEmail(), userData.getJobId(), uid, userData));
 
                 binding.tvReject.setOnClickListener(v -> viewModel.rejectUser(context, userData.getEmail(), userData.getJobId(), uid, userData));
-
             } else {
                 binding.llJob.setVisibility(View.GONE);
                 binding.llCompany.setVisibility(View.VISIBLE);
@@ -176,7 +168,6 @@ public class JobDetailsFragment extends Fragment {
                 binding.tvCompanyDescription.setText(userData.getDescription());
             }
 
-
             try {
                 Glide.with(binding.getRoot()).load(userData.getPhoto()).placeholder(R.drawable.place_holder).into(binding.ivCompany);
             } catch (Exception ex) {
@@ -187,7 +178,6 @@ public class JobDetailsFragment extends Fragment {
             binding.tvCompany.setText(userData.getCountry());
 
         }
-
 
         binding.ivBack.setOnClickListener(v -> {
                     requireActivity().onBackPressed();

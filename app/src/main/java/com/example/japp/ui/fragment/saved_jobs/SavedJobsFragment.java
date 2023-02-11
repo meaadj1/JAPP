@@ -55,7 +55,6 @@ public class SavedJobsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         SavedViewModel viewModel = new ViewModelProvider(this).get(SavedViewModel.class);
 
-
         LocaleHelper.setLocale(binding.getRoot().getContext(), LocaleHelper.getLanguage(binding.getRoot().getContext()));
 
         Job jobData = null;

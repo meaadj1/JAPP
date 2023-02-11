@@ -32,11 +32,12 @@
     <string name="profile">الملف الشخصي</string>
     <string name="my_jobs">وظائفي</string>
     <string name="full_time">دوام كامل</string>
-    <string name="part_time">دوام جزئى</string>
+    <string name="part_time">دوام جزئي</string>
     <string name="job_list">قائمة الوظائف</string>
     <string name="applicant_list">قائمة المتقدمين</string>
     <string name="read_more">قراءة المزيد</string>
     <string name="your_compatibility_percentage_with_this_job">نسبة التوافق مع هذه الوظيفة</string>
+    <string name="your_compatibility_percentage_with_this_job_seeker">نسبة توافقك مع هذا الباحث عن عمل</string>
     <string name="find_your_job">ابحث عن وظيفتك</string>
     <string name="find_your_employee">ابحث عن موظفك</string>
     <string name="job_description">وصف الوظيفة</string>
@@ -55,7 +56,7 @@
     <string name="gender">الجنس</string>
     <string name="country">الدولة</string>
     <string name="date_of_birth">تاريخ الميلاد</string>
-    <string name="city">المدينه</string>
+    <string name="city">المدينة</string>
     <string name="nationality">الجنسية</string>
     <string name="skills">المهارات</string>
     <string name="add">+ إضافة</string>
@@ -63,12 +64,12 @@
     <string name="languages">اللغات</string>
     <string name="save">حفظ</string>
     <string name="notification">الاشعارات</string>
-    <string name="saved_jobs">الوظايف المحفوظة</string>
+    <string name="saved_jobs">الوظائف المحفوظة</string>
     <string name="pending">لم يتم الرد</string>
     <string name="active">فعال</string>
     <string name="reject">مرفوض</string>
     <string name="accept">مقبول</string>
-    <string name="adding_item">اضافة عنصر</string>
+    <string name="adding_item">إضافة عنصر</string>
     <string name="text">نص</string>
     <string name="cancel">الغاء</string>
     <string name="finance">المالية</string>
@@ -89,7 +90,7 @@
     <string name="update">تحديث</string>
     <string name="are_you_sure_you_want_to_leave">هل انت متاكد انك تريد المغادرة؟</string>
     <string name="yes">نعم</string>
-    <string name="add_post">اضافه وظيفة</string>
+    <string name="add_post">إضافة وظيفة</string>
     <string name="jobs">وظائف</string>
     <string name="name_of_organization">اسم المؤسسة</string>
     <string name="organization_location">موقع المؤسسة</string>
@@ -141,7 +142,7 @@
     <string name="second_name">الاسم الثانى</string>
     <string name="last_name">الاسم الاخير</string>
     <string name="value">القيمة</string>
-    <string name="job_title">المسمى الوظيفى</string>
+    <string name="job_title">المسمى الوظيفي</string>
     <string name="adding_requirement">Adding requirement</string>
     <string name="priority_of_requirement">priority of requirement % :</string>
     <string name="matching_requirements">متطلبات المطابقة</string>

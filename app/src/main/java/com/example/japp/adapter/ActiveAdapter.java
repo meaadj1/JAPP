@@ -5,6 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.example.japp.R;
 import com.example.japp.databinding.ActiveJobItemBinding;
 import com.example.japp.model.Job;
 import java.util.ArrayList;
@@ -28,6 +31,9 @@ public class ActiveAdapter extends RecyclerView.Adapter<ActiveAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.binding.tvTitle.setText(list.get(position).getTitle());
         holder.binding.tvDetails.setText(list.get(position).getDescription());
+
+        Glide.with(holder.binding.getRoot()).load(list.get(position).getCompanyImage()).placeholder(R.drawable.place_holder).into(holder.binding.ivCompany);
+
         if (Objects.equals(list.get(position).getStatus(), "accept")) {
             holder.binding.tvAccept.setVisibility(View.VISIBLE);
             holder.binding.tvReject.setVisibility(View.GONE);
