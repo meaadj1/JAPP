@@ -42,7 +42,7 @@ public class JobDetailsViewModel extends ViewModel {
             user.setMatchingList(items);
         }
         if (validate[0] > 100) {
-            Toast.makeText(context, "some thing wrong", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "something wrong", Toast.LENGTH_SHORT).show();
             return;
         }
         user.setMatching((int) validate[0]);

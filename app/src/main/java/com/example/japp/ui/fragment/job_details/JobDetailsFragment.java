@@ -152,7 +152,6 @@ public class JobDetailsFragment extends Fragment {
                     }
                 });
 
-
                 binding.tvAccept.setOnClickListener(v -> viewModel.acceptUser(context, userData.getEmail(), userData.getJobId(), uid, userData));
 
                 binding.tvReject.setOnClickListener(v -> viewModel.rejectUser(context, userData.getEmail(), userData.getJobId(), uid, userData));
